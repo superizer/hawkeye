@@ -6,7 +6,12 @@ Created on Dec 2, 2012
 '''
 
 from hawkeye import application
+from hawkeye import config
+from hawkeye import routing
+
 
 if __name__ == '__main__':
-    app = application.Application()
+    config = config.Configuration()
+    routing.add_route(config)
+    app = application.Application(config)
     app.start()
