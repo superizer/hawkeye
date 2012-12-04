@@ -9,9 +9,14 @@ from hawkeye import application
 from hawkeye import config
 from hawkeye import routing
 
+import sys
 
 if __name__ == '__main__':
-    config = config.Configuration()
+    if len(sys.argv) < 2:
+        print("please use $ cmd config_file")
+        sys.exit()
+        
+    config = config.Configuration(sys.argv[1])
     routing.add_route(config)
     app = application.Application(config)
     app.start()
