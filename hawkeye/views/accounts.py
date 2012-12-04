@@ -10,7 +10,9 @@ def login(request):
     if len(request.matchdict) > 0:
         if len(request.matchdict.get('username')) > 0:
             print('username: ', request.matchdict['username'])
-            return request.route_url('/')
+            print('password: ', request.matchdict['password'])
+            if request.matchdict['username'] == 'admin' and request.matchdict['password'] == 'adminadmin':
+                return request.route_url('/')
         result['message'] = "username required"
     
     return result

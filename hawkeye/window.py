@@ -12,7 +12,7 @@ from PyQt4.QtNetwork import *
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-from . import contact
+from . import context
 
 class MyWebPage(QWebPage):
     formSubmitted = pyqtSignal(QUrl)
@@ -64,14 +64,14 @@ class Window(QWidget):
         
         if view is not None:
             action = view.get('action')
-            contact_obj = contact.ResourceContact()
-            contact_obj.add_args(args)
-            response = action(contact_obj)
+            context_obj = context.ResourceContact()
+            context_obj.add_args(args)
+            response = action(context_obj)
             
             print("response: ", response)
             if not isinstance(response, dict):
                 url = response.path()
-                contact_obj = contact.ResourceContact()
+                contact_obj = context.ResourceContact()
                 response = action(contact_obj)
                 print("response->: ", response)
                 
