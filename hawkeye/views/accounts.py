@@ -8,11 +8,16 @@ def login(request):
     print("This is login : ", request)
     result = dict()
     if len(request.matchdict) > 0:
-        if len(request.matchdict.get('username')) > 0:
-            print('username: ', request.matchdict['username'])
+        if len(request.matchdict.get('email')) > 0:
+            print('email: ', request.matchdict['email'])
             print('password: ', request.matchdict['password'])
-            if request.matchdict['username'] == 'admin' and request.matchdict['password'] == 'adminadmin':
+            if request.matchdict['email'] == 'admin' and request.matchdict['password'] == 'adminadmin':
                 return request.route_url('/')
-        result['message'] = "username required"
+        result['message'] = "email required"
     
+    return result
+
+def register(request):
+    result = dict()
+    print('register')
     return result
