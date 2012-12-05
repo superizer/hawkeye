@@ -5,7 +5,7 @@
 % endif
 
 <form action="/login" method="get">
-Email: <input type="text" name="email"><br/>
-Password: <input type="password" name="password"><br/>
+Email: ${form.email} ${form.get_error('email')}<br/>
+Password: ${form.password} ${form.get_error('password')}<br/>
 <input type="submit" value="Submit">&nbsp;<a href="/register">register</a>
 </form>
