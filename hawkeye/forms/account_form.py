@@ -4,8 +4,8 @@ from wtforms import validators
 from . import AbstactForm
 
 class AccountForm(AbstactForm):
-    email       = fields.TextField('Email', validators=[validators.required(), validators.Email()])
-    password    = fields.PasswordField('Password', validators=[validators.required()])
+    email       = fields.TextField('Email', validators=[validators.required(message="Email is required."), validators.Email()])
+    password    = fields.PasswordField('Password', validators=[validators.required(message="Passwords is required.")])
     
 class RegisterForm(AbstactForm):
     name     = fields.TextField('Name', validators=[validators.required()])

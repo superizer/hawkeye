@@ -51,9 +51,10 @@ html,body {
 
 #login-messages{
 	width: 100%;
-	background-color: blue;
+	padding:2px;
 	height: 16px;
 	font: bold 14px Tahoma, Geneva, sans-serif;
+	text-align: center;
 	color: red;
 	margin-top:px;
 }
