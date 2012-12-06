@@ -9,6 +9,6 @@ class AccountForm(AbstactForm):
     password    = fields.TextField('Password', validators=[validators.required()])
     #name
     #surname
-    password = fields.PasswordField('New Password', [Required(), EqualTo('confirm', mesage='Passwords must match')])
+    password = fields.PasswordField('New Password', [validators.Required(), validators.EqualTo('confirm', message='Passwords must match')])
     confirm  = fields.PasswordField('Repeat Password')
     
