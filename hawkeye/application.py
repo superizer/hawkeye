@@ -10,6 +10,9 @@ from PyQt4.QtWebKit import *
 from .window import Window
 import sys
 
+import logging
+logger = logging.getLogger(__name__)
+
 class Application(object):
     '''
     classdocs
@@ -22,10 +25,12 @@ class Application(object):
         self.config = config
         
     def start(self):
-        print("Hello world")
+        logger.debug("Hello world")
+        
+        #from . import resource
         
         window = Window(self.config)
         window.show()
         window.welcome()
         #window.view.load(QUrl('http://www.google.com'))
-        self.app.exec_()
+        return self.app.exec_()

@@ -10,6 +10,9 @@ from hawkeye import config
 from hawkeye import routing
 
 import sys
+import os
+import logging
+import logging.config
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -18,5 +21,14 @@ if __name__ == '__main__':
         
     config = config.Configuration(sys.argv[1])
     routing.add_route(config)
+    
+    # initial logging
+    directory = config.settings.get('hawkeye.log_dir')
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    logging.config.fileConfig(sys.argv[1])
+    logger = logging.getLogger()
+    logger.debug("wellcome_message")
+    
     app = application.Application(config)
     app.start()

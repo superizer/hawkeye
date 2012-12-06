@@ -15,7 +15,7 @@ class Configuration:
 
     def __init__(self, config_file):
         self.config_file = config_file
-        self.setting = dict()
+        self.settings = dict()
         self.route = dict()
         self.current_project_path = os.path.dirname(__file__)
         
@@ -27,12 +27,12 @@ class Configuration:
         
         sections = ["hawkeye"]
 
-        boolean_conf    = []
+        boolean_conf    = ['debug']
         integer_conf    = []
         
         
         for key in boolean_conf:
-            self.setting[key] = False
+            self.settings[key] = False
         
         for section in sections:
             if not config_parser.has_section(section):
@@ -40,11 +40,11 @@ class Configuration:
             
             for k, v in config_parser.items(section):
                 if k in boolean_conf:
-                    self.setting[k] = config_parser.getboolean(section, k)
+                    self.settings[k] = config_parser.getboolean(section, k)
                 elif k in integer_conf:
-                    self.setting[k] = config_parser.getint(section, k)
+                    self.settings[k] = config_parser.getint(section, k)
                 else:
-                    self.setting[k] = v.replace("hawkeye:", self.current_project_path+"/")
+                    self.settings[k] = v.replace("hawkeye:", self.current_project_path+"/")
     
     def add_route(self, name, action, renderer=None):
         self.route[name] = dict(
