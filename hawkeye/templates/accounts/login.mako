@@ -3,10 +3,12 @@
 <div id="login-box">
     <div id="login-messages">
 		% if message: 
-			${message} 
+			${message}
+		% elif form.get_error('email'):
+			${form.get_error('email')}
+		% elif form.get_error('password'): 
+		    ${form.get_error('password')}
 		% endif
-		${form.get_error('email')}
-		${form.get_error('password')}
 	</div>
 	<form id="login-form" action="/login" method="get">
 		<div id="login-box-name">Email</div>

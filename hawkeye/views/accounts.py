@@ -31,7 +31,7 @@ def login(request):
     except Exception as e:
         print('error: ', e)
         return dict(
-                    message='password mismatch',
+                    message='Passwords mismatch',
                     form = form
                     )
         
