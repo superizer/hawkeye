@@ -5,4 +5,4 @@ from . import AbstactForm
 
 class AccountForm(AbstactForm):
     email       = fields.TextField('Email', validators=[validators.required(), validators.Email()])
-    password    = fields.TextField('Password', validators=[validators.required()])
+    password    = fields.PasswordField('Password', validators=[validators.required()])
