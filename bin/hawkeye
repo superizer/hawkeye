@@ -28,7 +28,7 @@ if __name__ == '__main__':
         os.makedirs(directory)
     logging.config.fileConfig(sys.argv[1])
     logger = logging.getLogger()
-    logger.debug("wellcome_message")
+    logger.debug("welcome_message")
     
     app = application.Application(config)
     app.start()

@@ -125,4 +125,4 @@ class Window(QWidget):
             #self.web_view.load(a)
         
     def welcome(self):
-        self.render('/')
+        self.render('/login')
