@@ -25,9 +25,6 @@ class Application(object):
         self.config = config
         
     def start(self):
-        logger.debug("Hello world")
-        
-        #from . import resource
         
         window = Window(self.config)
         window.show()

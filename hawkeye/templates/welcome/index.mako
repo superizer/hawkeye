@@ -1,4 +1,4 @@
 <%inherit file="/base/base.mako"/>
-<a href="/login">login</a>
+&nbsp;&nbsp;&nbsp;<p1> welcome to hawkeye </p1></br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="/login">login</a>
 <br/>
-<span class="test">123456</span>

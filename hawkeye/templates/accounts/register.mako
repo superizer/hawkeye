@@ -6,5 +6,5 @@ Surname: <input type="text" name="surname"><br/>
 Email: <input type="text" name="email"><br/>
 Password: <input type="password" name="password"><br/>
 Confirm Password: <input type="password" name="password"><br/>
-<input type="submit" value="Register">
+<a href='/login' ><input type="submit" value="Register"></a>
 </form>
