@@ -35,7 +35,7 @@ def login(request):
                     form = form
                     )
         
-    return request.route_url('/login')
+    return request.route_url('/register')
 
 def register(request):
     result = dict()
