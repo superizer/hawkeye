@@ -43,16 +43,25 @@ html,body {
 	top: 50%;
 	margin-top: -165px;
 	margin-left: -151px;
-	background-image: url("../images/login/logo.png");
+	background-image: url("../images/logo.png");
 	background-repeat: no-repeat;
 	background-position: 50% 10%;
+	padding-top: 239px;
+}
+
+#login-messages{
+	width: 100%;
+	background-color: blue;
+	height: 16px;
+	font: bold 14px Tahoma, Geneva, sans-serif;
+	color: red;
+	margin-top:px;
 }
 
 #login-form {
 	float: left;
 	width: 282px;
 	height: 65px;
-	margin-top: 245px;
 	padding: 10px;
 	-webkit-box-shadow: 0px 0px 10px #888;
 	box-shadow: 0px 0px 10px #888;
