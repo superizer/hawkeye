@@ -4,16 +4,15 @@
 	${message}
 % endif
 
-
 <div id="login-box">
 	<form id="login-form" action="/login" method="get">
 		<div id="login-box-name">Email</div>
 		<div id="login-box-field">
-			${form.email(class='form-login', name='email')} ${form.get_error('email')}
+			${form.email(class_='form-login')} ${form.get_error('email')}
 		</div>
 		<div id="login-box-name">Password</div>
 		<div id="login-box-field">
-			${form.password(class='form-login')} ${form.get_error('password')}
+			${form.password(class_='form-login')} ${form.get_error('password')}
 		</div>
 		<div id="login-box-button">
 			<input type="submit"  class="login-button" value="login"> 
