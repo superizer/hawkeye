@@ -8,5 +8,5 @@ def index(request):
     return {}
 
 def exit_(request):
-    sys.exit(0)
+    raise Exception('Request Exit')
     return {}

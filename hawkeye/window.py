@@ -62,6 +62,8 @@ class Window(QWidget):
         
         else:
             layout.addWidget(self.web_view)
+            
+        self.session = dict()
 
     def setupInspector(self):
         '''
@@ -104,14 +106,27 @@ class Window(QWidget):
         
         if view is not None:
             action = view.get('action')
-            context_obj = context.ResourceContact()
+            context_obj = context.ResourceContact(self.session)
             context_obj.add_args(args)
-            response = action(context_obj)
+            try:
+                response = action(context_obj)
+            except Exception as e:            
+                if e.args[0] == 'Request Exit':
+                    qApp.closeAllWindows()
+                    return  
+                          
+                logger.exception(e)
+                #need error page
+                return ('/home')
+
             
             if not isinstance(response, dict):
-                url = response.path()
-                contact_obj = context.ResourceContact()
-                response = action(contact_obj)
+                if isinstance(response, QUrl):
+                    url = response.path()
+                    return self.render(url)
+#                else:
+#                    # need error page
+#                    return self.render('/login')
             
             logger.debug("response: %s"%response)
                 
