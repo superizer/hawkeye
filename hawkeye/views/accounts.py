@@ -35,10 +35,10 @@ def login(request):
                     form = form
                     )
         
-    return request.route_url('/')
+    return request.route_url('/login')
 
 def register(request):
     result = dict()
-    form = account_form.AccountForm(request.matchdict)
-    print('name :',form.data.get('email'))
+    form = account_form.RegisterForm(request.matchdict)
+    #print('name :',form.data.get('email'))
     return result

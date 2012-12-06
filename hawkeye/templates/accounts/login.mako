@@ -16,8 +16,8 @@
 		</div>
 		<div id="login-box-button">
 			<input type="submit"  class="login-button" value="login"> 
-			<input type="button"  class="login-button" value="register"> 
-			<input type="button"  class="login-button" value="exit">
+			<a href='/register'><input type="button"  class="login-button" value="register"></a> 
+			<a href='/exit'><input type="button"  class="login-button" value="exit"></a>
 		</div>
 	</form>
 </div>
