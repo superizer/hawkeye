@@ -19,5 +19,8 @@ class Account:
     
     def register(self):
         payload = {}
-        r = requests.post(self.url + '/authentication/tokens' , data=json.dumps(payload), headers=self.headers)
+        r = requests.post(self.url + '/register' , data=json.dumps(payload), headers=self.headers)
         return r.json
+    
+    def profile(self):
+        return {}

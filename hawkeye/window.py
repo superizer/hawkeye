@@ -106,7 +106,7 @@ class Window(QWidget):
         
         if view is not None:
             action = view.get('action')
-            context_obj = context.ResourceContact(self.session)
+            context_obj = context.ResourceContext(self.config, self.session)
             context_obj.add_args(args)
             try:
                 response = action(context_obj)

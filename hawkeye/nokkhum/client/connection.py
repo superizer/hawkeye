@@ -9,11 +9,11 @@ import json
 from .account import Account
 
 class Connection:
-    def __init__(self):
-        self.host = 'localhost'
-        self.port = '6543'
+    def __init__(self, host, port=80):
+        self.host = host
+        self.port = port
         
-        self.url = 'http://' + self.host + ':' + self.port
+        self.url = 'http://%s:%d' %(self.host,self.port)
         
         self.account = Account(self.url)
 

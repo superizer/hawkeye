@@ -28,7 +28,7 @@ class Configuration:
         sections = ["hawkeye"]
 
         boolean_conf    = ['debug']
-        integer_conf    = []
+        integer_conf    = ['nokkhum.api.port']
         
         
         for key in boolean_conf:

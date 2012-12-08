@@ -44,9 +44,11 @@ def login(request):
     return request.route_url('/home')
 
 def register(request):
-    result = dict()
     form = account_form.RegisterForm(request.matchdict)
     #print('name :',form.data.get('email'))
+    result = dict(
+                  form = form
+                  )
     return result
 
 def logout(request):

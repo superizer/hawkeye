@@ -7,16 +7,16 @@ Created on Dec 4, 2012
 
 from PyQt4.QtCore import QUrl
 from hawkeye.nokkhum.client import connection
-
 class MyDict(dict):
     def getlist(self, name):
         return [self.get(name)]
 
-class ResourceContact:
-    def __init__(self, session):
+class ResourceContext:
+    def __init__(self, config, session):
         ''''''
+        self.config = config
         self.matchdict = MyDict()
-        self.nokkhum_client = connection.Connection()
+        self.nokkhum_client = connection.Connection(self.config.settings.get('nokkhum.api.host'),self.config.settings.get('nokkhum.api.port'))
         self.session = session
     
     def route_url(self, name):
