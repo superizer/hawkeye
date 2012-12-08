@@ -7,4 +7,4 @@ from wtforms import fields
 from . import AbstactForm
 
 class ProjectForm(AbstactForm):
-    pform    = fields.SelectField('Programming Language',)
+    project    = fields.SelectField('Project',)

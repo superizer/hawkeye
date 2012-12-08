@@ -3,17 +3,24 @@ Created on Dec 3, 2012
 
 @author: superizer
 '''
-import sys
-from hawkeye.forms import account_form
+
 from hawkeye.forms import project_form
 
 def index(request):
     form = project_form.ProjectForm(request.matchdict)
-    form.pform.choices=[('Record', 'Record'), ('Detect', 'Detect'), ('View', 'View')]
+    form.project.choices=[('Record', 'Record'), ('Detect', 'Detect'), ('View', 'View')]
     #form.pform.choices.append(('test','test'))
-    return dict(
+    if len(request.matchdict) > 0 and form.validate():
+        project_id = form.data.get('project')
+        print(project_id)
+    else:
+        return dict(
                     form = form
                     )
+        
+    # add code hear
+    return {}
+
 def exit_(request):
     raise Exception('Request Exit')
     return {}
