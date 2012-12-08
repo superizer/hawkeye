@@ -40,5 +40,14 @@ def login(request):
 def register(request):
     result = dict()
     form = account_form.RegisterForm(request.matchdict)
-    #print('name :',form.data.get('email'))
-    return result
+    if len(request.matchdict) > 0 and form.validate():
+        name = form.data.get('name')
+        surname = form.data.get('surname')
+        email = form.data.get('email')
+        password = form.data.get('password')
+    else:
+        return dict(
+                    form = form
+                    )
+        
+    return request.route_path('/login')
