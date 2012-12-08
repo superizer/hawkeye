@@ -79,4 +79,3 @@ def profile(request):
     return {
             'user' : request.session['user']
             }
-
