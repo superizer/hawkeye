@@ -45,12 +45,38 @@ def login(request):
 
 def register(request):
     form = account_form.RegisterForm(request.matchdict)
-    #print('name :',form.data.get('email'))
-    result = dict(
-                  form = form
-                  )
-    return result
+    if len(request.matchdict) > 0 and form.validate():
+        name = form.data.get('name')
+        surname = form.data.get('surname')
+        email = form.data.get('email')
+        password = form.data.get('password')
+    else:
+        return dict(
+                    form = form
+                    )
+    
+    try:
+        data = request.nokkhum_client.account.register(name, surname, password, email)
+        print ('data:', data)
+        if data is None or 'error' in data:
+            raise Exception('error')
+        
+    except Exception as e:
+        logger.exception(e)
+        logger.error("error: ", data)
+        return dict(
+                    message=data.get("error", "Can't Register"),
+                    form = form
+                    )
+        
+    return request.route_path('/login')
 
 def logout(request):
     request.forget()
     return request.route_path('/login')
+
+def profile(request):
+    return {
+            'user' : request.session['user']
+            }
+

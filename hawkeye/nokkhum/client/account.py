@@ -12,15 +12,12 @@ class Account:
         self.url = url
         self.headers = {'content-type': 'application/json'}
         
-    def authenticate(self,email, password):
+    def authenticate(self, email, password):
         payload = {'password_credentials': {'password': password, 'email': email}}
         r = requests.post(self.url + '/authentication/tokens' , data=json.dumps(payload), headers=self.headers)
         return r.json
     
-    def register(self):
-        payload = {}
-        r = requests.post(self.url + '/register' , data=json.dumps(payload), headers=self.headers)
+    def register(self, name, surname, password, email ):
+        payload = {'user': {'first_name' : name, 'last_name' : surname, 'email' : email, 'password' : password }}
+        r = requests.post(self.url + '/accounts' , data=json.dumps(payload), headers=self.headers)
         return r.json
-    
-    def profile(self):
-        return {}
