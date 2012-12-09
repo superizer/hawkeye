@@ -25,14 +25,12 @@ class Account:
         return r.json
     
     def show_project(self):
-        #payload = {'projects': {'id' : id, 'name' : name }}
-        r = requests.get(self.url + '/users/' + hawkeye.window.Window.session['user']['id'] + '/projects' , headers=self.headers)
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.get(self.url + '/users/' + str(hawkeye.window.Window.session['user']['id']) + '/projects' , headers=self.headers)
         return r.json
     
     def add_project(self, name, description):
         payload = {'project': {'name' : name, 'description' : description,'user':{'id':hawkeye.window.Window.session['user']['id']}}}
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.post(self.url + '/projects' , data=json.dumps(payload), headers=self.headers)
-        print('r.jason',r.json)
-        print('headers',self.headers)
         return r.json
