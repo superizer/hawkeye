@@ -29,6 +29,9 @@ class HawkeyeWebPage(QWebPage):
         return super(HawkeyeWebPage, self).acceptNavigationRequest(frame, req, nav_type)
 
 class Window(QWidget):
+    
+    session = dict()
+    
     def __init__(self, config):
         super(Window, self).__init__()
         
@@ -63,7 +66,6 @@ class Window(QWidget):
         else:
             layout.addWidget(self.web_view)
             
-        self.session = dict()
 
     def setupInspector(self):
         '''

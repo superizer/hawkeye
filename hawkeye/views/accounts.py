@@ -5,6 +5,7 @@ Created on Dec 3, 2012
 '''
 
 from hawkeye.forms import account_form
+from hawkeye.forms import project_form
 
 import logging
 logger = logging.getLogger(__name__)
@@ -76,6 +77,35 @@ def logout(request):
     return request.route_path('/login')
 
 def profile(request):
+    form = project_form.ProjectForm(request.matchdict)
     return {
-            'user' : request.session['user']
+            'user' : request.session['user'],
             }
+def add(request):
+    form = project_form.AddProjectForm(request.matchdict)
+    if len(request.matchdict) > 0 and form.validate():
+        name = form.data.get('name')
+        description = form.data.get('description')
+        print('add', name)
+    else:
+        return dict(
+                    form = form
+                    )
+    
+    try:
+        data = request.nokkhum_client.account.add_project(name, description)
+        print ('add data:', data)
+        if data is None or 'error' in data:
+            raise Exception('error')
+        
+    except Exception as e:
+        logger.exception(e)
+        logger.error("error: ", data)
+        return dict(
+                    message=data.get("error", "Can't add project."),
+                    form = form
+                    )
+        
+    return request.route_path('/home')
+
+    return {}

@@ -3,6 +3,7 @@
 <p1>Project:</p1>
 <p1>${form.project()}</p1>
 <a href="/observe">Observe</a>
+<a href="/add">Add</a>
 <a href="/edit">Edit</a>
 <a href="/delete">Delete</a>
 <a href="/profile">Profile</a>

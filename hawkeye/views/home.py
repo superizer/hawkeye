@@ -12,7 +12,7 @@ def index(request):
     #form.pform.choices.append(('test','test'))
     if len(request.matchdict) > 0 and form.validate():
         project_id = form.data.get('project')
-        print(project_id)
+        print('project id', project_id)
     else:
         return dict(
                     form = form
