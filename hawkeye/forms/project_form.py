@@ -8,7 +8,7 @@ from wtforms import validators
 from . import AbstactForm
 
 class ProjectForm(AbstactForm):
-    project    = fields.SelectField('Project')
+    project    = fields.SelectField('Project', coerce=int, validators=[validators.required(message="Project is required.")])
     
 class AddProjectForm(AbstactForm):
     name     = fields.TextField('Name', validators=[validators.required(message="Name is required.")])

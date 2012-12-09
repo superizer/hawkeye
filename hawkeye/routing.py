@@ -10,6 +10,7 @@ def add_route(config):
     config.add_route('/', accounts.login, '/accounts/login.mako')
     config.add_route('/home', home.index, '/welcome/index.mako')
     config.add_route('/add', accounts.add, '/welcome/add-project.mako')
+    config.add_route('/delete', accounts.delete, '/welcome/del-project.mako')
     config.add_route('/profile', accounts.profile, '/accounts/profile.mako')
     config.add_route('/login', accounts.login, '/accounts/login.mako')
     config.add_route('/logout', accounts.logout)

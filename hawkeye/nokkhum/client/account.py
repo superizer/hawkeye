@@ -34,3 +34,8 @@ class Account:
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.post(self.url + '/projects' , data=json.dumps(payload), headers=self.headers)
         return r.json
+    
+    def delete_project(self, id):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.delete(self.url + '/projects/'+ str(id) , headers=self.headers)
+        return r.json

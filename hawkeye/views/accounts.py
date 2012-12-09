@@ -108,4 +108,23 @@ def add(request):
         
     return request.route_path('/home')
 
-    return {}
+def delete(request):
+    form = project_form.ProjectForm(request.matchdict)
+    #form.pform.choices.append(('test','test'))
+    data = request.nokkhum_client.account.show_project()
+    
+    form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
+    print('mathdict ', request.matchdict)
+    print('--> :  ', form.project.choices)
+
+    if len(request.matchdict) > 0 and form.validate():
+        project_id = form.data.get('project')
+        #print('project id', project_id)
+        request.nokkhum_client.account.delete_project(project_id)
+        return request.route_path('/home')
+        
+    else:
+        return dict(
+                    form = form
+                    )
+    return request.route_path('/home')
