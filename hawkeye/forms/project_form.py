@@ -13,3 +13,8 @@ class ProjectForm(AbstactForm):
 class AddProjectForm(AbstactForm):
     name     = fields.TextField('Name', validators=[validators.required(message="Name is required.")])
     description = fields.TextAreaField('Description') 
+
+class EditProjectForm(AbstactForm):
+    #project    = fields.SelectField('Project', coerce=int, validators=[validators.required(message="Project is required.")])
+    name     = fields.TextField('Name', validators=[validators.required(message="Name is required.")])
+    description = fields.TextAreaField('Description') 

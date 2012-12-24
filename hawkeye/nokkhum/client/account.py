@@ -24,9 +24,14 @@ class Account:
         r = requests.post(self.url + '/accounts' , data=json.dumps(payload), headers=self.headers)
         return r.json
     
-    def show_project(self):
+    def list_project(self):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.get(self.url + '/users/' + str(hawkeye.window.Window.session['user']['id']) + '/projects' , headers=self.headers)
+        return r.json
+    
+    def get_project(self, id):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.get(self.url + '/projects/' + str(id) , headers=self.headers)
         return r.json
     
     def add_project(self, name, description):
@@ -38,4 +43,12 @@ class Account:
     def delete_project(self, id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.delete(self.url + '/projects/'+ str(id) , headers=self.headers)
+        return r.json
+    
+    def edit_project(self, id, name, description):
+        payload = {'project': { 'name' : name, 'description' : description,'user':{'id':hawkeye.window.Window.session['user']['id']}}}
+        print('payload', payload)
+        print('id',id)
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.put(self.url + '/projects/'+ str(id) , data=json.dumps(payload), headers=self.headers)
         return r.json

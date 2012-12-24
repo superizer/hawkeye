@@ -87,7 +87,7 @@ class Window(QWidget):
         
     def handleFormSubmitted(self, qurl):
         elements = {}
-#        print("got url: ", qurl)
+        print("\n\ngot url: ", qurl)
         for key, value in qurl.queryItems():
             elements[key] = value
             
@@ -98,7 +98,13 @@ class Window(QWidget):
             
     
     def link_clicked(self, qurl):  
-        self.render(qurl.path())
+        elements = {}
+#        print("got url: ", qurl)
+        for key, value in qurl.queryItems():
+            elements[key] = value
+            
+        self.render(qurl.path(), elements)
+        #self.render(qurl.path())
         
         
     def render(self, url, args=None):
