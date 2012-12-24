@@ -23,7 +23,7 @@ class AddCameraForm(AbstactForm):
     url = fields.TextField('Url', [validators.Required(message="Username is required.")])
     username = fields.TextField('User Name', [validators.Required(message="Username is required.")])
     password = fields.TextField('New Password', [validators.Required(message="Password is required.")])
-    fps = fields.SelectField('Fps', coerce=int, validators=[validators.required(message="Fps is required.")])
+    #fps = fields.SelectField('Fps', coerce=int, validators=[validators.required(message="Fps is required.")])
 #    image_size = fields.SelectField('Image Size', coerce=int, validators=[validators.required(message="Image Size is required.")])
 #    manufactory = fields.SelectField('Menu Factory', coerce=int, validators=[validators.required(message="Menu Factoryt is required.")])
 #    model = fields.SelectField('Model', coerce=int, validators=[validators.required(message="Model is required.")])
