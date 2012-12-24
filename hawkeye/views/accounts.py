@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def login(request):
 
-    print("This is login : ", request.matchdict)
+    #print("This is login : ", request.matchdict)
     
     if request.session.get('user', None):
         return request.route_path('/home')
@@ -30,7 +30,7 @@ def login(request):
   
     try:
         data = request.nokkhum_client.account.authenticate(email, password)
-        print ('data:', data)
+        #print ('data:', data)
         if 'access' not in data:
             raise 'error'
         
@@ -58,7 +58,7 @@ def register(request):
     
     try:
         data = request.nokkhum_client.account.register(name, surname, password, email)
-        print ('data:', data)
+        #print ('data:', data)
         if data is None or 'error' in data:
             raise Exception('error')
         
@@ -86,7 +86,7 @@ def add(request):
     if len(request.matchdict) > 0 and form.validate():
         name = form.data.get('name')
         description = form.data.get('description')
-        print('add', name)
+        #print('add', name)
     else:
         return dict(
                     form = form
@@ -94,7 +94,7 @@ def add(request):
     
     try:
         data = request.nokkhum_client.account.add_project(name, description)
-        print ('add data:', data)
+        #print ('add data:', data)
         if data is None or 'error' in data:
             raise Exception('error')
         
@@ -109,17 +109,6 @@ def add(request):
     return request.route_path('/home')
 
 def delete(request):
-    #form = project_form.ProjectForm(request.matchdict)
-    #form.pform.choices.append(('test','test'))
-    #data = request.nokkhum_client.account.show_project()
-    
-    #form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
-    #print('mathdict ', request.matchdict)
-    #print('--> :  ', form.project.choices)
-
-    #if len(request.matchdict) > 0 and form.validate():
-        #project_id = form.data.get('project')
-        #print('project id', project_id)
     if len(request.matchdict) > 0:
         project_id = int(request.matchdict.get('id'))
         request.nokkhum_client.account.delete_project(project_id)
@@ -133,31 +122,18 @@ def delete(request):
 
 def edit(request):
     form = project_form.EditProjectForm(request.matchdict)
-    #data = request.nokkhum_client.account.show_project()
-    #print('data', data)
-    
-    #form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
-    print('matchdict', request.matchdict)
     id = int(request.matchdict.get('id'))
-    print('project_id', id)
-    #print('matchdict', request.matchdict)
-    
     if len(request.matchdict) > 0 and form.validate():
         id = int(request.matchdict.get('id'))
-        print('in project_id', id)
         name = form.data.get('name')
         description = form.data.get('description')
-        #print('name', name)
         data = request.nokkhum_client.account.edit_project(id, name, description)
-        #print('data', data)
         return request.route_path('/home')
     else:
         data = request.nokkhum_client.account.get_project(id)
-        print("project: ", data)
         project = data['project']
         form.name.data = project['name']
         form.description.data = project['description']
-        #form.data['name'] = project['name']
         return dict(
                     form = form,
                     project = project
