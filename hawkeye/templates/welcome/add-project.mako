@@ -1,5 +1,5 @@
 <%inherit file="/base/base.mako"/>
-<form action="/add" method = "get">
+<form action="/project/add" method = "get">
 Name : ${form.name} <br/>
 Description : ${form.description}<br/>
 <input type="submit" value="Add">

@@ -10,7 +10,7 @@ def index(request):
     form = project_form.ProjectForm(request.matchdict)
     #form.pform.choices.append(('test','test'))
     data = request.nokkhum_client.account.list_project()
-    print('data', data)
+    #print('data', data)
     form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
     project_id = form.data.get('project')
     if len(request.matchdict) > 0 and form.validate():
