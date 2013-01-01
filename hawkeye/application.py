@@ -21,7 +21,9 @@ class Application(object):
         '''
         Constructor
         '''
+       
         self.app = QApplication(sys.argv)
+#        self.app.setGraphicsSystem("raster");
         self.config = config
         
     def start(self):

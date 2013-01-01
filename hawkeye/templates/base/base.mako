@@ -10,7 +10,6 @@
 	<div id="wrapper">
 		<div id="header"><%block name='menu'></%block></div>
 		<div id="content">${next.body()}</div>
-		<div id="footer"></div>
 	</div>
 </body>
 </html>

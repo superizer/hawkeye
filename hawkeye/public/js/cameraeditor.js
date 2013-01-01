@@ -1,20 +1,35 @@
+var menulayer = new Kinetic.Layer();
+var arealayer = new Kinetic.Layer();
+var linelayer = new Kinetic.Layer();
+var itemOnarea = new Array();
+
+var statusProcesstool = false;
+var statusLinetool = false;
+var statusDeletetool = false;
+var moving = false;
+var curLine = undefined;
+var rootLine = undefined;
+var leafLine = undefined;
+
 var stage = new Kinetic.Stage({
 	container : 'container',
 	width : window.innerWidth,
 	height : window.innerHeight
 });
 
-var menulayer = new Kinetic.Layer();
-var arealayer = new Kinetic.Layer();
-
-var itemOnarea = new Array();
-
-var statusProcesstool = false;
-var statusLinetool = false;
-var statusDeletetool = false;
+stage.on("mousemove", function() {
+	if (moving) {
+		var mousePos = stage.getMousePosition();
+		var x = mousePos.x;
+		var y = mousePos.y;
+		curLine.getPoints()[1].x = mousePos.x;
+		curLine.getPoints()[1].y = mousePos.y;
+		arealayer.drawScene();
+	}
+});
 
 function Camera() {
-
+	this.line = new Array();
 	this.nextprocess = new Array();
 	this.json = {
 		"camera" : {
@@ -55,6 +70,8 @@ function Camera() {
 	});
 
 	// camera event
+	var tmp = this.shape;
+	var tmpArray = this.line;
 	this.shape.on('mouseover touchstart', function() {
 		this.setFill('#232323');
 		this.setTextFill('#fff');
@@ -64,6 +81,36 @@ function Camera() {
 		this.setFill('#ddd');
 		this.setTextFill('#555');
 		arealayer.draw();
+	});
+
+	this.shape.on('mousedown', function() {
+		if (statusLinetool) {
+			tmp.setDraggable(false);
+			var line = new Kinetic.Line({
+				points : [ tmp.getX() + (tmp.getWidth() / 2),
+						tmp.getY() + tmp.getHeight(), 0, 0 ],
+				stroke : "red"
+			});
+			if (rootLine == undefined) {
+				rootLine = tmp;
+			}
+			curLine = line;
+			tmpArray.push(line);
+			moving = true;
+			arealayer.add(line);
+		}
+	});
+	this.shape.on('mouseup', function() {
+		if (statusLinetool) {
+			tmp.setDraggable(true);
+			rootLine = undefined;
+			leafLine = undefined;
+			curLine.remove();
+			curLine = undefined;
+			tmpArray.pop();
+			moving = false;
+			arealayer.draw();
+		}
 	});
 	// end camera event
 	arealayer.add(this.shape);
@@ -199,13 +246,63 @@ function Processor(name) {
 		break;
 	}
 	var tmp = this.shape;
+	var tmpName = this.json;
+	if (name == "Motion Detector" || name == "Face Detector") {
+		this.line = new Array();
+		var tmpArray = this.line;
+		this.shape.on('mousedown', function() {
+			if (statusLinetool) {
+				tmp.setDraggable(false);
+				var line = new Kinetic.Line({
+					points : [ tmp.getX() + (tmp.getWidth() / 2),
+							tmp.getY() + tmp.getHeight(), 0, 0 ],
+					stroke : "red"
+				});
+				if (rootLine == undefined) {
+					rootLine = tmp;
+				}
+				curLine = line;
+				tmpArray.push(line);
+				moving = true;
+				arealayer.add(line);
+			}
+		});
+		this.shape.on('mouseup', function() {
+			if (statusLinetool) {
+				if (rootLine != undefined && rootLine != tmp) {
+					leafLine = tmp;
+					curLine.getPoints()[1].x = tmp.getX() + tmp.getWidth() / 2;
+					curLine.getPoints()[1].y = tmp.getY();
+				} else {
+					tmp.setDraggable(true);
+					rootLine = undefined;
+					leafLine = undefined;
+					curLine.remove();
+					curLine = undefined;
+					tmpArray.pop();
+					moving = false;
+					arealayer.draw();
+				}
+			}
+		});
+	}
 	this.shape.on('click', function() {
-        if(statusDeletetool){
-        	tmp.remove();
-        	arealayer.draw();
+		if (statusDeletetool) {
+			tmp.remove();
+			arealayer.draw();
 		}
 	});
-	
+	this.shape.on('mouseover touchstart', function() {
+		this.setFill('#232323');
+		this.setTextFill('#fff');
+		arealayer.draw();
+	});
+	this.shape.on('mouseout touchend', function() {
+		this.setFill('#ddd');
+		this.setTextFill('#555');
+		arealayer.draw();
+	});
+
 	arealayer.add(this.shape);
 	arealayer.draw();
 }
@@ -409,6 +506,8 @@ function Menu() {
 				}
 			});
 			statusProcesstool = true;
+			statusLinetool = false;
+			statusDeletetool = false;
 		}
 	});
 
@@ -493,24 +592,39 @@ function Menu() {
 	});
 
 	this.linetools.on('mouseover touchstart', function() {
-		this.setTextFill('#ffffff');
-		menulayer.draw();
+		if (!statusLinetool) {
+			this.setTextFill('#ffffff');
+			menulayer.draw();
+		}
 	});
 	this.linetools.on('mouseout touchend', function() {
-		this.setTextFill('#A0A0A0');
-		menulayer.draw();
+		if (!statusLinetool) {
+			this.setTextFill('#A0A0A0');
+			menulayer.draw();
+		}
+	});
+	this.linetools.on('click', function() {
+		if (statusLinetool) {
+			statusLinetool = false;
+		} else {
+			this.setTextFill('#ffffff');
+			menulayer.draw();
+			statusLinetool = true;
+			statusProcesstool = false;
+			statusDeletetool = false;
+		}
 	});
 
 	this.deletetools.on('mouseover touchstart', function() {
-		if(!statusDeletetool){
-		this.setTextFill('#ffffff');
-		menulayer.draw();
+		if (!statusDeletetool) {
+			this.setTextFill('#ffffff');
+			menulayer.draw();
 		}
 	});
 	this.deletetools.on('mouseout touchend', function() {
-		if(!statusDeletetool){
-		this.setTextFill('#A0A0A0');
-		menulayer.draw();
+		if (!statusDeletetool) {
+			this.setTextFill('#A0A0A0');
+			menulayer.draw();
 		}
 	});
 	this.deletetools.on('click', function() {
@@ -520,8 +634,11 @@ function Menu() {
 			this.setTextFill('#ffffff');
 			menulayer.draw();
 			statusDeletetool = true;
+			statusLinetool = false;
+			statusProcesstool = false;
 		}
 	});
+
 	// end of event
 
 	stage.add(menulayer);

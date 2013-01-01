@@ -7,7 +7,8 @@ html,body {
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
 	background-image: -webkit-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
 	background-image: -ms-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.07, #FFFFFF ), color-stop(0.54, #A1A1A1) );
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.07, #FFFFFF
+		), color-stop(0.54, #A1A1A1) );
 }
 
 #wrapper {
@@ -20,8 +21,8 @@ html,body {
 }
 
 #content {
-	width:100%;
-	height:100%;
+	width: 100%;
+	height: 100%;
 	padding: 0px;
 	padding-bottom: 0px; /* Height of the footer element */
 }
@@ -114,24 +115,22 @@ html,body {
 	width: 500px;
 	height: 180px;
 	padding: 20px;
-	
 	position: fixed;
 	left: 50%;
 	top: 50%;
 	margin-top: -100px;
 	margin-left: -250px;
-	
 	-webkit-box-shadow: 0px 0px 10px #888;
 	box-shadow: 0px 0px 10px #888;
 	-webkit-box-shadow: 0px 0px 10px #888;
 	-webkit-box-shadow: 0px 0px 10px #888;
 }
 
-#register-form-inform{
+#register-form-inform {
 	color: #555;
 	text-align: center;
 	font: bold 14px Tahoma, Geneva, sans-serif;
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
 
 #register-form {
@@ -169,9 +168,9 @@ html,body {
 }
 
 #register-message {
-	clear:left;
+	clear: left;
 	width: 100%;
-	height : 12px;
+	height: 12px;
 	padding: 2px;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -201,7 +200,6 @@ html,body {
 }
 
 /* --- menu --- */
-
 #Project-selection {
 	float: left;
 	color: rgb(160, 160, 160);
@@ -362,7 +360,48 @@ html,body {
 	color: rgb(240, 240, 240);
 }
 
-#project-box{
+#project-box {
 	width: 100%;
 	height: 100%;
 }
+
+
+/*
+#edit-camera-form-background {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	opacity: .50;
+	-webkit-opacity: .5;
+	-moz-opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 1000;
+}
+
+#edit-camera-form-content {
+	background-color: white;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 0 0 20px 0 #222;
+	-webkit-box-shadow: 0 0 20px 0 #222;
+	-moz-box-shadow: 0 0 20px 0 #222;
+	display: none;
+	height: 240px;
+	left: 50%;
+	margin: -120px 0 0 -160px;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	width: 320px;
+	z-index: 1000;
+}
+
+#edit-camera-form-background.active,#edit-camera-form-content.active {
+	display: block;
+}*/
+​
