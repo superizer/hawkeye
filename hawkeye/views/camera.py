@@ -46,5 +46,4 @@ def add(request):
     return request.route_path('/home')
 
 def live(request):
-    window.view.load(QUrl('http://www.google.com'))
     return {}
