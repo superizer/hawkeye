@@ -47,8 +47,8 @@ class Account:
     
     def edit_project(self, id, name, description):
         payload = {'project': { 'name' : name, 'description' : description,'user':{'id':hawkeye.window.Window.session['user']['id']}}}
-        print('payload', payload)
-        print('id',id)
+        #print('payload', payload)
+        #print('id',id)
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.put(self.url + '/projects/'+ str(id) , data=json.dumps(payload), headers=self.headers)
         return r.json
