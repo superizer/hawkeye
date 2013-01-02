@@ -13,14 +13,14 @@ class Camera:
         r = requests.get(self.url + '/manufactories'  , headers=self.headers)
         return r.json
     
-    def list_model(self):
+    def list_model(self,id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
-        r = requests.get(self.url + '/manufactories'  , headers=self.headers)
+        r = requests.get(self.url + '/camera_models/' + str(id)  , headers=self.headers)
         return r.json
     
-    def add_camera(self, name, username, password, url, image_size, fps, storage_periods):
+    def add_camera(self, name, username, password, url, image_size, fps, storage_periods, project_id):
         payload = {'camera': { 'name' : name, 'username' : username, 'password' : password, 'url' : url, 'image_size' : image_size
-                              , 'fps' : fps, 'storage_periods' : storage_periods, 'user':{'id':hawkeye.window.Window.session['user']['id']}}}
+                              , 'fps' : fps, 'storage_periods' : storage_periods, 'project' : {'id':project_id}, 'user':{'id':hawkeye.window.Window.session['user']['id']}}}
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
-        r = requests.post(self.url + '/projects/'+ str(id)+'/cameras' , data=json.dumps(payload), headers=self.headers)
+        r = requests.post(self.url + '/cameras' , data=json.dumps(payload), headers=self.headers)
         return r.json

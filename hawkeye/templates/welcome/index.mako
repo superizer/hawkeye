@@ -8,7 +8,7 @@
 <a href="/profile">Profile</a>
 <a href="/logout">Log out</a>
 <a href="/exit">Exit</a></br></br></br>
-
+<a href="/live">Live</a></a></br></br></br>
 % for project in projects:
 	${project['name']}&nbsp;&nbsp;
 	<a href = "/camera/add?id=${project['id']}">Add</a>

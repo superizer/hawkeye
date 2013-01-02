@@ -31,5 +31,5 @@ class Application(object):
         window = Window(self.config)
         window.show()
         window.welcome()
-        #window.view.load(QUrl('http://www.google.com'))
+        #window.web_view.load(QUrl('<img src="http://admin:123zxc@172.30.235.183/video/mjpg.cgi?.mjpg'))
         return self.app.exec_()
