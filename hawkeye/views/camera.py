@@ -13,8 +13,11 @@ logger = logging.getLogger(__name__)
 def add(request):
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
-    #print('data', data)
+    manufactory_id = "50d6c5c9f303f90131a98290"
+    model_data = request.nokkhum_client.camera.list_model(manufactory_id)
+    #print('model_data',model_data)
     form.manufactory.choices = [(manufactory['id'], manufactory['name']) for manufactory in data['manufactories'] ]
+    form.model.choices = [(model['id'], model['name']) for model in model_data['camera_models'] ]
     id = int(request.matchdict.get('id'))
     if len(request.matchdict) > 1 and form.validate():
         id = int(request.matchdict.get('id'))
@@ -37,3 +40,6 @@ def add(request):
                     )
     
     return request.route_path('/home')
+
+def live(request):
+    return request.route_url('http://www.google.com')

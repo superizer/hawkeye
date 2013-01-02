@@ -13,9 +13,9 @@ class Camera:
         r = requests.get(self.url + '/manufactories'  , headers=self.headers)
         return r.json
     
-    def list_model(self):
+    def list_model(self,id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
-        r = requests.get(self.url + '/manufactories'  , headers=self.headers)
+        r = requests.get(self.url + '/camera_models/' + str(id)  , headers=self.headers)
         return r.json
     
     def add_camera(self, name, username, password, url, image_size, fps, storage_periods):

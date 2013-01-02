@@ -19,3 +19,4 @@ def add_route(config):
     config.add_route('/logout', accounts.logout)
     config.add_route('/register', accounts.register, '/accounts/register.mako')
     config.add_route('/exit', home.exit_)
+    config.add_route('/live',camera.live,'http://www.google.com')

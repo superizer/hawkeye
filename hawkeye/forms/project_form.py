@@ -28,5 +28,6 @@ class AddCameraForm(AbstactForm):
     image_size = fields.SelectField('Image Size', choices=[('320x240', '320x240'), ('640x480', '640x480')])
     #manufactory = fields.SelectField('Menu Factory', choices=[('Generic', 'Generic')])
     manufactory = fields.SelectField('Menu Factory')
-    model = fields.SelectField('Model', choices=[('OpenCV', 'OpenCV')])
+    #model = fields.SelectField('Model', choices=[('OpenCV', 'OpenCV')])
+    model = fields.SelectField('Model')
     record_store = fields.TextField('Record_store')
