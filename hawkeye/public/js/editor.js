@@ -15,50 +15,7 @@ stageLayer.add(stageBackground);
 stage.add(stageLayer);
 
 var sTatus = undefined;
-var oldoption = {
-	"camera" : {
-		"username" : "",
-		"name" : "",
-		"url" : "",
-		"height" : 0,
-		"width" : 0,
-		"fps" : 0,
-		"model" : "",
-		"password" : "",
-		"id" : 0
-	},
-	"processors" : [ {
-		"name" : "Motion Detector",
-		"interval" : 0,
-		"resolution" : 0,
-		"processors" : [],
-		"drop_motion" : 0
-	}, {
-		"name" : "Motion Detector",
-		"interval" : 0,
-		"resolution" : 0,
-		"processors" : [ {
-			"name" : "Motion Detector",
-			"interval" : 0,
-			"resolution" : 0,
-			"processors" : [],
-			"drop_motion" : 0
-		}, {
-			"name" : "Motion Detector",
-			"interval" : 0,
-			"resolution" : 0,
-			"processors" : [],
-			"drop_motion" : 0
-		} ],
-		"drop_motion" : 0
-	}, {
-		"name" : "Motion Detector",
-		"interval" : 0,
-		"resolution" : 0,
-		"processors" : [],
-		"drop_motion" : 0
-	} ]
-};
+var oldoption = undefined;
 var menu = new Menu();
 var camera = new Camera();
 var nodes = new Array();
@@ -109,10 +66,30 @@ if (oldoption != undefined) {
 			}
 		}
 	}
+	
+	function generatepoint (nodes,level,offsetStart){
+		var offsetEnd = offsetStart;
+		for(i in nodes.next){
+			offsetEnd = generatepoint(nodes.next[i],level+1,offsetEnd);
+		}
+		var offset;
+		if(nodes.next.length == 0){
+			offset = offsetEnd;
+			offsetEnd += 140;
+		}else{
+			offset = offsetStart + (offsetEnd - offsetStart - 140)/2;
+		}
+		nodes.shape.setX(offset);
+		nodes.shape.setY(110 + level * 100);
+		nodes.layer.draw();
+		nodes.updateline();
+		return offsetEnd;
+	}
 
-	camera.shape.setX(window.innerWidth / 2 - camera.shape.getWidth() / 2);
-	camera.layer.draw();
+//	camera.shape.setX(window.innerWidth / 2 - camera.shape.getWidth() / 2);
+//	camera.layer.draw();
 	generate(oldoption, camera);
+	generatepoint(camera, 0, 10)
 }
 
 var tmpLine = undefined;
@@ -251,15 +228,7 @@ function Camera() {
 		}
 	});
 	tmpthis.shape.on('dragmove', function() {
-		if (tmpthis.nextline.length > 0) {
-			for (i in tmpthis.nextline) {
-				tmpthis.nextline[i].getPoints()[0].x = tmpthis.shape.getX()
-						+ tmpthis.shape.getWidth() / 2;
-				tmpthis.nextline[i].getPoints()[0].y = tmpthis.shape.getY()
-						+ tmpthis.shape.getHeight();
-				tmpthis.layer.draw();
-			}
-		}
+		tmpthis.updateline();
 	});
 	tmpthis.shape
 			.on(
@@ -370,7 +339,18 @@ function Camera() {
 				tmpthis.genjson(tmp.next[i]);
 			}
 		}
-	}
+	};
+	tmpthis.updateline=function(){
+		if (tmpthis.nextline.length > 0) {
+			for (i in tmpthis.nextline) {
+				tmpthis.nextline[i].getPoints()[0].x = tmpthis.shape.getX()
+						+ tmpthis.shape.getWidth() / 2;
+				tmpthis.nextline[i].getPoints()[0].y = tmpthis.shape.getY()
+						+ tmpthis.shape.getHeight();
+				tmpthis.layer.draw();
+			}
+		}
+	};
 	// --- end shape event ---
 	// --- end shape ---
 }
@@ -591,25 +571,7 @@ function Processor(name) {
 		}
 	});
 	tmpthis.shape.on('dragmove', function() {
-		if (tmpthis.nextline != undefined) {
-			if (tmpthis.nextline.length > 0) {
-				for (i in tmpthis.nextline) {
-					tmpthis.nextline[i].getPoints()[0].x = tmpthis.shape.getX()
-							+ tmpthis.shape.getWidth() / 2;
-					tmpthis.nextline[i].getPoints()[0].y = tmpthis.shape.getY()
-							+ tmpthis.shape.getHeight();
-					tmpthis.layer.draw();
-				}
-			}
-		}
-		if (tmpthis.preline.length > 0) {
-			for (i in tmpthis.preline) {
-				tmpthis.preline[i].getPoints()[1].x = tmpthis.shape.getX()
-						+ tmpthis.shape.getWidth() / 2;
-				tmpthis.preline[i].getPoints()[1].y = tmpthis.shape.getY();
-				tmpthis.pre[i].layer.draw();
-			}
-		}
+		tmpthis.updateline();
 	});
 	if (tmpthis.next != undefined) {
 		this.addLine = function(tmpNext) {
@@ -846,6 +808,27 @@ function Processor(name) {
 						}
 					});
 	// --- end shape ---
+	tmpthis.updateline=function(){
+		if (tmpthis.nextline != undefined) {
+			if (tmpthis.nextline.length > 0) {
+				for (i in tmpthis.nextline) {
+					tmpthis.nextline[i].getPoints()[0].x = tmpthis.shape.getX()
+							+ tmpthis.shape.getWidth() / 2;
+					tmpthis.nextline[i].getPoints()[0].y = tmpthis.shape.getY()
+							+ tmpthis.shape.getHeight();
+					tmpthis.layer.draw();
+				}
+			}
+		}
+		if (tmpthis.preline.length > 0) {
+			for (i in tmpthis.preline) {
+				tmpthis.preline[i].getPoints()[1].x = tmpthis.shape.getX()
+						+ tmpthis.shape.getWidth() / 2;
+				tmpthis.preline[i].getPoints()[1].y = tmpthis.shape.getY();
+				tmpthis.pre[i].layer.draw();
+			}
+		}
+	};
 }
 
 function Menu() {

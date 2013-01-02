@@ -2,13 +2,9 @@ html,body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	background-image: linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -o-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -moz-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -webkit-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -ms-linear-gradient(bottom, #FFFFFF 7%, #A1A1A1 54%);
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.07, #FFFFFF
-		), color-stop(0.54, #A1A1A1) );
+	box-shadow:inset 0px 0px 30px 20px rgba(0,0,0,0.6);
+	background-image:url('images/background.png');
+	background-repeat:repeat;
 }
 
 #wrapper {
@@ -27,177 +23,15 @@ html,body {
 	padding-bottom: 0px; /* Height of the footer element */
 }
 
-/* ---- Login ---- */
-#login-box {
-	width: 302px;
-	height: 330px;
-	position: fixed;
-	left: 50%;
-	top: 50%;
-	margin-top: -165px;
-	margin-left: -151px;
-	background-image: url("../images/logo.png");
-	background-repeat: no-repeat;
-	background-position: 50% 10%;
-	padding-top: 239px;
-}
+/* ---- form ----*/
+dl {clear: both;}
+dt {float: left;text-align: right;width: 120px;line-height: 25px;margin: 0 0 0 0;}
+dd {float: left;width: 120px;line-height: 25px;margin: 0 0 0 0;}
 
-#login-messages {
-	width: 100%;
-	padding: 2px;
-	height: 16px;
-	font: bold 12px Tahoma, Geneva, sans-serif;
-	text-align: center;
-	color: red;
-}
-
-#login-form {
-	float: left;
-	width: 282px;
-	height: 65px;
-	padding: 10px;
-	-webkit-box-shadow: 0px 0px 10px #888;
-	box-shadow: 0px 0px 10px #888;
-	-webkit-box-shadow: 0px 0px 10px #888;
-	-webkit-box-shadow: 0px 0px 10px #888;
-}
-
-#login-box-name {
-	float: left;
-	display: inline;
-	width: 80px;
-	height: 16px;
-	padding: 1px;
-	text-align: left;
-	margin-bottom: 2px;
-	vertical-align: middle;
-	font: bold 14px Tahoma, Geneva, sans-serif;
-	color: #555555;
-}
-
-#login-box-field {
-	float: left;
-	margin-bottom: 2px;
-	display: inline;
-	width: 200px;
-	height: 18px;
-}
-
-.form-login {
-	width: 195px;
-	height: 14px;
-	border: 1px solid #ffffff;
-	background-color: #ffffff;
-	font: 14px Tahoma, Geneva, sans-serif;
-}
-
-#login-box-button {
-	float: left;
-	width: 280px;
-	height: 14px;
-}
-
-.login-button {
-	width: 90px;
-	border: 1px solid #ffffff;
-	background-color: #ffffff;
-	font: 14px Tahoma, Geneva, sans-serif;
-	color: #555555;
-}
-
-.login-button:hover {
-	background-color: #A1A1A1;
-	color: #ffffff;
-}
-
-/* --- register form --- */
-#register-box {
-	width: 500px;
-	height: 180px;
-	padding: 20px;
-	position: fixed;
-	left: 50%;
-	top: 50%;
-	margin-top: -100px;
-	margin-left: -250px;
-	-webkit-box-shadow: 0px 0px 10px #888;
-	box-shadow: 0px 0px 10px #888;
-	-webkit-box-shadow: 0px 0px 10px #888;
-	-webkit-box-shadow: 0px 0px 10px #888;
-}
-
-#register-form-inform {
-	color: #555;
-	text-align: center;
-	font: bold 14px Tahoma, Geneva, sans-serif;
-	margin-bottom: 10px;
-}
-
-#register-form {
-	width: 352px;
-	margin: 0px auto;
-}
-
-#register-form-name {
-	float: left;
-	display: inline;
-	width: 150px;
-	height: 16px;
-	padding: 1px;
-	text-align: left;
-	margin-bottom: 2px;
-	vertical-align: middle;
-	font: bold 14px Tahoma, Geneva, sans-serif;
-	color: #555555;
-}
-
-#register-form-field {
-	float: left;
-	margin-bottom: 2px;
-	display: inline;
-	width: 200px;
-	height: 18px;
-}
-
-.form-register {
-	width: 195px;
-	height: 14px;
-	border: 1px solid #ffffff;
-	background-color: #ffffff;
-	font: 14px Tahoma, Geneva, sans-serif;
-}
-
-#register-message {
-	clear: left;
-	width: 100%;
-	height: 12px;
-	padding: 2px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font: bold 12px Tahoma, Geneva, sans-serif;
-	text-align: center;
-	color: red;
-}
-
-#register-form-button {
-	width: 282px;
-	height: 14px;
-	margin: 0px auto;
-}
-
-.register-button {
-	width: 90px;
-	border: 1px solid #fff;
-	text-align: center;
-	background-color: #ffffff;
-	font: 14px Tahoma, Geneva, sans-serif;
-	color: #555555;
-}
-
-.register-button:hover {
-	background-color: #A1A1A1;
-	color: #ffffff;
-}
+.form-button {width:251px;clear:both;margin: 0 auto 0 auto;}
+.form-message {color:red;height:16px;clear:both;text-align:center;margin: 0 auto 0 auto;}
+.form-name {width:120px;clear:both;margin: 0 auto 0 auto;}
+.logo{}
 
 /* --- menu --- */
 #Project-selection {
@@ -364,44 +198,3 @@ html,body {
 	width: 100%;
 	height: 100%;
 }
-
-
-/*
-#edit-camera-form-background {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: white;
-	opacity: .50;
-	-webkit-opacity: .5;
-	-moz-opacity: .5;
-	filter: alpha(opacity = 50);
-	z-index: 1000;
-}
-
-#edit-camera-form-content {
-	background-color: white;
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	box-shadow: 0 0 20px 0 #222;
-	-webkit-box-shadow: 0 0 20px 0 #222;
-	-moz-box-shadow: 0 0 20px 0 #222;
-	display: none;
-	height: 240px;
-	left: 50%;
-	margin: -120px 0 0 -160px;
-	padding: 10px;
-	position: absolute;
-	top: 50%;
-	width: 320px;
-	z-index: 1000;
-}
-
-#edit-camera-form-background.active,#edit-camera-form-content.active {
-	display: block;
-}*/
-​

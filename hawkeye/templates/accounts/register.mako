@@ -1,33 +1,81 @@
 <%inherit file="/base/base.mako"/>
 
-<div id="register-box">
-	<div id="register-form-inform">Register Form</div>
-	<form id="register-form" action="/register" method="get">
-		<div id="register-form-name">Name</div>
-		<div id="register-form-field">${form.name(class_='form-register')}</div>
-		<div id="register-form-name">Surname</div>
-		<div id="register-form-field">${form.surname(class_='form-register')}</div>
-		<div id="register-form-name">${form.email.label}</div>
-		<div id="register-form-field">${form.email(class_='form-register')}</div>
-		<div id="register-form-name">${form.password.label}</div>
-		<div id="register-form-field">${form.password(class_='form-register')}</div>
-		<div id="register-form-name">Confirm Password</div>
-		<div id="register-form-field">${form.confirm(class_='form-register')}</div>
-		<div id="register-message">
-	        % if form.get_error('name'): 
-				${form.get_error('name')}
-			% elif form.get_error('surname'):
-				${form.get_error('surname')}
-			% elif form.get_error('email'): 
-			    ${form.get_error('email')}
-			% elif form.get_error('password'): 
-			    ${form.get_error('password')}
-			% endif
-        </div>
-		<div id="register-form-button">
-			<input type="submit" class="register-button" value="Register">
-			<input type="reset" class="register-button" value="Reset"> 
-			<a href="/login"><input type="button" class="register-button" value="Cancel"></a>
-		</div>
-	</form>
+<script>
+	$(function() {
+		$("#register").button();
+		$("#reset").button();
+		$("#cancel").button();
+	});
+</script>
+<div></div>
+<div class="ui-overlay">
+	<div class="ui-widget-overlay"></div>
+	<div class="ui-widget-shadow ui-corner-all"
+		style="width: 322px; height: 232px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -116px;"></div>
+</div>
+<div
+	style="position: absolute; width: 300px; height: 210px; left: 50%; top: 50%; margin-left: -150px; margin-top: -105px; padding: 7px;"
+	class="ui-widget ui-widget-content ui-corner-all">
+	<div class="ui-dialog-content ui-widget-content"
+		style="background: none; border: 0;">
+		<form action="/register" method="get">
+		    <div class="form-name">:: Register Form ::</div>
+			<dl>
+				<dt>
+					<label for="name">Name:</label>
+				</dt>
+				<dd>
+					${form.name(class_='text ui-widget-content ui-corner-all')}
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<label for="surname">Surname:</label>
+				</dt>
+				<dd>
+				${form.surname(class_='text ui-widget-content ui-corner-all')}
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<label for="email">Email:</label>
+				</dt>
+				<dd>
+				${form.email(class_='text ui-widget-content ui-corner-all')}
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<label for="password">Password:</label>
+				</dt>
+				<dd>
+				${form.password(class_='text ui-widget-content ui-corner-all')}
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<label for="confirm-password">Confirm Password:</label>
+				</dt>
+				<dd>
+				${form.confirm(class_='text ui-widget-content ui-corner-all')}
+				</dd>
+			</dl>
+			<div class="form-message">
+		        % if form.get_error('name'): 
+					${form.get_error('name')}
+				% elif form.get_error('surname'):
+					${form.get_error('surname')}
+				% elif form.get_error('email'): 
+				    ${form.get_error('email')}
+				% elif form.get_error('password'): 
+				    ${form.get_error('password')}
+				% endif
+			</div>
+			<div class="form-button">
+				<button id="register" style="width:80px;" type="submit">Register</button>
+				<button id="reset" style="width:80px;" type="reset">Reset</button>
+				<a href='/login'><button id="cancel" style="width:80px;">Cancel</button></a>
+			</div>
+		</form>
+	</div>
 </div>
