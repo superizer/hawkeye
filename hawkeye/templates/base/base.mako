@@ -12,8 +12,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<div id="header"><%block name='menu'></%block></div>
-		<div id="content">${next.body()}</div>
+		${next.body()}
 	</div>
 </body>
 </html>
