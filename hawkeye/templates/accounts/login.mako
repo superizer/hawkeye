@@ -22,7 +22,7 @@
 		<div class="form-name">:: Login Form ::</div>
 			<dl>
 				<dt>
-					<label for="email">Email:</label>
+					<label for="email">Email :</label>
 				</dt>
 				<dd>
 					${form.email(class_='text ui-widget-content ui-corner-all')}
@@ -30,7 +30,7 @@
 			</dl>
 			<dl>
 				<dt>
-					<label for="password">Password:</label>
+					<label for="password">Password :</label>
 				</dt>
 				<dd>
 					${form.password(class_='text ui-widget-content ui-corner-all')}

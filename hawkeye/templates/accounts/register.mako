@@ -22,7 +22,7 @@
 		    <div class="form-name">:: Register Form ::</div>
 			<dl>
 				<dt>
-					<label for="name">Name:</label>
+					<label for="name">Name :</label>
 				</dt>
 				<dd>
 					${form.name(class_='text ui-widget-content ui-corner-all')}
@@ -30,7 +30,7 @@
 			</dl>
 			<dl>
 				<dt>
-					<label for="surname">Surname:</label>
+					<label for="surname">Surname :</label>
 				</dt>
 				<dd>
 				${form.surname(class_='text ui-widget-content ui-corner-all')}
@@ -38,7 +38,7 @@
 			</dl>
 			<dl>
 				<dt>
-					<label for="email">Email:</label>
+					<label for="email">Email :</label>
 				</dt>
 				<dd>
 				${form.email(class_='text ui-widget-content ui-corner-all')}
@@ -46,7 +46,7 @@
 			</dl>
 			<dl>
 				<dt>
-					<label for="password">Password:</label>
+					<label for="password">Password :</label>
 				</dt>
 				<dd>
 				${form.password(class_='text ui-widget-content ui-corner-all')}
@@ -54,7 +54,7 @@
 			</dl>
 			<dl>
 				<dt>
-					<label for="confirm-password">Confirm Password:</label>
+					<label for="confirm-password">Confirm Password :</label>
 				</dt>
 				<dd>
 				${form.confirm(class_='text ui-widget-content ui-corner-all')}
