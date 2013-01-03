@@ -21,7 +21,7 @@ def index(request):
         print('request', data)
         return dict(
                     form = form,
-                    projects=[(project['name'], project['description']) for project in data['projects'] ]
+                    projects=data['projects']
                     
                     )
         
