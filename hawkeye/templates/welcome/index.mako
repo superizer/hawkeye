@@ -3,7 +3,7 @@
 	$(function() {
 		$("#accordion").accordion({collapsible : true});
 		% for project in projects:
-			$("${"#"+project[0]}").buttonset();
+			$("${"#"+project['name']}").buttonset();
 		% endfor
 		$("#addProject").button();
 		$("#profile").button();
@@ -29,16 +29,18 @@
 <div style="margin:0 12px 0 12px;">
 <div id="accordion">
 % for project in projects:
-	<h3>${project[0]}</h3>
+	<h3>${project['name']}</h3>
 	<div>
 	<div class="menu-project">
 		<div id=${project['name']}>
-			<label for="radio1"><a href = "/camera/add?id=${project['id']}">Add camera</a></label>
-			<label for="radio2"><a href ="/project/edit?id=${project['id']}">Edit project</a></label>
-			<label for="radio3"><a href ="/project/delete?id=${project['id']}">Delete project</a></label>
+			<label for="radio1"><a href = "/camera/add?id=${project['id']}"><span class="ui-icon ui-icon-circle-plus" style="clear:both;float:left;margin:0 5px 0 0;"></span>Add camera</a></label>
+			<label for="radio2"><a href ="/project/edit?id=${project['id']}"><span class="ui-icon ui-icon-wrench" style="clear:both;float:left;margin:0 5px 0 0;"></span>Edit project</a></label>
+			<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash" style="clear:both;float:left;margin:0 5px 0 0;"></span>Delete project</a></label>
 		</div>
 	</div>
-	<p>Description : ${project[1]}</p>
+	<div class="des-project">
+	  Description : ${project['description']}
+	</div>
 		<ul>
 			<li>camera one</li>
 			<li>camera two</li>
