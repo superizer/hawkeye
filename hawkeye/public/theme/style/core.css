@@ -30,13 +30,14 @@ dd {float: left;width: 120px;line-height: 25px;margin: 0 0 0 0;}
 
 .form-button {width:251px;clear:both;margin: 0 auto 0 auto;}
 .form-message {color:red;height:16px;clear:both;text-align:center;margin: 0 auto 0 auto;}
-.form-name {width:120px;clear:both;margin: 0 auto 0 auto;}
+.form-name {clear:both;text-align: center;}
 .logo{}
 
 .main-menu{clear: both;margin:10px 10px 0 10px;}
 .main-menu-right{clear: both;float: right;}
-.menu-project{clear: both;float: right;}
 
+.menu-project{clear: both;float: right;}
+.des-project{clear: both;word-wrap: break-word;margin:45px 0 0 0;};
 /* --- menu --- */
 #Project-selection {
 	float: left;
