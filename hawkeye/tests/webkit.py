@@ -15,7 +15,7 @@ class WebkitTest(unittest.TestCase):
 
     def setUp(self):
         
-        self.config = config.Configuration('/home/ys/Workspace/hawkeye/configuration.conf')
+        self.config = config.Configuration('../../configuration.conf')
         routing.add_route(self.config)
         
         self.app = application.Application(self.config)
@@ -41,7 +41,7 @@ class WebkitTest(unittest.TestCase):
         html = template.render(**response)
         window.web_view.setHtml(html, window.base_url)
         #window.welcome()
-        #window.view.load(QUrl('http://www.google.com'))
+        #window.view_view.load(QUrl('http://www.google.com'))
         return self.app.app.exec_()
 
 
