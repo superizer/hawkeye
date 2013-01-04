@@ -93,6 +93,7 @@ class Window(QWidget):
         
     def handle_form_submitted(self, qurl):
         print("form submitted ->: ", qurl.queryItems())
+        print("form submitted ->: ", qurl.queryItems())
         elements = {}
  #       print("\n\ngot url: ", qurl)
         for key, value in qurl.queryItems():

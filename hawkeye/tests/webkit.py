@@ -34,6 +34,7 @@ class WebkitTest(unittest.TestCase):
         template = window.tempalte_lookup.get_template(
                             '/welcome/live.mako'
                             )
+        template = window.tempalte_lookup.get_template('/tests/tests.mako')
         response = {
                     }
             

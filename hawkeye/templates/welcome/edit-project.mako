@@ -9,15 +9,16 @@
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
 	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 322px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -76px;"></div>
+		style="width: 322px; height: 162px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -81px;"></div>
 </div>
 <div
-	style="position: absolute; width: 300px; height: 130px; left: 50%; top: 50%; margin-left: -150px; margin-top: -65px; padding: 7px;"
+	style="position: absolute; width: 300px; height: 140px; left: 50%; top: 50%; margin-left: -150px; margin-top: -70px; padding: 7px;"
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
-		<form action="/project/add" method="get">
-		<div class="form-name">:: Add Project Form ::</div>
+		<form action="/project/edit" method="get">
+		<input type="hidden" name="id" value="${project['id']}"/>
+		<div class="form-name">:: Edit ${project['name']} ::</div>
 			<dl>
 				<dt>
 					<label for="name">Name :</label>
