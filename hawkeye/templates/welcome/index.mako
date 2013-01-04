@@ -15,4 +15,7 @@
 	<a href ="/project/edit?id=${project['id']}">Edit</a>
 	<a href ="/project/delete?id=${project['id']}">Delete</a>
 	<br/>
+	% for camera in project['cameras']:
+		${camera['name']}<br/>
+	% endfor
 % endfor
