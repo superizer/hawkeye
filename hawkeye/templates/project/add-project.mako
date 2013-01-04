@@ -8,14 +8,10 @@
 </script>
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
-	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;"></div>
+	<div class="ui-widget-shadow ui-corner-all add-project-set-shadow-style"></div>
 </div>
-<div
-	style="position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;"
-	class="ui-widget ui-widget-content ui-corner-all">
-	<div class="ui-dialog-content ui-widget-content"
-		style="background: none; border: 0;">
+<div class="ui-widget ui-widget-content ui-corner-all add-project-set-content-style">
+	<div class="ui-dialog-content ui-widget-content add-project-set-content-inner-style">
 		<form action="/project/add" method="post">
 		<div class="form-name">:: Add Project Form ::</div>
 			<dl>
@@ -42,9 +38,9 @@
 				% endif
 			</div>
 			<div class="form-button">
-				<button id="submit" style="width:80px;" type="submit">Save</button>
-				<button id="reset" style="width:80px;" type="reset">Reset</button>
-				<a href='/home'><button id="cancel" style="width:80px;">Cancel</button></a>
+				<button id="submit" class="add-project-button" type="submit">Save</button>
+				<button id="reset" class="add-project-button" type="reset">Reset</button>
+				<a href='/home'><button id="cancel" class="add-project-button">Cancel</button></a>
 			</div>
 		</form>
 	</div>

@@ -34,5 +34,17 @@ dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
 .register-set-content-inner-style{background: none; border: 0;}
 .register-button{width:80px;}
 
+.profile-set-shadow-style{width: 332px; height: 162px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -81px;}
+.profile-set-content-style{position: absolute; width: 310px; height: 140px; left: 50%; top: 50%; margin-left: -155px; margin-top: -70px; padding: 7px;}
+.profile-set-content-inner-style{background: none; border: 0;}
+.profile-button{width:80px;}
 
+.add-project-set-shadow-style{width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;}
+.add-project-set-content-style{position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;}
+.add-project-set-content-inner-style{background: none; border: 0;}
+.add-project-button{width:80px;}
 
+.edit-project-set-shadow-style{width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;}
+.edit-project-set-content-style{position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;}
+.edit-project-set-content-inner-style{background: none; border: 0;}
+.edit-project-button{width:80px;}
