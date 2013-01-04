@@ -2,8 +2,10 @@
 <script>
 	$(function() {
 		$("#accordion").accordion({collapsible : true});
+		<% x = 0 %>
 		% for project in projects:
-			$("${"#"+project['name']}").buttonset();
+			$("#${x}").buttonset();
+		    <% x = x + 1 %>
 		% endfor
 		$("#addProject").button();
 		$("#profile").button();
@@ -28,11 +30,12 @@
 </%doc>
 <div style="margin:0 12px 0 12px;">
 <div id="accordion">
+<% x = 0 %>
 % for project in projects:
 	<h3>${project['name']}</h3>
 	<div>
 	<div class="menu-project">
-		<div id=${project['name']}>
+		<div id="${x}">
 			<label for="radio1"><a href = "/camera/add?id=${project['id']}"><span class="ui-icon ui-icon-circle-plus" style="clear:both;float:left;margin:0 5px 0 0;"></span>Add camera</a></label>
 			<label for="radio2"><a href ="/project/edit?id=${project['id']}"><span class="ui-icon ui-icon-wrench" style="clear:both;float:left;margin:0 5px 0 0;"></span>Edit project</a></label>
 			<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash" style="clear:both;float:left;margin:0 5px 0 0;"></span>Delete project</a></label>
@@ -52,6 +55,7 @@
 			<li>camera three</li>
 		</ul>
 	</div>
+	<% x = x + 1 %>
 % endfor
 </div>
 </div>

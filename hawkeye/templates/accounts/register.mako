@@ -10,14 +10,10 @@
 <div></div>
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
-	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 332px; height: 232px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -116px;"></div>
+	<div class="ui-widget-shadow ui-corner-all register-set-shadow-style"></div>
 </div>
-<div
-	style="position: absolute; width: 310px; height: 210px; left: 50%; top: 50%; margin-left: -155px; margin-top: -105px; padding: 7px;"
-	class="ui-widget ui-widget-content ui-corner-all">
-	<div class="ui-dialog-content ui-widget-content"
-		style="background: none; border: 0;">
+<div class="ui-widget ui-widget-content ui-corner-all register-set-content-style">
+	<div class="ui-dialog-content ui-widget-content register-set-content-inner-style">
 		<form action="/register" method="get">
 		    <div class="form-name">:: Register Form ::</div>
 			<dl>
@@ -72,9 +68,9 @@
 				% endif
 			</div>
 			<div class="form-button">
-			    <button id="register" style="width:80px;" type="submit">Register</button>
-				<button id="reset" type="Reset" style="width:80px;">Reset</button>
-				<a href='/login'><button id="cancel" style="width:80px;">Cancel</button></a>
+			    <button id="register" class="register-button" type="submit">Register</button>
+				<button id="reset" type="Reset" class="register-button">Reset</button>
+				<a href='/login'><button id="cancel" class="register-button">Cancel</button></a>
 			</div>
 		</form>
 	</div>
