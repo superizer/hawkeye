@@ -14,7 +14,7 @@
 </div>
 <div class="ui-widget ui-widget-content ui-corner-all login-set-content-style">
 	<div class="ui-dialog-content ui-widget-content login-set-content-inner-style">
-		<form action="/login" method="get">
+		<form action="/login" method="post">
 		<div class="form-name">:: Login Form ::</div>
 			<dl>
 				<dt>

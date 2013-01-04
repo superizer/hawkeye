@@ -20,12 +20,40 @@ import os
 from . import context
 
 class HawkeyeWebPage(QWebPage):
-    form_submitted = pyqtSignal(QUrl)
+    form_submitted = pyqtSignal(QUrl, QVariant)
     request_reload = pyqtSignal(QUrl)
 
     def acceptNavigationRequest(self, frame, req, nav_type):
+        
         if nav_type == QWebPage.NavigationTypeFormSubmitted:
-            self.form_submitted.emit(req.url())
+            forms = req.originatingObject().findAllElements('form')
+            
+            def get_attribute_form(inputs, elements):
+                for input in inputs:
+                    value_str = "this.value"
+                    if input.attribute('type') == 'textarea':
+                        value_str = "this.text"
+                    
+                    elements[input.attribute('name')] = input.evaluateJavaScript(value_str)
+            
+            elements={}
+            for form in forms:
+                if form.attribute('action') in req.url().path():
+                    inputs = form.findAll("input");
+                    get_attribute_form(inputs, elements)
+                    
+                    textareas = form.findAll("textarea");
+                    get_attribute_form(textareas, elements)
+                    
+                    selections = form.findAll("select");
+                    get_attribute_form(selections, elements)
+                    
+                    button = form.findAll("button");
+                    get_attribute_form(button, elements)
+                    
+            
+            #print("elements: ", elements)
+            self.form_submitted.emit(req.url(), elements)
         if nav_type == QWebPage.NavigationTypeReload:
             self.request_reload.emit(req.url())
             
@@ -91,10 +119,8 @@ class Window(QWidget):
         self.web_inspector.setVisible(not self.web_inspector.isVisible())
 
         
-    def handle_form_submitted(self, qurl):
-        print("form submitted ->: ", qurl.queryItems())
-        print("form submitted ->: ", qurl.queryItems())
-        elements = {}
+    def handle_form_submitted(self, qurl, elements=dict()):
+
  #       print("\n\ngot url: ", qurl)
         for key, value in qurl.queryItems():
             elements[key] = value

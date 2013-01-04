@@ -14,7 +14,7 @@
 </div>
 <div class="ui-widget ui-widget-content ui-corner-all register-set-content-style">
 	<div class="ui-dialog-content ui-widget-content register-set-content-inner-style">
-		<form action="/register" method="get">
+		<form action="/register" method="post">
 		    <div class="form-name">:: Register Form ::</div>
 			<dl>
 				<dt>

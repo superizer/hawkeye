@@ -1,5 +1,5 @@
 <%inherit file="/base/base.mako"/>
-<form action="/camera/add" method = "get">
+<form action="/camera/add" method = "post">
 Add Camera to Project ${project['name']}<br/>
 Name : ${form.name} <br/>
 Url :  ${form.url} <br/>

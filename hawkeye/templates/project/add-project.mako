@@ -16,7 +16,7 @@
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
-		<form action="/project/add" method="get">
+		<form action="/project/add" method="post">
 		<div class="form-name">:: Add Project Form ::</div>
 			<dl>
 				<dt>

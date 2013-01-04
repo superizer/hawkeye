@@ -16,7 +16,7 @@
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
-		<form action="/project/edit" method="get">
+		<form action="/project/edit" method="post">
 		<input type="hidden" name="id" value="${project['id']}"/>
 		<div class="form-name">:: Edit ${project['name']} ::</div>
 			<dl>
