@@ -32,10 +32,9 @@ class WebkitTest(unittest.TestCase):
         window.show()
         
         template = window.tempalte_lookup.get_template(
-                            '/welcome/index.mako'
+                            '/welcome/live.mako'
                             )
         response = {
-                    'name': 'Hello'
                     }
             
         html = template.render(**response)

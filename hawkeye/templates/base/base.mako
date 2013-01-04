@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="utf-8"/>
-<link media="screen" href="public/theme/style/core.css" rel="stylesheet" type="text/css" />
+<link media="screen" href="${base_url}/public/theme/style/core.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
