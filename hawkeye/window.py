@@ -28,13 +28,31 @@ class HawkeyeWebPage(QWebPage):
         if nav_type == QWebPage.NavigationTypeFormSubmitted:
             forms = req.originatingObject().findAllElements('form')
             
+            def get_attribute_form(inputs, elements):
+                for input in inputs:
+                    value_str = "this.value"
+                    if input.attribute('type') == 'textarea':
+                        value_str = "this.text"
+                    
+                    elements[input.attribute('name')] = input.evaluateJavaScript(value_str)
+            
             elements={}
             for form in forms:
                 if form.attribute('action') in req.url().path():
                     inputs = form.findAll("input");
-                    for input in inputs:
-                        elements[input.attribute('name')] = input.evaluateJavaScript("this.value")
-                        
+                    get_attribute_form(inputs, elements)
+                    
+                    textareas = form.findAll("textarea");
+                    get_attribute_form(textareas, elements)
+                    
+                    selections = form.findAll("select");
+                    get_attribute_form(selections, elements)
+                    
+                    button = form.findAll("button");
+                    get_attribute_form(button, elements)
+                    
+            
+            #print("elements: ", elements)
             self.form_submitted.emit(req.url(), elements)
         if nav_type == QWebPage.NavigationTypeReload:
             self.request_reload.emit(req.url())
