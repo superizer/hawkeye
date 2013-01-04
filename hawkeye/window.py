@@ -20,12 +20,22 @@ import os
 from . import context
 
 class HawkeyeWebPage(QWebPage):
-    form_submitted = pyqtSignal(QUrl)
+    form_submitted = pyqtSignal(QUrl, QVariant)
     request_reload = pyqtSignal(QUrl)
 
     def acceptNavigationRequest(self, frame, req, nav_type):
+        
         if nav_type == QWebPage.NavigationTypeFormSubmitted:
-            self.form_submitted.emit(req.url())
+            forms = req.originatingObject().findAllElements('form')
+            
+            elements={}
+            for form in forms:
+                if form.attribute('action') in req.url().path():
+                    inputs = form.findAll("input");
+                    for input in inputs:
+                        elements[input.attribute('name')] = input.evaluateJavaScript("this.value")
+                        
+            self.form_submitted.emit(req.url(), elements)
         if nav_type == QWebPage.NavigationTypeReload:
             self.request_reload.emit(req.url())
             
@@ -91,10 +101,8 @@ class Window(QWidget):
         self.web_inspector.setVisible(not self.web_inspector.isVisible())
 
         
-    def handle_form_submitted(self, qurl):
-        print("form submitted ->: ", qurl.queryItems())
-        print("form submitted ->: ", qurl.queryItems())
-        elements = {}
+    def handle_form_submitted(self, qurl, elements=dict()):
+
  #       print("\n\ngot url: ", qurl)
         for key, value in qurl.queryItems():
             elements[key] = value

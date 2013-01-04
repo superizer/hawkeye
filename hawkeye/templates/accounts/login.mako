@@ -18,7 +18,7 @@
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
-		<form action="/login" method="get">
+		<form action="/login" method="post">
 		<div class="form-name">:: Login Form ::</div>
 			<dl>
 				<dt>
