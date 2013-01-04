@@ -11,6 +11,8 @@ def add_route(config):
     config.add_route('/', accounts.login, '/accounts/login.mako')
     config.add_route('/home', home.index, '/welcome/index.mako')
     config.add_route('/camera/add', camera.add, '/welcome/add-camera.mako')
+    config.add_route('/camera/edit', camera.edit, '/welcome/edit-camera.mako')
+    config.add_route('/camera/delete', camera.delete)
     config.add_route('/project/add', accounts.add, '/welcome/add-project.mako')
     config.add_route('/project/edit',accounts.edit, '/welcome/edit-project.mako')
     config.add_route('/project/delete', accounts.delete)

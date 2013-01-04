@@ -31,9 +31,7 @@ class WebkitTest(unittest.TestCase):
         window = Window(self.config)
         window.show()
         
-        template = window.tempalte_lookup.get_template(
-                            '/welcome/index.mako'
-                            )
+        template = window.tempalte_lookup.get_template('/tests/tests.mako')
         response = {
                     'name': 'Hello'
                     }

@@ -22,11 +22,12 @@ def index(request):
     if len(request.matchdict) > 0 and form.validate():
         project_id = form.data.get('project')
         #print('project id', project_id)
-        #print('request', request)
+    
     else:
+        print('request', data)
         return dict(
                     form = form,
-                    projects=data['projects'],
+                    projects=data['projects']  
                     )
         
     # add code hear

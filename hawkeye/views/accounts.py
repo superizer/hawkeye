@@ -130,7 +130,7 @@ def edit(request):
         data = request.nokkhum_client.account.edit_project(id, name, description)
         return request.route_path('/home')
     else:
-        data = request.nokkhum_client.account.get_project(id)
+        data = request.nokkhum_๋client.account.get_project(id)
         project = data['project']
         form.name.data = project['name']
         form.description.data = project['description']
