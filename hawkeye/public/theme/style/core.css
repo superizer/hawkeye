@@ -10,8 +10,8 @@ html,body {
 
 /* ---- form ----*/
 dl {clear: both;}
-dt {float: left;text-align: right;width: 120px;line-height: 25px;margin: 0 0 0 0;}
-dd {float: left;width: 120px;line-height: 25px;margin: 0 0 0 0;}
+dt {float: left;text-align: right;width: 130px;line-height: 25px;margin: 0 0 0 0;}
+dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
 
 .form-button {width:251px;clear:both;margin: 0 auto 0 auto;}
 .form-message {color:red;height:16px;clear:both;text-align:center;margin: 0 auto 0 auto;}

@@ -9,10 +9,10 @@
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
 	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 322px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -76px;"></div>
+		style="width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;"></div>
 </div>
 <div
-	style="position: absolute; width: 300px; height: 130px; left: 50%; top: 50%; margin-left: -150px; margin-top: -65px; padding: 7px;"
+	style="position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;"
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
@@ -23,7 +23,7 @@
 					<label for="name">Name :</label>
 				</dt>
 				<dd>
-					${form.name}
+					${form.name(class_='text ui-widget-content ui-corner-all')}
 				</dd>
 			</dl>
 			<dl>
@@ -31,9 +31,16 @@
 					<label for="description">Description :</label>
 				</dt>
 				<dd>
-					${form.description}
+					${form.description(class_='text ui-widget-content ui-corner-all')}
 				</dd>
 			</dl>
+			<div class="form-message">
+				% if message: 
+					${message}
+				% elif form.get_error('name'):
+					${form.get_error('name')}
+				% endif
+			</div>
 			<div class="form-button">
 				<button id="submit" style="width:80px;" type="submit">Save</button>
 				<button id="reset" style="width:80px;" type="reset">Reset</button>

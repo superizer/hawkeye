@@ -39,7 +39,9 @@
 		</div>
 	</div>
 	<div class="des-project">
-	  Description : ${project['description']}
+		%if project['description'] != "":
+			  Description : ${project['description']}
+		%endif
 	</div>
 	% for camera in project['cameras']:
 		${camera['name']} <a href ="/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">edit</a>  <a href ="/camera/delete?camera_id=${camera['id']}">delete</a><br/>

@@ -11,10 +11,10 @@
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
 	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 322px; height: 232px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -116px;"></div>
+		style="width: 332px; height: 232px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -116px;"></div>
 </div>
 <div
-	style="position: absolute; width: 300px; height: 210px; left: 50%; top: 50%; margin-left: -150px; margin-top: -105px; padding: 7px;"
+	style="position: absolute; width: 310px; height: 210px; left: 50%; top: 50%; margin-left: -155px; margin-top: -105px; padding: 7px;"
 	class="ui-widget ui-widget-content ui-corner-all">
 	<div class="ui-dialog-content ui-widget-content"
 		style="background: none; border: 0;">
@@ -72,8 +72,8 @@
 				% endif
 			</div>
 			<div class="form-button">
-				<button id="register" style="width:80px;" type="submit">Register</button>
-				<button id="reset" style="width:80px;" type="reset">Reset</button>
+			    <button id="register" style="width:80px;" type="submit">Register</button>
+				<button id="reset" type="Reset" style="width:80px;">Reset</button>
 				<a href='/login'><button id="cancel" style="width:80px;">Cancel</button></a>
 			</div>
 		</form>
