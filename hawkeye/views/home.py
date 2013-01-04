@@ -10,13 +10,7 @@ def index(request):
     form = project_form.ProjectForm(request.matchdict)
     #form.pform.choices.append(('test','test'))
     data = request.nokkhum_client.account.list_project()
-
-    for project in data['projects']:
-        project['cameras'] = request.nokkhum_client.camera.list_camera(project['id'])['project']['cameras']
-   
-    print('camera dict',data['projects'])
-    #camera_in_project = request.nokkhum_client.camera.list_camera();
-    #print('camera ', camera_in_project)
+    #print('data', data)
     form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
     project_id = form.data.get('project')
     if len(request.matchdict) > 0 and form.validate():
@@ -26,7 +20,7 @@ def index(request):
     else:
         return dict(
                     form = form,
-                    projects=data['projects'],
+                    projects=data['projects']
                     )
         
     # add code hear

@@ -24,8 +24,3 @@ class Camera:
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.post(self.url + '/cameras' , data=json.dumps(payload), headers=self.headers)
         return r.json
-    
-    def list_camera(self,id):
-        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
-        r = requests.get(self.url + '/projects/' + str(id) + '/cameras', headers=self.headers)
-        return r.json
