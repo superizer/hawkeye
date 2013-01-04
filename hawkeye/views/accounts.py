@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 def login(request):
-
+    
     #print("This is login : ", request.matchdict)
     
     if request.session.get('user', None):
@@ -123,7 +123,7 @@ def delete(request):
 def edit(request):
     form = project_form.EditProjectForm(request.matchdict)
     id = int(request.matchdict.get('id'))
-    if len(request.matchdict) > 0 and form.validate():
+    if len(request.matchdict) > 1 and form.validate():
         id = int(request.matchdict.get('id'))
         name = form.data.get('name')
         description = form.data.get('description')

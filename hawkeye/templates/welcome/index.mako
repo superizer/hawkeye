@@ -39,7 +39,9 @@
 		</div>
 	</div>
 	<div class="des-project">
-	  Description : ${project['description']}
+		%if project['description'] != "":
+			  Description : ${project['description']}
+		%endif
 	</div>
 		<ul>
 			<li>camera one</li>
