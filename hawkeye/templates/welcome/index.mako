@@ -46,9 +46,11 @@
 			  Description : ${project['description']}
 		%endif
 	</div>
-	% for camera in project['cameras']:
-		${camera['name']} <a href ="/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">edit</a>  <a href ="/camera/delete?camera_id=${camera['id']}">delete</a><a href ="/camera/storage?camera_id=${camera['id']}">storage</a><br/>
+	<ul>
+    % for camera in project['cameras']:
+		<li> ${camera['name']} <a href ="/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">edit</a>  <a href ="/camera/delete?camera_id=${camera['id']}">delete</a><a href ="/camera/storage?camera_id=${camera['id']}">storage</a></li>
 	% endfor
+    </ul>
 		<ul>
 			<li>camera one</li>
 			<li>camera two</li>
