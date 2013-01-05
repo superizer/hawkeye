@@ -78,15 +78,15 @@ def edit(request):
     else:
         old_data_camera =request.nokkhum_client.camera.get_camera(camera_id);
         print('old data camera', old_data_camera)
-        form.name.data = old_data_camera['camera']['name']
-        form.url.data = old_data_camera['camera']['url']
-        form.username.data = old_data_camera['camera']['username']
-        form.password.data = old_data_camera['camera']['password']
-        form.fps.data = old_data_camera['camera']['fps']
-        form.image_size.data = old_data_camera['camera']['image_size']
-        form.manufactory.data = form.data.get('menufactory')
-        form.model.data = form.data.get('model')
-        form.record_store.data = old_data_camera['camera']['storage_periods']
+#        form.name.data = old_data_camera['camera']['name']
+#        form.url.data = old_data_camera['camera']['url']
+#        form.username.data = old_data_camera['camera']['username']
+#        form.password.data = old_data_camera['camera']['password']
+#        form.fps.data = old_data_camera['camera']['fps']
+#        form.image_size.data = old_data_camera['camera']['image_size']
+#        form.manufactory.data = form.data.get('menufactory')
+#        form.model.data = form.data.get('model')
+#        form.record_store.data = old_data_camera['camera']['storage_periods']
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
         #camera_json = request.matchdict.get('camera_json')
@@ -96,6 +96,7 @@ def edit(request):
         return dict(
                     form = form,
                     project = project,
+
                     camera = { 'id': camera_id },
                     cameras = old_data_camera
                     )
