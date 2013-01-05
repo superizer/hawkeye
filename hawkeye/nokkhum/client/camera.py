@@ -43,6 +43,7 @@ class Camera:
         return r.json
     
     def edit_camera_json(self, camera_id, payload):
+        #print('payload', payload)
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.put(self.url + '/cameras/' + str(camera_id) , data=json.dumps(payload), headers=self.headers)
         return r.json

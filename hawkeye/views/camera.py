@@ -8,6 +8,7 @@ from hawkeye.forms import account_form
 from hawkeye.forms import project_form
 
 import logging
+import json
 logger = logging.getLogger(__name__)
 #add_camera(self, name, username, password, url, image_size, fps, storage_periods):
 def add(request):
@@ -53,8 +54,8 @@ def edit(request):
     #print('model_data',model_data)
     project_id = int(request.matchdict.get('project_id'))
     camera_id = int(request.matchdict.get('camera_id'))
-    print('project id', project_id)
-    print('camera id', camera_id)
+    #print('project id', project_id)
+    #print('camera id', camera_id)
     form.manufactory.choices = [(manufactory['id'], manufactory['name']) for manufactory in data['manufactories'] ]
     form.model.choices = [(model['id'], model['name']) for model in model_data['camera_models'] ]
     #print('project_id',project_id)
@@ -78,6 +79,7 @@ def edit(request):
     else:
         old_data_camera =request.nokkhum_client.camera.get_camera(camera_id);
         print('old data camera', old_data_camera)
+        #print('camera id', camera_id)
 #        form.name.data = old_data_camera['camera']['name']
 #        form.url.data = old_data_camera['camera']['url']
 #        form.username.data = old_data_camera['camera']['username']
@@ -89,14 +91,14 @@ def edit(request):
 #        form.record_store.data = old_data_camera['camera']['storage_periods']
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
-        #camera_json = request.matchdict.get('camera_json')
-        #print('camera json', camera_json)
-        #data_json = request.matchdict.camera.edit_camera_json(camera_id,camera_json)
-        #print('data json', data_json)
+        camera_json = request.matchdict.get('camera_json')
+        if camera_json is not None:
+            print('camera json', camera_json)
+            data_json = request.nokkhum_client.camera.edit_camera_json(camera_id, json.loads(camera_json))
+            print('data json', data_json)
         return dict(
                     form = form,
                     project = project,
-
                     camera = { 'id': camera_id },
                     cameras = old_data_camera
                     )
@@ -148,9 +150,10 @@ def files(request):
                 )
     
 def delete_files(request):
-    #url = int(request.matchdict.get('files_url')
-    #d = request.nokkhum_client.camera.delete_files(url)
-    #print('delete data', data)
+    url = request.matchdict.get('files_url')
+    print('url', url)
+    data = request.nokkhum_client.camera.delete_file(url)
+    print('delete data', data)
     return {}
     
     
