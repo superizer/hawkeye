@@ -16,7 +16,7 @@ def add(request):
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
     model_data = request.nokkhum_client.camera.list_model(manufactory_id)
-    #print('model_data',model_data)
+    print('model_data',model_data)
     form.manufactory.choices = [(manufactory['id'], manufactory['name']) for manufactory in data['manufactories'] ]
     form.model.choices = [(model['id'], model['name']) for model in model_data['camera_models'] ]
     project_id = int(request.matchdict.get('id'))
@@ -32,8 +32,9 @@ def add(request):
         image_size = form.data.get('image_size')
         manufactory = form.data.get('menufactory')
         model = form.data.get('model')
+        print('model', model)
         record_store = form.data.get('record_store')
-        d = request.nokkhum_client.camera.add_camera(name, username, password, url, image_size, fps, int(record_store), int(project_id))
+        d = request.nokkhum_client.camera.add_camera(name, username, password, url, image_size, fps, int(record_store), model, int(project_id))
         print('add camera',d)
         return request.route_path('/home')
     else:
@@ -49,8 +50,8 @@ def add(request):
 def edit(request):
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
-    manufactory_id = "50d6c5c9f303f90131a98290"
-    model_data = request.nokkhum_client.camera.list_model(manufactory_id)
+    #manufactory_id = "50d6c5c9f303f90131a98290"
+#    model_data = request.nokkhum_client.camera.list_model(manufactory_id)
     #print('model_data',model_data)
     project_id = int(request.matchdict.get('project_id'))
     camera_id = int(request.matchdict.get('camera_id'))
@@ -150,11 +151,15 @@ def files(request):
                 )
     
 def delete_files(request):
+    
     url = request.matchdict.get('files_url')
     print('url', url)
     data = request.nokkhum_client.camera.delete_file(url)
     print('delete data', data)
-    return {}
+    pos = url.rfind('/')
+    route='/camera/storage?files_url='+ url[:pos]
+    print ('url: ', route)
+    return request.route_path(route )
     
     
 def live(request):

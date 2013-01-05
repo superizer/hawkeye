@@ -184,8 +184,10 @@ class Window(QWidget):
             
             if not isinstance(response, dict):
                 if isinstance(response, QUrl):
-                    url = response.path()
-                    return self.render(url)
+                    return self.link_clicked(response)
+#                    url = response.path()
+#                    print('window url', url)
+#                    return self.render(url)
 #                else:
 #                    # need error page
 #                    return self.render('/login')
