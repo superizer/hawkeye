@@ -58,7 +58,7 @@ class Camera:
         r = requests.get(self.url + '/storage/' + str(id), headers=self.headers)
         return r.json
     
-    def delete_file(self, id):
+    def delete_file(self, url):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.delete(self.url + url , headers=self.headers)
         return r.json
