@@ -89,6 +89,10 @@ def edit(request):
         form.record_store.data = old_data_camera['camera']['storage_periods']
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
+        camera_json = request.matchdict.get('camera_json')
+        print('camera json', camera_json)
+        data_json = request.matchdict.camera.edit_camera_json(camera_id,camera_json)
+        print('data json', data_json)
         return dict(
                     form = form,
                     project = project,
@@ -107,5 +111,42 @@ def delete(request):
         return request.route_path('/home')
     return request.route_path('/home')
 
+def storage(request):
+    
+    file_url = request.matchdict.get('files_url', None)
+    
+    if file_url:
+        data = request.nokkhum_client.camera.get_file(file_url)
+
+    else:
+        id = int(request.matchdict.get('camera_id'))
+        print('***id', id)
+        #data = request.nokkhum_client.camera.get_storage(id)
+        data = request.nokkhum_client.camera.get_storage(1)
+    
+    #print('storage', data)
+    return dict(
+                files = data['files']
+                )
+
+def files(request):
+    print('matchdict', request.matchdict)
+    url = request.matchdict.get('files_url')
+    
+    image = False
+    extensions=['.png']
+    for extension in extensions:
+        if extension in url:
+            image = True
+            break
+        
+    return dict(
+                url=url,
+                image=image
+                )
+    
+#def delete_files(request):
+    
+    
 def live(request):
     return {}

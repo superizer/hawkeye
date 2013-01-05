@@ -164,6 +164,7 @@ class Window(QWidget):
         #print("url: ", url)
         logger.debug("url: %s" % url)
         view = self.config.get_route(url)
+        # logger.debug("view: %s" % view)
         
         if view is not None:
             action = view.get('action')

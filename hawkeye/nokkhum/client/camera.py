@@ -42,12 +42,28 @@ class Camera:
         r = requests.put(self.url + '/cameras/' + str(camera_id) , data=json.dumps(payload), headers=self.headers)
         return r.json
     
+    def edit_camera_json(self, camera_id, payload):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.put(self.url + '/cameras/' + str(camera_id) , data=json.dumps(payload), headers=self.headers)
+        return r.json
+        
+    
     def list_camera(self,id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.get(self.url + '/projects/' + str(id) + '/cameras', headers=self.headers)
         return r.json
     
-    def get_storage(self,id):
+    def get_storage(self, id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.get(self.url + '/storage/' + str(id), headers=self.headers)
+        return r.json
+    
+    def delete_file(self, id):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.delete(self.url + url , headers=self.headers)
+        return r.json
+    
+    def get_file(self, url):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.get(self.url + url, headers=self.headers)
         return r.json

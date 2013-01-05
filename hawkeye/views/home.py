@@ -13,7 +13,7 @@ def index(request):
 
     for project in data['projects']:
         project['cameras'] = request.nokkhum_client.camera.list_camera(project['id'])['project']['cameras']
-    print('camera dict',data['projects'])
+    #print('camera dict',data['projects'])
     #camera_in_project = request.nokkhum_client.camera.list_camera();
     #print('camera ', camera_in_project)
     form.project.choices = [(project['id'], project['name']) for project in data['projects'] ]
@@ -24,7 +24,7 @@ def index(request):
         #print('project id', project_id)
     
     else:
-        print('request', data)
+        #print('request', data)
         return dict(
                     form = form,
                     projects=data['projects']  
