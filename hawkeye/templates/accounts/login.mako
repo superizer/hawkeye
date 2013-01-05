@@ -10,14 +10,10 @@
 <div></div>
 <div class="ui-overlay">
 	<div class="ui-widget-overlay"></div>
-	<div class="ui-widget-shadow ui-corner-all"
-		style="width: 332px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -76px;"></div>
+	<div class="ui-widget-shadow ui-corner-all login-set-shadow-style"></div>
 </div>
-<div
-	style="position: absolute; width: 310px; height: 130px; left: 50%; top: 50%; margin-left: -155px; margin-top: -65px; padding: 7px;"
-	class="ui-widget ui-widget-content ui-corner-all">
-	<div class="ui-dialog-content ui-widget-content"
-		style="background: none; border: 0;">
+<div class="ui-widget ui-widget-content ui-corner-all login-set-content-style">
+	<div class="ui-dialog-content ui-widget-content login-set-content-inner-style">
 		<form action="/login" method="post">
 		<div class="form-name">:: Login Form ::</div>
 			<dl>
@@ -46,9 +42,9 @@
 				% endif
 			</div>
 			<div class="form-button">
-				<button id="login" style="width:80px;" type="submit">Login</button>
-				<a href='/register'><button id="register" style="width:80px;">Register</button></a>
-				<a href='/exit'><button id="exit" style="width:80px;">Exit</button></a>
+				<button id="login" style="width:80px;" class="login-button">Login</button>
+				<a href='/register'><button id="register" class="login-button">Register</button></a>
+				<a href='/exit'><button id="exit" class="login-button">Exit</button></a>
 			</div>
 		</form>
 	</div>
