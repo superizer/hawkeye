@@ -63,6 +63,7 @@ def add(request):
 
 def edit(request):
     form = project_form.AddCameraForm(request.matchdict)
+    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.port')) 
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
     model_data = request.nokkhum_client.camera.list_model(manufactory_id)
@@ -108,14 +109,16 @@ def edit(request):
         project = data['project']
         camera_json = request.matchdict.get('camera_json')
         if camera_json is not None:
-            #print('camera json', camera_json)
+            print('camera json', camera_json)
             data_json = request.nokkhum_client.camera.edit_camera_json(camera_id, json.loads(camera_json))
-            #print('data json', data_json)
+            print('data json', data_json)
+            return request.route_path('/home')
         return dict(
                     form = form,
                     project = project,
                     camera = { 'id': camera_id },
-                    cameras = old_data_camera
+                    cameras = old_data_camera,
+                    url_api = url_api
                     )
     
     return request.route_path('/home')
