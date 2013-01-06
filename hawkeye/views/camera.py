@@ -47,7 +47,6 @@ def add(request):
         return dict(
                     form = form,
                     project = project,
-                    model = model_data
                     project = project,
                     url_api = url_api
                     )
