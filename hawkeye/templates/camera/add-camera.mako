@@ -1,6 +1,12 @@
 <%inherit file="/base/base.mako"/>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
 <script>
+  $(function(){
+	  $("#menufactory").change(function () {
+		  var tmp = $.get("${url_api + '/manufactories'}");
+		  document.getElementById("camera_json").value = JSON.stringify(tmp);
+	  })
+  });
   var oldoption = undefined;
 </script>
 <div style="display: none">
@@ -16,15 +22,47 @@
 	<div id="camera-form" title="Edit Camera">
 		<form>
 			<fieldset> 
-				<label for="name">Name</label> ${form.name(class_="text ui-widget-content ui-corner-all")}  
-				<label for="url">Url</label> ${form.url(class_="text ui-widget-content ui-corner-all")}
-				<label for="username">Username</label> ${form.username(class_="text ui-widget-content ui-corner-all")}
-			    <label for="password">Password</label> ${form.password(class_="text ui-widget-content ui-corner-all")} 
-				<label for="fps">Fps</label> ${form.fps(class_="text ui-widget-content ui-corner-all")}
-				<label for="imagesize">Image size</label> ${form.image_size(class_="text ui-widget-content ui-corner-all")}
-				<label for="menufactory">Menufactory</label> ${form.manufactory(class_="text ui-widget-content ui-corner-all")}
-				<label for="model">Model</label> ${form.model(class_="text ui-widget-content ui-corner-all")}
-				<label for="recordstore">Record Store</label> ${form.record_store(class_="text ui-widget-content ui-corner-all")} 
+				<label for="name">Name</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />  
+				<label for="url">Url</label> <input type="text" name="url" id="url" class="text ui-widget-content ui-corner-all" />
+				<label for="username">Username</label> <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" />
+			    <label for="password">Password</label> <input type="text" name="password" id="password" class="text ui-widget-content ui-corner-all" />
+				<label for="fps">Fps</label> 
+				<select id="fps" class="select ui-widget-content ui-corner-all">
+				<%
+					tmp = [i for i in range(1,31)]
+				%>
+				% for x in tmp: 
+				  <option value=${x}>${x}</option>
+				%endfor:
+                </select >
+				<label  for="imagesize">Image size</label> 
+                <select id="imagesize" class="select ui-widget-content ui-corner-all">
+				<%
+					tmp = ["320x240","640x480"]
+				%>
+				% for x in tmp: 
+				  <option value=${x}>${x}</option>
+				%endfor:
+                </select>
+				<label for="menufactory">Menufactory</label>
+                <select id="menufactory" class="select ui-widget-content ui-corner-all">
+				<%
+					tmp = ["320x240","640x480"]
+				%>
+				% for x in tmp: 
+				  <option value=${x}>${x}</option>
+				%endfor:
+                </select>
+				<label for="model">Model</label> 
+                <select id="model" class="select ui-widget-content ui-corner-all">
+				<%
+					tmp = ["320x240","640x480"]
+				%>
+				% for x in tmp: 
+				  <option value=${x}>${x}</option>
+				%endfor:
+                </select>
+				<label for="recordstore">Record Store</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" /> 
 		</fieldset>
 		</form>
 	</div>
