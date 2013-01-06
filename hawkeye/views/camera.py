@@ -21,8 +21,9 @@ def add(request):
     #print('model_data',model_data)
     form.manufactory.choices = [(manufactory['id'], manufactory['name']) for manufactory in data['manufactories'] ]
     form.model.choices = [(model['id'], model['name']) for model in model_data['camera_models'] ]
-    project_id = int(request.matchdict.get('id'))
-    #print('project_id',project_id)
+    #project_id = int(request.matchdict.get('id'))
+    project_id = request.matchdict.get('id')
+#    print('project_id',project_id)
     if len(request.matchdict) > 1 and form.validate():
         #project_id = int(request.matchdict.get('id'))
         #print('in if project_id',project_id)
@@ -40,14 +41,18 @@ def add(request):
         print('add camera',d)
         return request.route_path('/home')
     else:
-        data = request.nokkhum_client.account.get_project(project_id)
-        
-        project = data['project']
         camera_json = request.matchdict.get('camera_json')
+        print('camera json', camera_json)
+        if project_id is None:
+            project_id = int(request.matchdict.get('project_id'))
+        data = request.nokkhum_client.account.get_project(project_id)
+        print('data', data)
+        project = data['project']
         if camera_json is not None:
             #print('camera json', camera_json)
             data_json = request.nokkhum_client.camera.add_camera_json(json.loads(camera_json))
             print('data json', data_json)
+            return request.route_path('/home')
         return dict(
                     form = form,
                     project = project,

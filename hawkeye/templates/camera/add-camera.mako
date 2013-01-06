@@ -2,7 +2,8 @@
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
 <script>
 	var oldoption = undefined;
-	var projectid = "${project['id']}";
+	var projectid = ${project['id']};
+	var userid = ${project['user']['id']};
   $(function(){
 	  $.getJSON("${url_api + '/manufactories'}", function(menuGet){
 		  var menuFact = document.getElementById("menufactory");
@@ -10,6 +11,7 @@
 		  for(i in menuGet.manufactories){
 			  var option = document.createElement("option");
 			  option.text = menuGet.manufactories[i].name;
+			  option.value = menuGet.manufactories[i].name;
 			  menuFact.add(option,menuFact.options[null]);
 		  }
 		  $.ajax({
@@ -21,6 +23,7 @@
 					  for(i in modelGet.camera_models){
 						  var option = document.createElement("option");
 						  option.text = modelGet.camera_models[i].name;
+						  option.value = modelGet.camera_models[i].name;
 						  modelist.add(option,modelist.options[null]);
 					  }
 	            }
@@ -47,6 +50,7 @@
 						  for(i in modelGet.camera_models){
 							  var option = document.createElement("option");
 							  option.text = modelGet.camera_models[i].name;
+							  option.value = modelGet.camera_models[i].name;
 							  modelist.add(option,modelist.options[null]);
 						  }
 		            }
@@ -64,6 +68,7 @@
 							  for(i in modelGet.camera_models){
 								  if(tmpstr == modelGet.camera_models[i].name){
 									  modelist.name = modelGet.camera_models[i].id;
+									  break;
 								  }
 							  }
 			            }
@@ -115,7 +120,7 @@
 				<label for="model">Model</label> 
                 <select id="model" class="select ui-widget-content ui-corner-all">
                 </select>
-				<label for="recordstore">Record Store</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" /> 
+				<label for="recordstore">Record Store</label> <input type="text" name="recordstore" id="recordstore" class="text ui-widget-content ui-corner-all" /> 
 		</fieldset>
 		</form>
 	</div>
