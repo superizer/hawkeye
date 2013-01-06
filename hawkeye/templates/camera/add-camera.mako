@@ -83,7 +83,7 @@
 	<form>
 		<input type="hidden" id="project_id" name="id" value="${project['id']}"/>
 	</form>
-	<form id="formsave" action="/camera/add?id=${project['id']}" method = "post">
+	<form id="formsave" action="/camera/add" method = "post">
 		<input type="hidden" id="camera_json" name="camera_json" value=""/>
 	</form>
 	<form id="formcancel"action="/home">

@@ -53,3 +53,8 @@ dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
 .index-camera-list-tool{clear:both; float:right;}
 .menu-project-camera{margin-top:-7px;}
 .list-camera-project{height:35px;}
+
+.storage-set-shadow-style{width: 332px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -76px;}
+.storage-set-content-style{position: absolute; width: 310px; height: 130px; left: 50%; top: 50%; margin-left: -155px; margin-top: -65px; padding: 7px;}
+.storage-set-content-inner-style{background: none; border: 0;}
+.storage-button{width:80px;}
