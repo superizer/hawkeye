@@ -34,22 +34,20 @@ def add(request):
         image_size = form.data.get('image_size')
         manufactory = form.data.get('menufactory')
         model = form.data.get('model')
-        #print('model', model)
+        print('model', model)
         record_store = form.data.get('record_store')
         d = request.nokkhum_client.camera.add_camera(name, username, password, url, image_size, fps, int(record_store), model, int(project_id))
-        #print('add camera',d)
+        print('add camera',d)
         return request.route_path('/home')
     else:
         data = request.nokkhum_client.account.get_project(project_id)
         
         project = data['project']
-        camera_json = request.matchdict.get('camera_json')
-        if camera_json is not None:
-            print('camera json', camera_json)
-            data_json = request.nokkhum_client.camera.add_camera_json(json.loads(camera_json))
-            print('data josn', data_json)
+        
         return dict(
                     form = form,
+                    project = project,
+                    model = model_data
                     project = project,
                     url_api = url_api
                     )

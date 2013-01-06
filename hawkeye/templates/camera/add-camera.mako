@@ -5,7 +5,7 @@
 </script>
 <div style="display: none">
 	<form>
-		<input type="hidden" name="project_id" value="${project['id']}"/>
+		<input type="hidden" id="project_id" name="project_id" value="${project}"/>
 	</form>
 	<form id="formsave" action="/camera/add" method = "post">
 		<input type="hidden" id="camera_json" name="camera_json" value=""/>
