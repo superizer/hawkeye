@@ -42,7 +42,7 @@
 				% endif
 			</div>
 			<div class="form-button">
-				<button id="login" style="width:80px;" class="login-button">Login</button>
+				<button id="login" class="login-button">Login</button>
 				<a href='/register'><button id="register" class="login-button">Register</button></a>
 				<a href='/exit'><button id="exit" class="login-button">Exit</button></a>
 			</div>

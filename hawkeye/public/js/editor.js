@@ -171,11 +171,16 @@ function Camera() {
 			"url": "",
 			"fps": 0,
 			"image_size": "",
+			'model': {'name': '', 
+				      'manufactory': {'name': '', 
+				    	              'id': ''
+				    	              },
+				      'id': ''},
 			"password": "",
 			"id": 0,
 			"processors" : []
-		}
-	};
+		    }
+		};
 	this.shape = new Kinetic.Text({
 		x : 10,
 		y : 110,
