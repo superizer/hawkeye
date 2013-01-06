@@ -164,6 +164,7 @@ class Window(QWidget):
         #print("url: ", url)
         logger.debug("url: %s" % url)
         view = self.config.get_route(url)
+        # logger.debug("view: %s" % view)
         
         if view is not None:
             action = view.get('action')
@@ -183,8 +184,10 @@ class Window(QWidget):
             
             if not isinstance(response, dict):
                 if isinstance(response, QUrl):
-                    url = response.path()
-                    return self.render(url)
+                    return self.link_clicked(response)
+#                    url = response.path()
+#                    print('window url', url)
+#                    return self.render(url)
 #                else:
 #                    # need error page
 #                    return self.render('/login')

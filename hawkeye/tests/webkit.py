@@ -10,6 +10,8 @@ from hawkeye import config
 from hawkeye.window import Window
 from hawkeye import routing
 
+from PyQt4.QtCore import *
+
 class WebkitTest(unittest.TestCase):
 
 
@@ -34,12 +36,11 @@ class WebkitTest(unittest.TestCase):
         template = window.tempalte_lookup.get_template(
                             '/welcome/live.mako'
                             )
-        template = window.tempalte_lookup.get_template('/tests/tests.mako')
         response = {
                     }
             
         html = template.render(**response)
-        window.web_view.setHtml(html, window.base_url)
+        window.web_view.setHtml(html, QUrl('file:///live'))
         #window.welcome()
         #window.view_view.load(QUrl('http://www.google.com'))
         return self.app.app.exec_()

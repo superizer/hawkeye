@@ -1107,7 +1107,7 @@ function Menu() {
 		proReset();
 		deleteReset();
 		camera.genjson();
-		document.getElementById("camera_json").value = camera.json;
+		document.getElementById("camera_json").value = JSON.stringify(camera.json);
 		document.forms["formsave"].submit();
 		
 	});
