@@ -8,8 +8,8 @@
 			$("#menu-project-${x}").buttonset();
 		    % for camera in project['cameras']:
 		    	$("#menu-project-camera-${y}").buttonset();
-		        <% y = y + 1 %>
-		    % endfor
+		    	<% y = y + 1 %>
+			% endfor
 		    <% x = x + 1 %>
 		% endfor
 		$("#addProject").button();
@@ -47,18 +47,17 @@
 				<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete project</a></label>
 			</div>
 		</div>
-	</div>
-	<div class="des-project">
-		%if project['description'] != "":
-			  Description : ${project['description']}
-		%endif
-	</div>
+		<div class="des-project">
+			%if project['description'] != "":
+				  Description : ${project['description']}
+			%endif
+		</div>
 		<ul>
 		% for camera in project['cameras']:
 		    <li> 
-			    <div class="" style="height:35px;">
+			    <div class="list-camera-project">
 			        ${camera['name']}
-				    <div id="menu-project-camera-${y}" class="index-camera-list-tool" style="margin-top:-7px; ">
+				    <div id="menu-project-camera-${y}" class="index-camera-list-tool menu-project-camera">
 						<label for="radio1"><a href = "/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}"><span class="ui-icon ui-icon-wrench index-icon-button" ></span>Edit</a></label>
 						<label for="radio2"><a href = "/camera/storage?camera_id=${camera['id']}"><span class="ui-icon ui-icon-disk index-icon-button" ></span>Storage</a></label>
 						<label for="radio3"><a href = "/camera/delete?camera_id=${camera['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete</a></label>
