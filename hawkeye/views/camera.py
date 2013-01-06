@@ -199,4 +199,10 @@ def delete_files(request):
     return request.route_path(route )   
     
 def live(request):
-    return {}
+    camera_id = int(request.matchdict.get('camera_id'))
+    data =request.nokkhum_client.camera.get_camera(camera_id);
+    print('url', data['camera']['url'])
+    data['camera']['url'] = 'http://admin:123zxc@172.30.235.183/image/jpeg.cgi'
+    return dict(
+                url = data['camera']['url']
+                )

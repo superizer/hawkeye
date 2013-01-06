@@ -15,5 +15,5 @@ function updateImage()
 }
 </script>
 
-<img id="display" src="http://admin:123zxc@172.30.235.183/image/jpeg.cgi?.jpg" height="240" width="320" onload="updateImage();"/>
-
+<img id="display" src="http://admin:123zxc@172.30.235.183/image/jpeg.cgi?.jpg" height="240" width="320" onload="updateImage();"/><br/>
+<a href="/home"><input type="button"  value="Home"></a>
