@@ -12,11 +12,13 @@ import json
 logger = logging.getLogger(__name__)
 #add_camera(self, name, username, password, url, image_size, fps, storage_periods):
 def add(request):
+    #print('ip',request.config.settings.get('nokkhum.api.host'))
+    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.host')) 
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
     model_data = request.nokkhum_client.camera.list_model(manufactory_id)
-    print('model_data',model_data)
+    #print('model_data',model_data)
     form.manufactory.choices = [(manufactory['id'], manufactory['name']) for manufactory in data['manufactories'] ]
     form.model.choices = [(model['id'], model['name']) for model in model_data['camera_models'] ]
     project_id = int(request.matchdict.get('id'))
@@ -32,18 +34,23 @@ def add(request):
         image_size = form.data.get('image_size')
         manufactory = form.data.get('menufactory')
         model = form.data.get('model')
-        print('model', model)
+        #print('model', model)
         record_store = form.data.get('record_store')
         d = request.nokkhum_client.camera.add_camera(name, username, password, url, image_size, fps, int(record_store), model, int(project_id))
-        print('add camera',d)
+        #print('add camera',d)
         return request.route_path('/home')
     else:
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
-        
+        camera_json = request.matchdict.get('camera_json')
+        if camera_json is not None:
+            print('camera json', camera_json)
+            data_json = request.nokkhum_client.camera.add_camera_json(json.loads(camera_json))
+            print('data josn', data_json)
         return dict(
                     form = form,
-                    project = project
+                    project = project,
+                    url_api = url_api
                     )
     
     return request.route_path('/home')
@@ -82,6 +89,15 @@ def edit(request):
         old_data_camera =request.nokkhum_client.camera.get_camera(camera_id);
         print('old data camera', old_data_camera)
         #print('camera id', camera_id)
+#        form.name.data = old_data_camera['camera']['name']
+#        form.url.data = old_data_camera['camera']['url']
+#        form.username.data = old_data_camera['camera']['username']
+#        form.password.data = old_data_camera['camera']['password']
+#        form.fps.data = old_data_camera['camera']['fps']
+#        form.image_size.data = old_data_camera['camera']['image_size']
+#        form.manufactory.data = form.data.get('menufactory')
+#        form.model.data = form.data.get('model')
+#        form.record_store.data = old_data_camera['camera']['storage_periods']
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
         camera_json = request.matchdict.get('camera_json')
@@ -109,7 +125,8 @@ def delete(request):
     return request.route_path('/home')
 
 def storage(request):
-    
+    id = int(request.matchdict.get('camera_id'))
+    #print('***id', id)
     url = request.matchdict.get('files_url', None)
     #print('file url',url)
     route = None
