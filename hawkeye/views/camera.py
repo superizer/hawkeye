@@ -43,7 +43,8 @@ def add(request):
         
         return dict(
                     form = form,
-                    project = project
+                    project = project,
+                    model = model_data
                     )
     
     return request.route_path('/home')

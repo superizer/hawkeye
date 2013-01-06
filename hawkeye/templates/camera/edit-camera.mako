@@ -6,7 +6,7 @@
 <div style="display: none">
 	<form>
 		<input type="hidden" name="camera_id" value="${camera['id']}"/>
-		<input type="hidden" name="project_id" value="${project['id']}"/>
+		<input type="hidden" id="project_id" name="project_id" value="${project['id']}"/>
 	</form>
 	<form id="formsave" action="/camera/edit" method = "post">
 		<input type="hidden" id="camera_json" name="camera_json" value=""/>
