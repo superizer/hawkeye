@@ -1,7 +1,10 @@
 <%inherit file="/base/base.mako"/>
 <script>
 	$(function() {
-		$("#accordion").accordion({collapsible : true});
+		$("#accordion").accordion({
+			collapsible : true,
+			heightStyle: "content"
+			});
 		<% x = 0 %>
 		<% y = 0 %>
 		% for project in projects:

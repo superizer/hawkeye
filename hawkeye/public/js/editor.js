@@ -162,7 +162,7 @@ function Camera() {
 	this.next = new Array();
 	this.nextline = new Array();
 	this.json = {
-		"camera" : {
+		    "camera" : {
 			"username": "",
 			"status": "",
 			"create_date": "",
@@ -175,7 +175,7 @@ function Camera() {
 				      'manufactory': {'name': '', 
 				    	              'id': ''
 				    	              },
-				      'id': ''},
+				      'id': '50d6c5c9f303f90131a98291'},
 			"password": "",
 			"id": 0,
 			"processors" : []
