@@ -40,6 +40,7 @@ def add(request):
     else:
         data = request.nokkhum_client.account.get_project(project_id)
         project = data['project']
+        
         return dict(
                     form = form,
                     project = project
