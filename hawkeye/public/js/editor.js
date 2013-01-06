@@ -171,6 +171,7 @@ function Camera() {
 			"url": "",
 			"fps": 0,
 			"image_size": "",
+			"model":"",
 			"password": "",
 			"id": 0,
 			"processors" : []

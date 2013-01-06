@@ -3,8 +3,13 @@
 	$(function() {
 		$("#accordion").accordion({collapsible : true});
 		<% x = 0 %>
+		<% y = 0 %>
 		% for project in projects:
-			$("#${x}").buttonset();
+			$("#menu-project-${x}").buttonset();
+		    % for camera in project['cameras']:
+		    	$("#menu-project-camera-${y}").buttonset();
+		        <% y = y + 1 %>
+		    % endfor
 		    <% x = x + 1 %>
 		% endfor
 		$("#addProject").button();
@@ -31,30 +36,36 @@
 <div style="margin:0 12px 0 12px;">
 <div id="accordion">
 <% x = 0 %>
+<% y = 0 %>
 % for project in projects:
 	<h3>${project['name']}</h3>
 	<div>
-	<div class="menu-project">
-		<div id="${x}">
-			<label for="radio1"><a href = "/camera/add?id=${project['id']}"><span class="ui-icon ui-icon-circle-plus" style="clear:both;float:left;margin:0 5px 0 0;"></span>Add camera</a></label>
-			<label for="radio2"><a href ="/project/edit?id=${project['id']}"><span class="ui-icon ui-icon-wrench" style="clear:both;float:left;margin:0 5px 0 0;"></span>Edit project</a></label>
-			<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash" style="clear:both;float:left;margin:0 5px 0 0;"></span>Delete project</a></label>
+		<div class="menu-project">
+			<div id="menu-project-${x}">
+				<label for="radio1"><a href = "/camera/add?id=${project['id']}"><span class="ui-icon ui-icon-circle-plus index-icon-button" ></span>Add camera</a></label>
+				<label for="radio2"><a href ="/project/edit?id=${project['id']}"><span class="ui-icon ui-icon-wrench index-icon-button" ></span>Edit project</a></label>
+				<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete project</a></label>
+			</div>
 		</div>
-	</div>
-	<div class="des-project">
-		%if project['description'] != "":
-			  Description : ${project['description']}
-		%endif
-	</div>
-	<ul>
-    % for camera in project['cameras']:
-		<li> ${camera['name']} <a href ="/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">edit</a>  <a href ="/camera/delete?camera_id=${camera['id']}">delete</a><a href ="/camera/storage?camera_id=${camera['id']}">storage</a></li>
-	% endfor
-    </ul>
+		<div class="des-project">
+			%if project['description'] != "":
+				  Description : ${project['description']}
+			%endif
+		</div>
 		<ul>
-			<li>camera one</li>
-			<li>camera two</li>
-			<li>camera three</li>
+		% for camera in project['cameras']:
+		    <li> 
+			    <div class="" style="height:35px;">
+			        ${camera['name']}
+				    <div id="menu-project-camera-${y}" class="index-camera-list-tool" style="margin-top:-7px; ">
+						<label for="radio1"><a href = "/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}"><span class="ui-icon ui-icon-wrench index-icon-button" ></span>Edit</a></label>
+						<label for="radio2"><a href = "/camera/storage?camera_id=${camera['id']}"><span class="ui-icon ui-icon-disk index-icon-button" ></span>Storage</a></label>
+						<label for="radio3"><a href = "/camera/delete?camera_id=${camera['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete</a></label>
+					</div>
+				</div>
+			</li>
+			<% y = y + 1 %>
+		% endfor
 		</ul>
 	</div>
 	<% x = x + 1 %>

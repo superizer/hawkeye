@@ -23,7 +23,7 @@
 			    <label for="password">Password</label> ${form.password(class_="text ui-widget-content ui-corner-all")} 
 				<label for="fps">Fps</label> ${form.fps(class_="text ui-widget-content ui-corner-all")}
 				<label for="imagesize">Image size</label> ${form.image_size(class_="text ui-widget-content ui-corner-all")}
-				##<label for="menufactory">Menufactory</label> ${form.manufactory(class_="text ui-widget-content ui-corner-all")}
+				<label for="menufactory">Menufactory</label> ${form.manufactory(class_="text ui-widget-content ui-corner-all")}
 				<label for="model">Model</label> ${form.model(class_="text ui-widget-content ui-corner-all")}
 				<label for="recordstore">Record Store</label> ${form.record_store(class_="text ui-widget-content ui-corner-all")} 
 		</fieldset>
