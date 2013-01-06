@@ -4,7 +4,7 @@
   $(function(){
 	  $("#menufactory").change(function () {
 		  var tmp = $.get("${url_api + '/manufactories'}");
-		  
+		  document.getElementById("camera_json").value = JSON.stringify(tmp);
 	  })
   });
   var oldoption = undefined;
