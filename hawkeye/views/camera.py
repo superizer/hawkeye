@@ -41,6 +41,7 @@ def add(request):
         return request.route_path('/home')
     else:
         data = request.nokkhum_client.account.get_project(project_id)
+        
         project = data['project']
         camera_json = request.matchdict.get('camera_json')
         if camera_json is not None:
