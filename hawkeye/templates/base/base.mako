@@ -9,11 +9,11 @@
 <script type="text/javascript" src="${base_url}/public/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="${base_url}/public/js/jquery-ui-1.9.2.custom.js"></script>
 <script type="text/javascript" src="${base_url}/public/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script>
-	$(function(){
-		$("body").css("overflow", "hidden");
-	});
-</script>
+##<script>
+##$(function(){
+	##	$("body").css("overflow", "hidden");
+	##});
+##</script>
 </head>
 <body>
 	<div id="wrapper">
