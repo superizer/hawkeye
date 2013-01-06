@@ -1,18 +1,82 @@
 <%inherit file="/base/base.mako"/>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
 <script>
+	var oldoption = undefined;
+	var projectid = "${project['id']}";
   $(function(){
-	  $("#menufactory").change(function () {
-		  $.getJSON("${url_api + '/manufactories'}", function(data){
-			  alert(data.manufactories[0].name);
+	  $.getJSON("${url_api + '/manufactories'}", function(menuGet){
+		  var menuFact = document.getElementById("menufactory");
+		  menuFact.name = menuGet.manufactories[0].id;
+		  for(i in menuGet.manufactories){
+			  var option = document.createElement("option");
+			  option.text = menuGet.manufactories[i].name;
+			  menuFact.add(option,menuFact.options[null]);
+		  }
+		  $.ajax({
+	            type: 'GET',
+	            url: "${url_api + '/camera_models'}"+menuGet.manufactories[0].id,
+	            success: function(modelGet) {
+	            	 var modelist = document.getElementById("model");
+	            	 modelist.name = modelGet.camera_models[0].id;
+					  for(i in modelGet.camera_models){
+						  var option = document.createElement("option");
+						  option.text = modelGet.camera_models[i].name;
+						  modelist.add(option,modelist.options[null]);
+					  }
+	            }
+	         });
+		  
+		  $("#menufactory").change(function () {
+			  var str = "";
+			  var id = "";
+			  $("#menufactory option:selected").each(function () {
+		            str = $(this).text();
+		      });
+			  for(i in menuGet.manufactories){
+			  	if(str == menuGet.manufactories[i].name){
+			  		id = menuGet.manufactories[i].id;
+			  		break;
+			  	}
+			  }
+			  menuFact.name = id;
+			  $.ajax({
+		            type: 'GET',
+		            url: "${url_api + '/camera_models'}"+id,
+		            success: function(modelGet) {
+		            	 var modelist = document.getElementById("model");
+						  for(i in modelGet.camera_models){
+							  var option = document.createElement("option");
+							  option.text = modelGet.camera_models[i].name;
+							  modelist.add(option,modelist.options[null]);
+						  }
+		            }
+		         });
+			  $("#model").change(function () {
+				  var tmpstr = "";
+				  $("#model option:selected").each(function () {
+			            tmpstr = $(this).text();
+			      });
+				  $.ajax({
+			            type: 'GET',
+			            url: "${url_api + '/camera_models'}"+id,
+			            success: function(modelGet) {
+			            	 var modelist = document.getElementById("model");
+							  for(i in modelGet.camera_models){
+								  if(tmpstr == modelGet.camera_models[i].name){
+									  modelist.name = modelGet.camera_models[i].id;
+								  }
+							  }
+			            }
+			      });
+			  });
 		  });
 	  });
   });
-  var oldoption = undefined;
+
 </script>
 <div style="display: none">
 	<form>
-		<input type="hidden" id="project_id" name="project_id" value="${project}"/>
+		<input type="hidden" id="project_id" name="project_id" value="${project['id']}"/>
 	</form>
 	<form id="formsave" action="/camera/add" method = "post">
 		<input type="hidden" id="camera_json" name="camera_json" value=""/>
@@ -47,21 +111,9 @@
                 </select>
 				<label for="menufactory">Menufactory</label>
                 <select id="menufactory" class="select ui-widget-content ui-corner-all">
-				<%
-					tmp = ["320x240","640x480"]
-				%>
-				% for x in tmp: 
-				  <option value=${x}>${x}</option>
-				%endfor:
                 </select>
 				<label for="model">Model</label> 
                 <select id="model" class="select ui-widget-content ui-corner-all">
-				<%
-					tmp = ["320x240","640x480"]
-				%>
-				% for x in tmp: 
-				  <option value=${x}>${x}</option>
-				%endfor:
                 </select>
 				<label for="recordstore">Record Store</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" /> 
 		</fieldset>

@@ -92,6 +92,12 @@ if (oldoption != undefined) {
 	camera.json.camera.processors.splice(0,camera.json.camera.processors.length);
 	generate(oldoption.camera, camera);
 	generatepoint(camera, 0, 10)
+}else{
+	camera.json.camera.id = projectid;
+	camera.json.camera.fps = $('#fps').val();
+	camera.json.camera.model.name = $('#model').val();
+	camera.json.camera.model.manufactory.name= $('#manufactory').val();
+	camera.json.camera.image_size = $('#imagesize').val();
 }
 
 var tmpLine = undefined;
@@ -166,7 +172,7 @@ function Camera() {
 			"username": "",
 			"status": "",
 			"create_date": "",
-			"name": "camera_test",
+			"name": "",
 			"storage_periods": 0,
 			"url": "",
 			"fps": 0,
@@ -177,7 +183,7 @@ function Camera() {
 				    	              },
 				      'id': ''},
 			"password": "",
-			"id": 0,
+			"id": "",
 			"processors" : []
 		    }
 		};
@@ -242,17 +248,15 @@ function Camera() {
 						if (sTatus == undefined) {
 							var name = $("#name"), url = $("#url"),manufactory=$("#manufactory"),recordstore=$("#record_store"),imagesize = $("#image_size"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
 							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password);
-
-							name.val(tmpthis.json.camera.name);
-							url.val(tmpthis.json.camera.url);
-							//manufactory.val(tmpthis.json.camera.);
-							recordstore.val(tmpthis.json.camera.storage_periods);
-							imagesize.val(tmpthis.json.camera.image_size);
-							fps.val(tmpthis.json.camera.fps);
-							model.val(tmpthis.json.camera.model);
-							username.val(tmpthis.json.camera.username);
-							password.val(tmpthis.json.camera.password);
-
+							    name.val(tmpthis.json.camera.name);
+								url.val(tmpthis.json.camera.url);
+								manufactory.val(tmpthis.json.camera.model.manufactory.name);
+								recordstore.val(tmpthis.json.camera.storage_periods);
+								imagesize.val(tmpthis.json.camera.image_size);
+								fps.val(tmpthis.json.camera.fps);
+								model.val(tmpthis.json.camera.model.name);
+								username.val(tmpthis.json.camera.username);
+								password.val(tmpthis.json.camera.password);
 							$("#camera-form")
 									.dialog(
 											{
@@ -267,10 +271,10 @@ function Camera() {
 														tmpthis.json.camera.name = name.val();
 														tmpthis.json.camera.url = url.val();
 														tmpthis.json.camera.fps = fps.val();
-														tmpthis.json.camera.model = model.val();
-														//tmpthis.json.camera.=manufactory.val();
+														tmpthis.json.camera.model.name = model.val();
+														tmpthis.json.camera.model.manufactory.name= manufactory.val();
 														tmpthis.json.camera.storage_periods=recordstore.val();
-														tmpthis.json.camera.image_size=imagesize.val();
+														tmpthis.json.camera.image_size = imagesize.val();
 														tmpthis.json.camera.username = username.val();
 														tmpthis.json.camera.password = password.val();
 														
@@ -1110,6 +1114,8 @@ function Menu() {
 		lineReset();
 		proReset();
 		deleteReset();
+		camera.json.camera.model.id = document.getElementById("model").name;
+		camera.json.camera.model.manufactory.id = document.getElementById("menufactory").name;
 		camera.genjson();
 		document.getElementById("camera_json").value = JSON.stringify(camera.json);
 		document.forms["formsave"].submit();
