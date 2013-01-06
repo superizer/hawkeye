@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 #add_camera(self, name, username, password, url, image_size, fps, storage_periods):
 def add(request):
     #print('ip',request.config.settings.get('nokkhum.api.host'))
-    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.host')) 
+    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.port')) 
+    print('url ',url_api)
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
@@ -50,7 +51,6 @@ def add(request):
             print('data json', data_json)
         return dict(
                     form = form,
-                    project = project,
                     project = project,
                     url_api = url_api
                     )
