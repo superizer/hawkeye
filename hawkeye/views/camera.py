@@ -179,8 +179,7 @@ def delete_files(request):
     pos = url.rfind('/')
     route='/camera/storage?files_url='+ url[:pos]
     #print ('url: ', route)
-    return request.route_path(route )
-    
+    return request.route_path(route )   
     
 def live(request):
     return {}
