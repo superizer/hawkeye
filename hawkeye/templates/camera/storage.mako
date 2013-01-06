@@ -7,7 +7,9 @@
 	% endif
 % endfor
 
-if ${route} is not None:
-	##${route}<br/>
+% if route is not None:
+	${route}<br/>
 	<a href=${route}><input type="button" value="Back"></a>
+	##<% route = None %>
+% endif
 <a href="/home"><input type="button"  value="Home"></a>

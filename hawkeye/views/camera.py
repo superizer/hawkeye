@@ -119,12 +119,19 @@ def delete(request):
 def storage(request):
     
     url = request.matchdict.get('files_url', None)
-    print('file url',url)
+    #print('file url',url)
     route = None
     if url is not None:
-        data = request.nokkhum_client.camera.get_file(url)
         pos = url.rfind('/')
-        route='/camera/storage?files_url='+ url[:pos]
+        #print('url pos', url[:pos])
+        if url[:pos] == '/storage/1':
+            data = request.nokkhum_client.camera.get_file(url)
+            route = '/camera/storage?camera_id=1'
+        else:
+            #print(':D')
+            data = request.nokkhum_client.camera.get_file(url)
+            #pos = url.rfind('/')
+            route='/camera/storage?files_url='+ url[:pos]
         #print ('url: ', route)
 
     else:
