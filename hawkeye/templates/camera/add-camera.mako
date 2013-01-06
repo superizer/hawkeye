@@ -3,9 +3,10 @@
 <script>
   $(function(){
 	  $("#menufactory").change(function () {
-		  var tmp = $.get("${url_api + '/manufactories'}");
-		  
-	  })
+		  $.getJSON("${url_api + '/manufactories'}", function(data){
+			  alert(data.manufactories[0].name);
+		  });
+	  });
   });
   var oldoption = undefined;
 </script>
