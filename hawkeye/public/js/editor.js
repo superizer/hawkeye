@@ -3,6 +3,7 @@ var stage = new Kinetic.Stage({
 	width : window.innerWidth,
 	height : window.innerHeight
 });
+
 var stageLayer = new Kinetic.Layer();
 var stageBackground = new Kinetic.Rect({
 	x : 0,
