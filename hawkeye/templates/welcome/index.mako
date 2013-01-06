@@ -47,23 +47,12 @@
 				<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete project</a></label>
 			</div>
 		</div>
-<<<<<<< HEAD
-		<div class="des-project">
-			%if project['description'] != "":
-				  Description : ${project['description']}
-			%endif
-		</div>
-=======
 	</div>
 	<div class="des-project">
 		%if project['description'] != "":
 			  Description : ${project['description']}
 		%endif
 	</div>
-	% for camera in project['cameras']:
-		${camera['name']} <a href ="/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">edit</a>  <a href ="/camera/delete?camera_id=${camera['id']}">delete</a> <a href ="/camera/storage?camera_id=${camera['id']}">storage</a><br/>
-	% endfor
->>>>>>> branch 'master' of ssh://git@github.com/superizer/hawkeye.git
 		<ul>
 		% for camera in project['cameras']:
 		    <li> 
