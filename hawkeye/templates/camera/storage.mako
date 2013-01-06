@@ -6,4 +6,8 @@
 	${file['name']} <a href="/camera/storage?files_url=${file['url']}">view</a> <a href="/camera/files/delete?files_url=${file['url']}">delete</a><br/>
 	% endif
 % endfor
+
+if ${route} is not None:
+	##${route}<br/>
+	<a href=${route}><input type="button" value="Back"></a>
 <a href="/home"><input type="button"  value="Home"></a>

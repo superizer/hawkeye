@@ -50,8 +50,8 @@ def add(request):
 def edit(request):
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
-    #manufactory_id = "50d6c5c9f303f90131a98290"
-#    model_data = request.nokkhum_client.camera.list_model(manufactory_id)
+    manufactory_id = "50d6c5c9f303f90131a98290"
+    model_data = request.nokkhum_client.camera.list_model(manufactory_id)
     #print('model_data',model_data)
     project_id = int(request.matchdict.get('project_id'))
     camera_id = int(request.matchdict.get('camera_id'))
@@ -94,9 +94,9 @@ def edit(request):
         project = data['project']
         camera_json = request.matchdict.get('camera_json')
         if camera_json is not None:
-            print('camera json', camera_json)
+            #print('camera json', camera_json)
             data_json = request.nokkhum_client.camera.edit_camera_json(camera_id, json.loads(camera_json))
-            print('data json', data_json)
+            #print('data json', data_json)
         return dict(
                     form = form,
                     project = project,
@@ -118,21 +118,26 @@ def delete(request):
 
 def storage(request):
     
-    file_url = request.matchdict.get('files_url', None)
-    print('file url',file_url)
-    if file_url:
-        data = request.nokkhum_client.camera.get_file(file_url)
+    url = request.matchdict.get('files_url', None)
+    print('file url',url)
+    route = None
+    if url is not None:
+        data = request.nokkhum_client.camera.get_file(url)
+        pos = url.rfind('/')
+        route='/camera/storage?files_url='+ url[:pos]
+        #print ('url: ', route)
 
     else:
         id = int(request.matchdict.get('camera_id'))
-        print('***id', id)
+        #print('***id', id)
         #data = request.nokkhum_client.camera.get_storage(id)
         data = request.nokkhum_client.camera.get_storage(1)
     
     #print('storage', data)
     return dict(
-                files = data['files']
-                )
+                files = data['files'],
+                route = route
+                )  
 
 def files(request):
     print('matchdict', request.matchdict)
@@ -153,12 +158,12 @@ def files(request):
 def delete_files(request):
     
     url = request.matchdict.get('files_url')
-    print('url', url)
+    #print('url', url)
     data = request.nokkhum_client.camera.delete_file(url)
-    print('delete data', data)
+    #print('delete data', data)
     pos = url.rfind('/')
     route='/camera/storage?files_url='+ url[:pos]
-    print ('url: ', route)
+    #print ('url: ', route)
     return request.route_path(route )
     
     
