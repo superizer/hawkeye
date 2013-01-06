@@ -43,7 +43,11 @@ def add(request):
         data = request.nokkhum_client.account.get_project(project_id)
         
         project = data['project']
-        
+        camera_json = request.matchdict.get('camera_json')
+        if camera_json is not None:
+            #print('camera json', camera_json)
+            data_json = request.nokkhum_client.camera.add_camera_json(json.loads(camera_json))
+            print('data json', data_json)
         return dict(
                     form = form,
                     project = project,
@@ -123,7 +127,7 @@ def delete(request):
     return request.route_path('/home')
 
 def storage(request):
-    id = int(request.matchdict.get('camera_id'))
+    camera_id = int(request.matchdict.get('camera_id'))
     #print('***id', id)
     url = request.matchdict.get('files_url', None)
     #print('file url',url)
@@ -142,15 +146,16 @@ def storage(request):
         #print ('url: ', route)
 
     else:
-        id = int(request.matchdict.get('camera_id'))
+        #id = int(request.matchdict.get('camera_id'))
         #print('***id', id)
-        #data = request.nokkhum_client.camera.get_storage(id)
+        #data = request.nokkhum_client.camera.get_storage(camera_id)
         data = request.nokkhum_client.camera.get_storage(1)
     
     #print('storage', data)
     return dict(
                 files = data['files'],
-                route = route
+                route = route,
+                camera = { 'id': camera_id }
                 )  
 
 def files(request):
