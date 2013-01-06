@@ -93,10 +93,11 @@ if (oldoption != undefined) {
 	generate(oldoption.camera, camera);
 	generatepoint(camera, 0, 10)
 }else{
-	camera.json.camera.id = projectid;
+	camera.json.camera.project.id = projectid;
+	camera.json.camera.user.id = userid;
 	camera.json.camera.fps = $('#fps').val();
 	camera.json.camera.model.name = $('#model').val();
-	camera.json.camera.model.manufactory.name= $('#manufactory').val();
+	camera.json.camera.model.manufactory.name= $('#menufactory').val();
 	camera.json.camera.image_size = $('#imagesize').val();
 }
 
@@ -183,6 +184,8 @@ function Camera() {
 				    	              },
 				      'id': ''},
 			"password": "",
+			'project' : {'id':''}, 
+			'user':{'id':''},
 			"id": "",
 			"processors" : []
 		    }
@@ -246,7 +249,7 @@ function Camera() {
 	});
 	tmpthis.shape.on('dblclick',function() {
 						if (sTatus == undefined) {
-							var name = $("#name"), url = $("#url"),manufactory=$("#manufactory"),recordstore=$("#record_store"),imagesize = $("#image_size"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
+							var name = $("#name"), url = $("#url"),manufactory=$("#menufactory"),recordstore=$("#recordstore"),imagesize = $("#imagesize"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
 							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password);
 							    name.val(tmpthis.json.camera.name);
 								url.val(tmpthis.json.camera.url);
@@ -1119,7 +1122,6 @@ function Menu() {
 		camera.genjson();
 		document.getElementById("camera_json").value = JSON.stringify(camera.json);
 		document.forms["formsave"].submit();
-		
 	});
 	// --- end save event ---
 	// --- start cancel event ---
