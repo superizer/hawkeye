@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 def add(request):
     #print('ip',request.config.settings.get('nokkhum.api.host'))
     url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.port')) 
-    print('url ',url_api)
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
@@ -128,28 +127,28 @@ def delete(request):
 
 def storage(request):
     camera_id = int(request.matchdict.get('camera_id'))
-    #print('***id', id)
+    #('***id', camera_id)
     url = request.matchdict.get('files_url', None)
     #print('file url',url)
     route = None
     if url is not None:
         pos = url.rfind('/')
         #print('url pos', url[:pos])
-        if url[:pos] == '/storage/1':
+        if url[:pos] == '/storage/' + str(camera_id):
             data = request.nokkhum_client.camera.get_file(url)
-            route = '/camera/storage?camera_id=1'
+            route = '/camera/storage?camera_id=' + str(camera_id)
         else:
             #print(':D')
             data = request.nokkhum_client.camera.get_file(url)
             #pos = url.rfind('/')
-            route='/camera/storage?files_url='+ url[:pos]
+            route='/camera/storage?files_url='+ url[:pos] + '&camera_id=' + str(camera_id)
         #print ('url: ', route)
 
     else:
         #id = int(request.matchdict.get('camera_id'))
         #print('***id', id)
-        #data = request.nokkhum_client.camera.get_storage(camera_id)
-        data = request.nokkhum_client.camera.get_storage(1)
+        camera_id = 1
+        data = request.nokkhum_client.camera.get_storage(camera_id)
     
     #print('storage', data)
     return dict(
@@ -157,11 +156,23 @@ def storage(request):
                 route = route,
                 camera = { 'id': camera_id }
                 )  
-
+#/camera/storage?files_url=/storage/1/20121223&camera_id=1
 def files(request):
-    print('matchdict', request.matchdict)
+    camera_id = int(request.matchdict.get('camera_id'))
+    #print('***id', camera_id)
+    #print('matchdict', request.matchdict)
     url = request.matchdict.get('files_url')
-    print('url', url)
+    #print('url', url)
+    pos = url.rfind('/')
+    back_url = url[:pos]
+    for i in range (1,7):
+        pos = back_url.find('/')
+        back_url = back_url[pos:]
+        back_url = back_url[1:]
+    #pos = url.rfind('/')
+    #print('url2', url)
+    route='/camera/storage?files_url=/storage/' + back_url + '&' + 'camera_id=' + str(camera_id)
+    #print('route', route)
     image = False
     extensions=['.png']
     for extension in extensions:
@@ -171,7 +182,9 @@ def files(request):
         
     return dict(
                 url=url,
-                image=image
+                image=image,
+                route = route,
+                camera = { 'id': camera_id }
                 )
     
 def delete_files(request):
