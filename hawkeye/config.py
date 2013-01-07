@@ -18,6 +18,7 @@ class Configuration:
         self.settings = dict()
         self.route = dict()
         self.current_project_path = os.path.dirname(__file__)
+        self.current_route_path = None
         
         self.__parse()
 

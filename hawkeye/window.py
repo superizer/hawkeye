@@ -76,7 +76,8 @@ class NetworkAccessManager(QNetworkAccessManager):
     def createRequest(self, operation, request, data):
         #print("url: ", request.url())
         api_url = self.context_obj.config.settings['nokkhum.api.url']
-        if request.url().path():
+
+        if api_url in request.url().toString():
             if 'token' in self.context_obj.session:
                 request.setRawHeader('X-Auth-Token', self.context_obj.session['token']['id'])
         
@@ -152,14 +153,14 @@ class Window(QWidget):
         for key, value in qurl.queryItems():
             elements[key] = value
             
-        self.render(qurl.path(), elements)
+        self.render(qurl, elements)
         # do stuff with elements...
 #        for item in elements.items():
 #            print ("got: ", item)
 
     def handle_reload(self, qurl):
         print("reload ->: ", qurl)
-        self.render(qurl.path())
+        self.render(qurl)
     
     def load_started(self): 
         ''''''
@@ -183,12 +184,15 @@ class Window(QWidget):
         for key, value in qurl.queryItems():
             elements[key] = value
             
-        self.render(qurl.path(), elements)
+        self.render(qurl, elements)
         #self.render(qurl.path())
         
         
-    def render(self, url, args=None):
-        #print("url: ", url)
+    def render(self, qurl, args=None):
+        url = qurl.path()
+        self.config.current_route_path = qurl.toString()
+        print("url: ", url)
+        print("current_route_path: ", self.config.current_route_path)
         logger.debug("url: %s" % url)
         view = self.config.get_route(url)
         # logger.debug("view: %s" % view)
@@ -234,4 +238,5 @@ class Window(QWidget):
             #self.web_view.load(a)
         
     def welcome(self):
-        self.render('/login')
+        context_obj = context.ResourceContext(self.config, self.session)
+        return self.link_clicked(context_obj.route_path('/login'))
