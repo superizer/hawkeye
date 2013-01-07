@@ -54,7 +54,7 @@ dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
 .menu-project-camera{margin-top:-7px;}
 .list-camera-project{height:35px;}
 
-.storage-set-shadow-style{width: 332px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -76px;}
+.storage-set-background-style{width: 100%; height: 100%; margin: 10px;background-color: white;}
 .storage-set-content-style{position: absolute; width: 310px; height: 130px; left: 50%; top: 50%; margin-left: -155px; margin-top: -65px; padding: 7px;}
 .storage-set-content-inner-style{background: none; border: 0;}
 .storage-button{width:80px;}
