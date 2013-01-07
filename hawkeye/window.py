@@ -70,7 +70,7 @@ class Window(QWidget):
         
         self.base_url = QUrl.fromLocalFile(os.path.dirname(__file__)).toString()
         
-        # initial web view abd handle all link
+        # initial web view add handle all link and form submitted
         self.web_view = QWebView(self)
         self.web_view.setPage(HawkeyeWebPage())
         self.web_view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
@@ -198,7 +198,8 @@ class Window(QWidget):
                             self.config.get_route(url).get('renderer')
                             )
             
-            response['base_url']=self.base_url
+            response['request'] = context_obj
+            response['base_url'] = self.base_url
             html = template.render(**response)
             
             self.web_view.setHtml(html, QUrl("file://"+url))
