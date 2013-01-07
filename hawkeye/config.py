@@ -45,6 +45,17 @@ class Configuration:
                     self.settings[k] = config_parser.getint(section, k)
                 else:
                     self.settings[k] = v.replace("hawkeye:", self.current_project_path+"/")
+        
+        if 'nokkhum.api.protocal' not in self.settings.keys():
+            self.settings['nokkhum.api.protocal'] = 'http'
+        if 'nokkhum.api.host' not in self.settings.keys():
+            self.settings['nokkhum.api.host'] = 'localhost'
+        if 'nokkhum.api.port' not in self.settings.keys():
+            self.settings['nokkhum.api.port'] = 6543
+            
+        self.settings['nokkhum.api.url'] = "%s://%s:%d" % (self.settings['nokkhum.api.protocal'], self.settings['nokkhum.api.host'], self.settings['nokkhum.api.port'])
+        
+        
     
     def add_route(self, name, action, renderer=None):
         self.route[name] = dict(

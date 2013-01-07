@@ -58,6 +58,29 @@ class HawkeyeWebPage(QWebPage):
             self.request_reload.emit(req.url())
             
         return super(HawkeyeWebPage, self).acceptNavigationRequest(frame, req, nav_type)
+    
+class NetworkAccessManager(QNetworkAccessManager):
+    '''
+    implement hawkeye new networkrequest with identify user token header, only connect to nokkhum api. 
+    '''
+    def __init__(self, old_manager, context_obj):
+
+        QNetworkAccessManager.__init__(self)
+        self.old_manager = old_manager
+        self.setCache(old_manager.cache())
+        self.setCookieJar(old_manager.cookieJar())
+        self.setProxy(old_manager.proxy())
+        self.setProxyFactory(old_manager.proxyFactory())
+        self.context_obj = context_obj
+        
+    def createRequest(self, operation, request, data):
+        #print("url: ", request.url())
+        api_url = self.context_obj.config.settings['nokkhum.api.url']
+        if request.url().path():
+            if 'token' in self.context_obj.session:
+                request.setRawHeader('X-Auth-Token', self.context_obj.session['token']['id'])
+        
+        return QNetworkAccessManager.createRequest(self, operation, request, data)
 
 class Window(QWidget):
     
@@ -99,7 +122,11 @@ class Window(QWidget):
         
         else:
             layout.addWidget(self.web_view)
-            
+                
+        old_manager = self.web_view.page().networkAccessManager()
+        context_obj = context.ResourceContext(self.config, self.session)
+        new_manager = NetworkAccessManager(old_manager, context_obj)
+        self.web_view.page().setNetworkAccessManager(new_manager)
 
     def setup_inspector(self):
         '''

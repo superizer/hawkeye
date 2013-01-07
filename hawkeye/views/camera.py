@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 #add_camera(self, name, username, password, url, image_size, fps, storage_periods):
 def add(request):
     #print('ip',request.config.settings.get('nokkhum.api.host'))
-    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.port')) 
+
     form = project_form.AddCameraForm(request.matchdict)
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
@@ -56,14 +56,12 @@ def add(request):
         return dict(
                     form = form,
                     project = project,
-                    url_api = url_api
                     )
     
     return request.route_path('/home')
 
 def edit(request):
     form = project_form.AddCameraForm(request.matchdict)
-    url_api = 'http://' + str(request.config.settings.get('nokkhum.api.host')) + ':' + str(request.config.settings.get('nokkhum.api.port')) 
     data = request.nokkhum_client.camera.list_manufactory()
     manufactory_id = "50d6c5c9f303f90131a98290"
     model_data = request.nokkhum_client.camera.list_model(manufactory_id)
@@ -118,7 +116,6 @@ def edit(request):
                     project = project,
                     camera = { 'id': camera_id },
                     cameras = old_data_camera,
-                    url_api = url_api
                     )
     
     return request.route_path('/home')

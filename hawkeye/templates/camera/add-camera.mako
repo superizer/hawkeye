@@ -1,11 +1,20 @@
 <%inherit file="/base/base.mako"/>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
-<script>
+<script type="text/javascript">
 	var oldoption = undefined;
 	var projectid = ${project['id']};
 	var userid = ${project['user']['id']};
+
   $(function(){
-	  $.getJSON("${url_api + '/manufactories'}", function(menuGet){
+	  $.ajax({
+		  type: 'GET',
+          url: "${request.config.settings['nokkhum.api.url'] + '/manufactories'}", 
+          datatype: 'json',
+          error: function(resp){
+        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
+          },
+          success: function(menuGet){
+        	  console.debug("header success: ");
 		  var menuFact = document.getElementById("menufactory");
 		  menuFact.name = menuGet.manufactories[0].id;
 		  for(i in menuGet.manufactories){
@@ -14,9 +23,11 @@
 			  option.value = menuGet.manufactories[i].name;
 			  menuFact.add(option,menuFact.options[null]);
 		  }
+		  
 		  $.ajax({
 	            type: 'GET',
-	            url: "${url_api + '/camera_models'}"+menuGet.manufactories[0].id,
+	            datatype: 'json',
+	            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+menuGet.manufactories[0].id,
 	            success: function(modelGet) {
 	            	 var modelist = document.getElementById("model");
 	            	 modelist.name = modelGet.camera_models[0].id;
@@ -44,7 +55,8 @@
 			  menuFact.name = id;
 			  $.ajax({
 		            type: 'GET',
-		            url: "${url_api + '/camera_models'}"+id,
+		            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+id,
+		            datatype: 'json',
 		            success: function(modelGet) {
 		            	 var modelist = document.getElementById("model");
 						  for(i in modelGet.camera_models){
@@ -62,7 +74,7 @@
 			      });
 				  $.ajax({
 			            type: 'GET',
-			            url: "${url_api + '/camera_models'}"+id,
+			            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+id,
 			            success: function(modelGet) {
 			            	 var modelist = document.getElementById("model");
 							  for(i in modelGet.camera_models){
@@ -75,6 +87,7 @@
 			      });
 			  });
 		  });
+	  }
 	  });
   });
 
