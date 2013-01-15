@@ -29,6 +29,13 @@ class Camera:
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.post(self.url + '/cameras' , data=json.dumps(payload), headers=self.headers)
         return r.json()
+    #start camera
+    def start_camera(self,id):
+        payload = {'camera_operating' : { 'action' : 'start' }}
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        print('hello start camera')
+        r = requests.post(self.url + '/cameras/' + str(id) + '/operating', data=json.dumps(payload), headers=self.headers)
+        return r.json()
     
     def delete_camera(self, id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']

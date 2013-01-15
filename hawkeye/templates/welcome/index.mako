@@ -65,6 +65,7 @@
 						<label for="radio2"><a href = "/camera/storage?camera_id=${camera['id']}"><span class="ui-icon ui-icon-disk index-icon-button" ></span>Storage</a></label>
 						<label for="radio3"><a href = "/camera/delete?camera_id=${camera['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete</a></label>
 						<label for="radio4"><a href = "/live?camera_id=${camera['id']}"><span class="ui-icon ui-icon-video index-icon-button" ></span>Live</a></label>
+						<label for="radio4"><a href = "/camera/start?camera_id=${camera['id']}"><span class="ui-icon ui-icon-video index-icon-button" ></span>Start</a></label>
 					</div>
 				</div>
 			</li>
