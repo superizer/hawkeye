@@ -197,7 +197,7 @@ function Camera() {
 		stroke : '#555',
 		strokeWidth : 2,
 		fill : '#ddd',
-		text : 'Video',
+		text : 'Camera',
 		fontFamily : 'Tahoma, Geneva, sans-serif',
 		fontSize : 10,
 		textFill : '#555',
