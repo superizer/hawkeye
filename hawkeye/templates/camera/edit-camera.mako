@@ -4,49 +4,32 @@
 	var oldoption = ${cameras};
 	var projectid = ${project['id']};
 	var userid = ${project['user']['id']};
-  $(function(){
-	  $.getJSON("${url_api + '/manufactories'}", function(menuGet){
-		  var menuFact = document.getElementById("menufactory");
-		  menuFact.name = menuGet.manufactories[0].id;
-		  for(i in menuGet.manufactories){
-			  var option = document.createElement("option");
-			  option.text = menuGet.manufactories[i].name;
-			  option.value = menuGet.manufactories[i].name;
-			  menuFact.add(option,menuFact.options[null]);
-		  }
+	 $(function(){
 		  $.ajax({
-	            type: 'GET',
-	            url: "${url_api + '/camera_models'}"+menuGet.manufactories[0].id,
-	            success: function(modelGet) {
-	            	 var modelist = document.getElementById("model");
-	            	 modelist.name = modelGet.camera_models[0].id;
-					  for(i in modelGet.camera_models){
-						  var option = document.createElement("option");
-						  option.text = modelGet.camera_models[i].name;
-						  option.value = modelGet.camera_models[i].name;
-						  modelist.add(option,modelist.options[null]);
-					  }
-	            }
-	         });
-		  
-		  $("#menufactory").change(function () {
-			  var str = "";
-			  var id = "";
-			  $("#menufactory option:selected").each(function () {
-		            str = $(this).text();
-		      });
+			  type: 'GET',
+	          url: "${request.config.settings['nokkhum.api.url'] + '/manufactories'}", 
+	          datatype: 'json',
+	          error: function(resp){
+	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
+	          },
+	          success: function(menuGet){
+	        	  console.debug("header success: ");
+			  var menuFact = document.getElementById("menufactory");
+			  menuFact.name = menuGet.manufactories[0].id;
 			  for(i in menuGet.manufactories){
-			  	if(str == menuGet.manufactories[i].name){
-			  		id = menuGet.manufactories[i].id;
-			  		break;
-			  	}
+				  var option = document.createElement("option");
+				  option.text = menuGet.manufactories[i].name;
+				  option.value = menuGet.manufactories[i].name;
+				  menuFact.add(option,menuFact.options[null]);
 			  }
-			  menuFact.name = id;
+			  
 			  $.ajax({
 		            type: 'GET',
-		            url: "${url_api + '/camera_models'}"+id,
+		            datatype: 'json',
+		            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+menuGet.manufactories[0].id,
 		            success: function(modelGet) {
 		            	 var modelist = document.getElementById("model");
+		            	 modelist.name = modelGet.camera_models[0].id;
 						  for(i in modelGet.camera_models){
 							  var option = document.createElement("option");
 							  option.text = modelGet.camera_models[i].name;
@@ -55,29 +38,57 @@
 						  }
 		            }
 		         });
-			  $("#model").change(function () {
-				  var tmpstr = "";
-				  $("#model option:selected").each(function () {
-			            tmpstr = $(this).text();
+			  
+			  $("#menufactory").change(function () {
+				  var str = "";
+				  var id = "";
+				  $("#menufactory option:selected").each(function () {
+			            str = $(this).text();
 			      });
+				  for(i in menuGet.manufactories){
+				  	if(str == menuGet.manufactories[i].name){
+				  		id = menuGet.manufactories[i].id;
+				  		break;
+				  	}
+				  }
+				  menuFact.name = id;
 				  $.ajax({
 			            type: 'GET',
-			            url: "${url_api + '/camera_models'}"+id,
+			            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+id,
+			            datatype: 'json',
 			            success: function(modelGet) {
 			            	 var modelist = document.getElementById("model");
 							  for(i in modelGet.camera_models){
-								  if(tmpstr == modelGet.camera_models[i].name){
-									  modelist.name = modelGet.camera_models[i].id;
-									  break;
-								  }
+								  var option = document.createElement("option");
+								  option.text = modelGet.camera_models[i].name;
+								  option.value = modelGet.camera_models[i].name;
+								  modelist.add(option,modelist.options[null]);
 							  }
 			            }
-			      });
+			         });
+				  $("#model").change(function () {
+					  var tmpstr = "";
+					  $("#model option:selected").each(function () {
+				            tmpstr = $(this).text();
+				      });
+					  $.ajax({
+				            type: 'GET',
+				            url: "${request.config.settings['nokkhum.api.url'] + '/camera_models'}"+id,
+				            success: function(modelGet) {
+				            	 var modelist = document.getElementById("model");
+								  for(i in modelGet.camera_models){
+									  if(tmpstr == modelGet.camera_models[i].name){
+										  modelist.name = modelGet.camera_models[i].id;
+										  break;
+									  }
+								  }
+				            }
+				      });
+				  });
 			  });
+		  }
 		  });
 	  });
-  });
-
 </script>
 <div style="display: none">
 	<form>
