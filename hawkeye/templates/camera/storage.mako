@@ -1,18 +1,49 @@
 <%inherit file="/base/base.mako"/>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			type : 'GET',
+			url : "${request.config.settings['nokkhum.api.url']}/storage/1",
+			datatype : 'json',
+			error : function(resp) { console.debug("header-> : " + JSON.stringify(resp.getAllResponseHeaders())); },
+			success : function(dir) {
+				function generteNextFolder(tmp){
+					$.ajax({
+						type : 'GET',
+						url : "${request.config.settings['nokkhum.api.url']}"+tmp,
+						datatype : 'json',
+						error : function(resp) { console.debug("header-> : " + JSON.stringify(resp.getAllResponseHeaders())); },
+						success : function(dir) {
+							generteFolder(dir.files);
+						}
+					});
+				}
+				function generteFolder(tmp) {
+					for (i in tmp) {
+						$("<div/>", {
+							"class" : "folder",
+							text : tmp[i].name,
+							dblclick :function(){
+								$('#storage').empty();
+								generteNextFolder(tmp[i].url);
+							}
+						}).appendTo('#storage');
+					}
+				}
+				generteFolder(dir.files);
+			}
+		});
+	});
+</script>
 
-<div class="storage-set-background-style">
-	% for file in files:
-		% if file['file']:
-		${file['name']} <a href="/camera/files?files_url=${file['download']}&camera_id=${camera['id']}">view</a> <a href="/camera/files/delete?files_url=${file['url']}">delete</a><br/>
-		% else:
-		${file['name']} <a href="/camera/storage?files_url=${file['url']}&camera_id=${camera['id']}">view</a> <a href="/camera/files/delete?files_url=${file['url']}">delete</a><br/>
-		% endif
-          % endfor
-	<div>
-	% if route is not None:
-		##${route}<br/>
-		<a href=${route}><input type="button" value="Back"></a>
+<div class="menu">
+    <ul class="button-group" >
+		<li><a class="button"><</a></li>
+		<li><a class="button">></a></li>
+    </ul>
+	% if route is not None: 
+		<a href=${route}>Back</a> 
 	% endif
-	<a href="/home"><input type="button"  value="Home"></a>
-	</div>
+		<a href="/home">Home</a>
 </div>
+<div id="storage"></div>

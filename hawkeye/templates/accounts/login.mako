@@ -1,52 +1,21 @@
 <%inherit file="/base/base.mako"/>
 
-<script>
-	$(function() {
-		$("#login").button();
-		$("#register").button();
-		$("#exit").button();
-	});
-</script>
-<div></div>
-<div class="ui-overlay">
-	<div class="ui-widget-overlay"></div>
-	<div class="ui-widget-shadow ui-corner-all login-set-shadow-style"></div>
+<div id="login">
+	<div class="logo"></div>
+	% if message: 
+		<div class="validate">${message}</div> 
+	% elif form.get_error('email'):
+		<div class="validate">${form.get_error('email')}</div>
+	% elif form.get_error('password'):
+		<div class="validate">${form.get_error('password')}</div> 
+	% endif
+	<form action="/login" autocomplete="on">
+		${form.email(placeholder="Username")}
+		${form.password(placeholder="Password")}
+		<ul class="button-group">
+			<li><input type="submit" class="button" value="Login" /></li>
+			<li><a href="/register" class="button">Register</a></li>
+			<li><a href="/exit" class="button">Exit</a></li>
+		</ul>
+	</form>
 </div>
-<div class="ui-widget ui-widget-content ui-corner-all login-set-content-style">
-	<div class="ui-dialog-content ui-widget-content login-set-content-inner-style">
-		<form action="/login" method="post">
-		<div class="form-name">:: Login Form ::</div>
-			<dl>
-				<dt>
-					<label for="email">Email :</label>
-				</dt>
-				<dd>
-					${form.email(class_='text ui-widget-content ui-corner-all')}
-				</dd>
-			</dl>
-			<dl>
-				<dt>
-					<label for="password">Password :</label>
-				</dt>
-				<dd>
-					${form.password(class_='text ui-widget-content ui-corner-all')}
-				</dd>
-			</dl>
-			<div class="form-message">
-				% if message: 
-					${message}
-				% elif form.get_error('email'):
-					${form.get_error('email')}
-				% elif form.get_error('password'): 
-			    	${form.get_error('password')}
-				% endif
-			</div>
-			<div class="form-button">
-				<button id="login" class="login-button">Login</button>
-				<a href='/register'><button id="register" class="login-button">Register</button></a>
-				<a href='/exit'><button id="exit" class="login-button">Exit</button></a>
-			</div>
-		</form>
-	</div>
-</div>
-

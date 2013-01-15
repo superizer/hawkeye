@@ -1,5 +1,6 @@
 <%inherit file="/base/base.mako"/>
 
+
 <script>
 	$(function() {
 		$("#register").button();

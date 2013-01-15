@@ -1,6 +1,6 @@
 <%inherit file="/base/base.mako"/>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
-<script>
+<script type="text/javascript">
 	var oldoption = ${cameras};
 	var projectid = ${project['id']};
 	var userid = ${project['user']['id']};
