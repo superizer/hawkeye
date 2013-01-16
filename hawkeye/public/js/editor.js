@@ -1,15 +1,15 @@
 var stage = new Kinetic.Stage({
 	container : 'container',
-	width : window.innerWidth,
-	height : window.innerHeight
+	width : window.innerWidth - 20,
+	height : window.innerHeight - 20
 });
 
 var stageLayer = new Kinetic.Layer();
 var stageBackground = new Kinetic.Rect({
 	x : 0,
 	y : 40,
-	width : window.innerWidth,
-	height : window.innerHeight - 40,
+	width : window.innerWidth - 20,
+	height : window.innerHeight - 60,
 	fill : '#ffffff'
 });
 stageLayer.add(stageBackground);
@@ -153,14 +153,14 @@ stage.on("mouseup", function() {
 });
 
 window.onresize = function() {
-	stage.setWidth(window.innerWidth);
-	stage.setHeight(window.innerHeight);
-	stageBackground.setWidth(window.innerWidth);
-	stageBackground.setHeight(window.innerHeight - 40);
-	menu.proBackground.setWidth(window.innerWidth);
-	menu.menuBackground.setWidth(window.innerWidth);
-	menu.save.setX(window.innerWidth - 260);
-	menu.cancel.setX(window.innerWidth - 130);
+	stage.setWidth(window.innerWidth-20);
+	stage.setHeight(window.innerHeight-20);
+	stageBackground.setWidth(window.innerWidth-20);
+	stageBackground.setHeight(window.innerHeight - 60);
+	menu.proBackground.setWidth(window.innerWidth-20);
+	menu.menuBackground.setWidth(window.innerWidth-20);
+	menu.save.setX(window.innerWidth - 280);
+	menu.cancel.setX(window.innerWidth - 150);
 	stageLayer.draw();
 	menu.layer.draw();
 };

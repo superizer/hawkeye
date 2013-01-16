@@ -1,7 +1,9 @@
 <%inherit file="/base/base.mako"/> 
+<%block>
 <style>
 .ui-menu { position: absolute; width: 100px; }
 </style>
+</%block>
 
 <%block name='script'>
 <script>
@@ -36,13 +38,13 @@
 		    % for camera in project['cameras']:
 	    		  $.ajax({
 	    			  type: 'GET',
-	    	          url: "${request.config.settings['nokkhum.api.url'] + '/manufactories'}", 
+	    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/status", 
 	    	          datatype: 'json',
 	    	          error: function(resp){
 	    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
 	    	          },
 	    	          success: function(chonf){
-	    	        	  
+	    	        	  alert(JSON.stringify(chonf,null,'\t'));
 	    	          }
 	    	      });
 		    	$("#live-${y}").button();

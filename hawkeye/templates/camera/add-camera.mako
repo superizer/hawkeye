@@ -1,5 +1,8 @@
 <%inherit file="/base/base.mako"/>
+<%block>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
+</%block>
+<%block name='script'>
 <script type="text/javascript">
 	var oldoption = undefined;
 	var projectid = ${project['id']};
@@ -92,6 +95,7 @@
   });
 
 </script>
+</%block>
 <div style="display: none">
 	<form>
 		<input type="hidden" id="project_id" name="id" value="${project['id']}"/>
