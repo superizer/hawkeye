@@ -10,10 +10,11 @@
 <script type="text/javascript" src="${base_url}/public/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="${base_url}/public/js/jquery-ui-1.9.2.custom.js"></script>
 <script type="text/javascript" src="${base_url}/public/js/jquery-ui-1.9.2.custom.min.js"></script>
-
+<%block name='script'></%block>
 </head>
 
 <body>
+    <%block name='menu'></%block>
 	<div id="wrapper">
 		${next.body()}
 	</div>

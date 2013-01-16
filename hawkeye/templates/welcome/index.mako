@@ -1,16 +1,70 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/base.mako"/> 
+<style>
+.ui-menu { position: absolute; width: 100px; }
+</style>
+
+<%block name='script'>
 <script>
 	$(function() {
 		$("#accordion").accordion({
-			collapsible : true,
+			collapsible : false,
 			heightStyle: "content"
 			});
 		<% x = 0 %>
 		<% y = 0 %>
 		% for project in projects:
-			$("#menu-project-${x}").buttonset();
+			$( "#pmenu-${x}" )
+				.button()
+					.next()
+		        		.button({
+		          			text: false,
+		          			icons: {
+		            		primary: "ui-icon-triangle-1-s"
+		          			}
+		        		})
+		        	.click(function() {
+		          		var menu = $( this ).parent().next().show().position({
+		            		my: "left top",
+		            		at: "left bottom",
+		            		of: this
+		          		}).css('z-index',1000);
+		    			$( document ).one( "click", function() {
+		    				menu.hide();
+		   				});
+		          		return false;
+		        	}).parent().buttonset().next().hide().menu();
 		    % for camera in project['cameras']:
-		    	$("#menu-project-camera-${y}").buttonset();
+	    		  $.ajax({
+	    			  type: 'GET',
+	    	          url: "${request.config.settings['nokkhum.api.url'] + '/manufactories'}", 
+	    	          datatype: 'json',
+	    	          error: function(resp){
+	    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
+	    	          },
+	    	          success: function(chonf){
+	    	        	  
+	    	          }
+	    	      });
+		    	$("#live-${y}").button();
+		    	$("#stor-${y}").button().next()
+        		.button({
+          			text: false,
+          			icons: {
+            		primary: "ui-icon-triangle-1-s"
+          			}
+        		})
+        		.click(function() {
+	          		var menu = $( this ).parent().next().show().position({
+	            		my: "left top",
+	            		at: "left bottom",
+	            		of: this
+	          		}).css('z-index',1000);
+	          		menu.zIndex();
+	    			$( document ).one( "click", function() {
+	    				menu.hide();
+	   				});
+	          		return false;
+        			}).parent().buttonset().next().hide().menu();
 		    	<% y = y + 1 %>
 			% endfor
 		    <% x = x + 1 %>
@@ -18,53 +72,86 @@
 		$("#addProject").button();
 		$("#profile").button();
 		$("#logout").button();
+		
 	});
 </script>
+</%block>
 <!-- <p1>Project:</p1>-->
 <!-- <p1>${form.project()}</p1>   -->
 <!-- <a href ="/edit">Edit Project</a> -->
-<div class="main-menu">
-<a href="/project/add"><button id="addProject">Add Project</button></a>
-<div class="main-menu-right">
-<a href="/profile"><button id="profile">Profile</button></a>
-<a href="/logout"><button id="logout">Logout</button></a>
+<%block name='menu'>
+<div class="menu">
+	<a href="/project/add" id="addProject">Add Project</a>
+	<div class="right"> 
+		<a href="/profile" id="profile">Profile</a> 
+		<a href="/logout" id="logout">Logout</a>
+	</div>
 </div>
+</%block>
 <!-- <a href="/delete">Delete Project</a> -->
-</div>
 <%doc>
 <a href="/observe">Observe</a>
-<a href="/exit">Exit</a></br></br></br>
-<a href="/live">Live</a></a></br></br></br>
+<a href="/exit">Exit</a>
+</br>
+</br>
+</br>
+<a href="/live">Live</a>
+</a>
+</br>
+</br>
+</br>
 </%doc>
-<div style="margin:0 12px 0 12px;">
+
 <div id="accordion">
 <% x = 0 %>
 <% y = 0 %>
 % for project in projects:
 	<h3>${project['name']}</h3>
 	<div>
-		<div class="menu-project">
-			<div id="menu-project-${x}">
-				<label for="radio1"><a href = "/camera/add?id=${project['id']}"><span class="ui-icon ui-icon-circle-plus index-icon-button" ></span>Add camera</a></label>
-				<label for="radio2"><a href ="/project/edit?id=${project['id']}"><span class="ui-icon ui-icon-wrench index-icon-button" ></span>Edit project</a></label>
-				<label for="radio3"><a href ="/project/delete?id=${project['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete project</a></label>
-			</div>
+		<div class="pmenu">
+		  <div>
+		    <a id="pmenu-${x}" href = "/camera/add?id=${project['id']}">Add camera</a>
+		    <button id="select">Select an action</button>
+		  </div>
+		  <ul>
+		    <li><a href ="/project/edit?id=${project['id']}">Edit project</a></li>
+		    <li><a href ="/project/delete?id=${project['id']}">Delete project</a></li>
+		  </ul>
 		</div>
-		<div class="des-project">
+		<div class="pdes">
+			Description :
 			%if project['description'] != "":
-				  Description : ${project['description']}
+				  ${project['description']}
+		    %else:
+		    	  N / A
 			%endif
 		</div>
 		<ul>
 		% for camera in project['cameras']:
 		    <li> 
-			    <div class="list-camera-project">
+			    <div class="pclist">
 			        ${camera['name']}
-				    <div id="menu-project-camera-${y}" class="index-camera-list-tool menu-project-camera">
-						<label for="radio1"><a href = "/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}"><span class="ui-icon ui-icon-wrench index-icon-button" ></span>Edit</a></label>
-						<label for="radio2"><a href = "/camera/storage?camera_id=${camera['id']}"><span class="ui-icon ui-icon-disk index-icon-button" ></span>Storage</a></label>
-						<label for="radio3"><a href = "/camera/delete?camera_id=${camera['id']}"><span class="ui-icon ui-icon-trash index-icon-button" ></span>Delete</a></label>
-						<label for="radio4"><a href = "/live?camera_id=${camera['id']}"><span class="ui-icon ui-icon-video index-icon-button" ></span>Live</a></label>
+			        <div class="pclist-t">
+						<div class="pcslist-t">	        
+				        	<div>
+							    <a id="live-${y}" href = "/live?camera_id=${camera['id']}">Live</a>
+		 						<a id="stor-${y}" href = "/camera/storage?camera_id=${camera['id']}">Storage</a>
+		   						<button id="select">Select an action</button>
+		 					</div>
+		 					<ul>
+				    			<li><a href = "/camera/edit?camera_id=${camera['id']}&project_id=${project['id']}">Edit</a></li>
+				    			<li><a href = "/camera/delete?camera_id=${camera['id']}">Delete</a></li>
+							</ul>
+						</div>
+						<div class="on-pcslist-t">
+							<div class="onoffswitch">
+							    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-${y}" checked>
+							    <label class="onoffswitch-label" for="myonoffswitch-${y}">
+							        <div class="onoffswitch-inner"></div>
+							        <div class="onoffswitch-switch"></div>
+							    </label>
+							</div>	
+						</div>
 					</div>
 				</div>
 			</li>
@@ -74,7 +161,6 @@
 	</div>
 	<% x = x + 1 %>
 % endfor
-</div>
 </div>
 </div>
 </div>

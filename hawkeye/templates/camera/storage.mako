@@ -1,4 +1,5 @@
 <%inherit file="/base/base.mako"/>
+<%block name='script'>
 <script type="text/javascript">
 	$(function() {
 		$.ajax({
@@ -35,8 +36,9 @@
 		});
 	});
 </script>
-
-<div class="menu">
+</%block>
+<%block name='menu'>
+<div  class="menu">
     <ul class="button-group" >
 		<li><a class="button"><</a></li>
 		<li><a class="button">></a></li>
@@ -46,4 +48,5 @@
 	% endif
 		<a href="/home">Home</a>
 </div>
+</%block>
 <div id="storage"></div>
