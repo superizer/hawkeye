@@ -264,16 +264,11 @@ html,body {
 	-webkit-animation-iteration-count: 1;
 }
 
-@
--webkit-keyframes Opacity {
-	from {opacity: 1.0;
+@-webkit-keyframes Opacity {
+	from {opacity: 1.0;}
+    to {opacity: 0.0;}
 }
 
-to {
-	opacity: 0.0;
-}
-
-}
 #login input[type=text],input[type=password] {
 	width: 232px;
 	height: 26px;
@@ -318,26 +313,7 @@ to {
 	margin: 2px 0 0 0;
 }
 
-.main-menu {
-	clear: both;
-	margin: 10px 10px 0 10px;
-}
 
-.main-menu-right {
-	clear: both;
-	float: right;
-}
-
-.menu-project {
-	clear: both;
-	float: right;
-}
-
-.des-project {
-	clear: both;
-	word-wrap: break-word;
-	margin: 45px 0 0 0;
-}
 /* --- storage --- */
 #storage {
 	clear: both;
