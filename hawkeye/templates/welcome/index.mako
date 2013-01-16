@@ -36,17 +36,47 @@
 		          		return false;
 		        	}).parent().buttonset().next().hide().menu();
 		    % for camera in project['cameras']:
-	    		  $.ajax({
-	    			  type: 'GET',
-	    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/status", 
-	    	          datatype: 'json',
-	    	          error: function(resp){
-	    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
-	    	          },
-	    	          success: function(chonf){
-	    	        	  alert(JSON.stringify(chonf,null,'\t'));
-	    	          }
-	    	      });
+	    		$.ajax({
+    			  type: 'GET',
+    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/operating", 
+    	          datatype: 'json',
+    	          error: function(resp){
+    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
+    	          },
+    	          success: function(chonf){
+					  if(chonf.camera.operating.status == 'Running'){
+						  $('#myonoffswitch-${y}').attr('checked','checked');
+					  }
+					  $('#myonoffswitch-${y}').click(function() {
+						  $.ajax({
+			    			  type: 'GET',
+			    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/operating", 
+			    	          datatype: 'json',
+			    	          error: function(resp){
+			    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
+			    	          },
+			    	          success: function(chonf){
+			    	        	  if(chonf.camera.operating.status == 'Running'){
+									  $.ajax({
+						    			  type: 'POST',
+						    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/operating",
+						    	          data: JSON.stringify({'camera_operating' : { 'action' : 'stop' }}),
+						    	          datatype: 'json'
+						    	      });
+								  }else{
+									  $.ajax({
+						    			  type: 'POST',
+						    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/operating",
+						    	          data: JSON.stringify({'camera_operating' : { 'action' : 'start' }}),
+						    	          datatype: 'json'
+						    	      });
+								  }
+			    	          }
+						  });
+					  });
+				  }
+	    	    });
+		    
 		    	$("#live-${y}").button();
 		    	$("#stor-${y}").button().next()
         		.button({
@@ -147,7 +177,7 @@
 						</div>
 						<div class="on-pcslist-t">
 							<div class="onoffswitch">
-							    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-${y}" checked>
+							    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-${y}">
 							    <label class="onoffswitch-label" for="myonoffswitch-${y}">
 							        <div class="onoffswitch-inner"></div>
 							        <div class="onoffswitch-switch"></div>
