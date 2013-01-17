@@ -32,8 +32,10 @@ if (oldoption != undefined) {
 					tmp.pre.push(tmpnode);
 					tmpnode.addLine(tmp);
 					generate(tmpjson.processors[i], tmp);
-					tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
-					tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
+					if(tmpnode.json.camera == undefined){
+						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+						tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
+					}
 					break;
 				case "Face Detector":
 					var tmp = new Processor("Face Detector");
@@ -42,8 +44,10 @@ if (oldoption != undefined) {
 					tmp.pre.push(tmpnode);
 					tmpnode.addLine(tmp);
 					generate(tmpjson.processors[i], tmp);
-					tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
-					tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
+					if(tmpnode.json.camera == undefined){
+						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+						tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
+					}
 					break;
 				case "Video Recorder":
 					var tmp = new Processor("Video Recorder");
@@ -51,8 +55,10 @@ if (oldoption != undefined) {
 					tmpnode.next.push(tmp);
 					tmp.pre.push(tmpnode);
 					tmpnode.addLine(tmp);
-					generate(tmpjson.processors[i], tmp);
-					tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+					if(tmpnode.json.camera == undefined){
+						generate(tmpjson.processors[i], tmp);
+						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+					}
 					break;
 				case "Image Recorder":
 					var tmp = new Processor("Image Recorder");
@@ -60,8 +66,10 @@ if (oldoption != undefined) {
 					tmpnode.next.push(tmp);
 					tmp.pre.push(tmpnode);
 					tmpnode.addLine(tmp);
-					generate(tmpjson.processors[i], tmp);
-					tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+					if(tmpnode.json.camera == undefined){
+						generate(tmpjson.processors[i], tmp);
+						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+					}
 					break;
 				}
 			}
@@ -74,7 +82,7 @@ if (oldoption != undefined) {
 			offsetEnd = generatepoint(nodes.next[i],level+1,offsetEnd);
 		}
 		var offset;
-		if(nodes.next.length == 0){
+		if(nodes.next != undefined){
 			offset = offsetEnd;
 			offsetEnd += 140;
 		}else{
@@ -86,17 +94,19 @@ if (oldoption != undefined) {
 		nodes.updateline();
 		return offsetEnd;
 	}
-
+	
 //	camera.shape.setX(window.innerWidth / 2 - camera.shape.getWidth() / 2);
 //	camera.layer.draw();
+	//oldoption.camera.processors = JSON.parse(oldoption.camera.processors);
+	
 	camera.json = JSON.parse(JSON.stringify(oldoption));
 	camera.json.camera.processors.splice(0,camera.json.camera.processors.length);
 	generate(oldoption.camera, camera);
-	generatepoint(camera, 0, 10)
+	generatepoint(camera, 0, 100);
 }else{
 	camera.json.camera.project.id = projectid;
 	camera.json.camera.user.id = userid;
-	camera.json.camera.fps = $('#fps').val();
+	camera.json.camera.fps = parseInt($('#fps').val());
 	camera.json.camera.model.name = $('#model').val();
 	camera.json.camera.model.manufactory.name= $('#menufactory').val();
 	camera.json.camera.image_size = $('#imagesize').val();
@@ -153,14 +163,14 @@ stage.on("mouseup", function() {
 });
 
 window.onresize = function() {
-	stage.setWidth(window.innerWidth-20);
-	stage.setHeight(window.innerHeight-20);
-	stageBackground.setWidth(window.innerWidth-20);
-	stageBackground.setHeight(window.innerHeight - 60);
-	menu.proBackground.setWidth(window.innerWidth-20);
-	menu.menuBackground.setWidth(window.innerWidth-20);
-	menu.save.setX(window.innerWidth - 280);
-	menu.cancel.setX(window.innerWidth - 150);
+	stage.setWidth(window.innerWidth -20);
+	stage.setHeight(window.innerHeight -20);
+	stageBackground.setWidth(window.innerWidth -20);
+	stageBackground.setHeight(window.innerHeight -60);
+	menu.proBackground.setWidth(window.innerWidth -20);
+	menu.menuBackground.setWidth(window.innerWidth -20);
+	menu.save.setX(window.innerWidth -280);
+	menu.cancel.setX(window.innerWidth -150);
 	stageLayer.draw();
 	menu.layer.draw();
 };
@@ -170,24 +180,24 @@ function Camera() {
 	this.next = new Array();
 	this.nextline = new Array();
 	this.json = {
-		"camera" : {
-			"username": "",
-			"status": "",
-			"create_date": "",
-			"name": "",
-			"storage_periods": 0,
-			"url": "",
-			"fps": 0,
-			"image_size": "",
+		'camera' : {
+			'username': '',
+			'status': '',
+			'create_date': '',
+			'name': '',
+			'storage_periods': 0,
+			'url': '',
+			'fps': 0,
+			'image_size': '',
 			'model': {'name': '', 
 				      'manufactory': {'name': '', 
-				    	              'id': ''
+				    	              'id': 0
 				    	              },
-				      'id': ''},
-			"password": "",
-			'project' : {'id':''}, 
-			'user':{'id':''},
-			"id": "",
+				      'id': 0},
+			"password": '',
+			'project' : {'id': 0}, 
+			'user':{'id': 0},
+			"id": 0,
 			"processors" : []
 		    }
 		};
@@ -249,6 +259,8 @@ function Camera() {
 		tmpthis.updateline();
 	});
 	tmpthis.shape.on('dblclick',function() {
+
+		alert(JSON.stringify(tmpthis.json));
 						if (sTatus == undefined) {
 							var name = $("#name"), url = $("#url"),manufactory=$("#menufactory"),recordstore=$("#recordstore"),imagesize = $("#imagesize"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
 							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password);
@@ -274,14 +286,13 @@ function Camera() {
 
 														tmpthis.json.camera.name = name.val();
 														tmpthis.json.camera.url = url.val();
-														tmpthis.json.camera.fps = fps.val();
+														tmpthis.json.camera.fps = parseInt(fps.val());
 														tmpthis.json.camera.model.name = model.val();
 														tmpthis.json.camera.model.manufactory.name= manufactory.val();
-														tmpthis.json.camera.storage_periods=recordstore.val();
+														tmpthis.json.camera.storage_periods = parseInt(recordstore.val());
 														tmpthis.json.camera.image_size = imagesize.val();
 														tmpthis.json.camera.username = username.val();
 														tmpthis.json.camera.password = password.val();
-														
 														$(this).dialog("close");
 
 													},
@@ -377,7 +388,7 @@ function Processor(name) {
 			"interval" : 0,
 			"resolution" : 0,
 			"processors" : [],
-			"drop_motion" : 0
+			"drop_motion" : 10
 		};
 		this.shape = new Kinetic.Text({
 			x : 10,
@@ -644,9 +655,9 @@ function Processor(name) {
 													buttons : {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
-															tmpthis.json.interval = interval.val();
-															tmpthis.json.resolution = resolution.val();
-															tmpthis.json.drop_motion = dropmotion.val();
+															tmpthis.json.interval = parseInt(interval.val());
+															tmpthis.json.resolution = parseInt(resolution.val());
+															tmpthis.json.drop_motion = parseInt(dropmotion.val());
 															$(this).dialog("close");
 														},
 														Cancel : function() {
@@ -672,7 +683,7 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 
-															tmpthis.json.interval = interval.val();
+															tmpthis.json.interval = parseInt(interval.val());
 															$(this).dialog("close");
 														},
 														Cancel : function() {
@@ -703,11 +714,11 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 
-															tmpthis.json.width = width.val();
-															tmpthis.json.height = height.val();
-															tmpthis.json.maximum_wait_motion = maximumwaitmotion.val();
-															tmpthis.json.fps = fps.val();
-															tmpthis.json.record_motion = recordmotion.val();
+															tmpthis.json.width = parseInt(width.val());
+															tmpthis.json.height = parseInt(height.val());
+															tmpthis.json.maximum_wait_motion = parseInt(maximumwaitmotion.val());
+															tmpthis.json.fps = parseInt(fps.val());
+															tmpthis.json.record_motion = recordmotion.val() == "true";
 															$(this).dialog("close");
 														},
 														Cancel : function() {
@@ -735,8 +746,8 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 
-															tmpthis.json.width = width.val();
-															tmpthis.json.height = height.val();
+															tmpthis.json.width = parseInt(width.val());
+															tmpthis.json.height = parseInt(height.val());
 															$(this).dialog("close");
 														},
 														Cancel : function() {

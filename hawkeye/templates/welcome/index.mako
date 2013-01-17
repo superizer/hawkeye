@@ -1,5 +1,5 @@
 <%inherit file="/base/base.mako"/> 
-<%block>
+<%block name='style'>
 <style>
 .ui-menu { position: absolute; width: 100px; }
 </style>

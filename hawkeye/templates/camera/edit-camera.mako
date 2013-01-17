@@ -1,7 +1,8 @@
 <%inherit file="/base/base.mako"/>
+<%! import json %>
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-	var oldoption = ${cameras};
+	var oldoption = ${json.dumps(cameras)};
 	var projectid = ${project['id']};
 	var userid = ${project['user']['id']};
 	 $(function(){

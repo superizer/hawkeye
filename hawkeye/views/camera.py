@@ -152,8 +152,13 @@ def delete_files(request):
 def live(request):
     camera_id = int(request.matchdict.get('camera_id'))
     data =request.nokkhum_client.camera.get_camera(camera_id);
-    print('url', data['camera']['url'])
-    data['camera']['url'] = 'http://admin:123zxc@172.30.235.183/image/jpeg.cgi'
+    url = data['camera']['url']
+    pos = url.rfind('/')
+    url = url[:pos]
+    pos = url.rfind('/')
+    print('pos',pos)
+    url = url[:pos] + '/image/jpeg.cgi?.jpg'
+    print('url', url)
     return dict(
-                url = data['camera']['url']
+                url = url
                 )
