@@ -175,8 +175,8 @@
 	<div id="Image-Recorder-form" title="Edit Image Recorder">
 		<form>
 			<fieldset>
-				<label for="height">Height</label> <input type="text" name="height" id="height" class="text ui-widget-content ui-corner-all" /> 
-				<label for="width">Width</label> <input type="text" name="width" id="width" class="text ui-widget-content ui-corner-all" />
+				<label for="height">Height</label> <input type="text" name="height" id="height-img" class="text ui-widget-content ui-corner-all" /> 
+				<label for="width">Width</label> <input type="text" name="width" id="width-img" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
 		</form>
 	</div>

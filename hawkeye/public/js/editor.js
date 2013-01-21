@@ -730,12 +730,10 @@ function Processor(name) {
 												});
 								$("#Video-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Image Recorder") {
-								var width = $("#width"), height = $("#height"), 
+								var width = $("#width-img"), height = $("#height-img"), 
 								allFields = $([]).add(width).add(height);
-
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
-
 								$("#Image-Recorder-form").dialog({
 													autoOpen : false,
 													height : 300,
@@ -744,7 +742,6 @@ function Processor(name) {
 													buttons : {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
-
 															tmpthis.json.width = parseInt(width.val());
 															tmpthis.json.height = parseInt(height.val());
 															$(this).dialog("close");
