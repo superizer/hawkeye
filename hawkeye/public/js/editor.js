@@ -260,7 +260,6 @@ function Camera() {
 	});
 	tmpthis.shape.on('dblclick',function() {
 
-		alert(JSON.stringify(tmpthis.json));
 						if (sTatus == undefined) {
 							var name = $("#name"), url = $("#url"),manufactory=$("#menufactory"),recordstore=$("#recordstore"),imagesize = $("#imagesize"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
 							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password);
