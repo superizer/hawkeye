@@ -1,15 +1,15 @@
 var stage = new Kinetic.Stage({
 	container : 'container',
-	width : window.innerWidth - 20,
-	height : window.innerHeight - 20
+	width : window.innerWidth ,
+	height : window.innerHeight
 });
 
 var stageLayer = new Kinetic.Layer();
 var stageBackground = new Kinetic.Rect({
 	x : 0,
 	y : 40,
-	width : window.innerWidth - 20,
-	height : window.innerHeight - 60,
+	width : window.innerWidth ,
+	height : window.innerHeight - 40,
 	fill : '#ffffff'
 });
 stageLayer.add(stageBackground);
@@ -163,14 +163,14 @@ stage.on("mouseup", function() {
 });
 
 window.onresize = function() {
-	stage.setWidth(window.innerWidth -20);
-	stage.setHeight(window.innerHeight -20);
-	stageBackground.setWidth(window.innerWidth -20);
-	stageBackground.setHeight(window.innerHeight -60);
-	menu.proBackground.setWidth(window.innerWidth -20);
-	menu.menuBackground.setWidth(window.innerWidth -20);
-	menu.save.setX(window.innerWidth -280);
-	menu.cancel.setX(window.innerWidth -150);
+	stage.setWidth(window.innerWidth );
+	stage.setHeight(window.innerHeight );
+	stageBackground.setWidth(window.innerWidth );
+	stageBackground.setHeight(window.innerHeight -40);
+	menu.proBackground.setWidth(window.innerWidth );
+	menu.menuBackground.setWidth(window.innerWidth );
+	menu.save.setX(window.innerWidth -260);
+	menu.cancel.setX(window.innerWidth -130);
 	stageLayer.draw();
 	menu.layer.draw();
 };
@@ -385,7 +385,7 @@ function Processor(name) {
 		this.json = {
 			"name" : "Motion Detector",
 			"interval" : 0,
-			"resolution" : 0,
+			"sensitive" : 0.0,
 			"processors" : [],
 			"drop_motion" : 10
 		};
@@ -639,13 +639,13 @@ function Processor(name) {
 					function() {
 						if (sTatus == undefined) {
 							if (tmpthis.json.name == "Motion Detector") {
-								var interval = $("#interval"), resolution = $("#resolution"), dropmotion = $("#dropmotion"), 
-								allFields = $([]).add(interval).add(resolution).add(dropmotion);
+								var interval = $("#interval"), sensitive = $("#sensitive"), dropmotion = $("#dropmotion"), 
+								allFields = $([]).add(interval).add(sensitive).add(dropmotion);
 
 								interval.val(tmpthis.json.interval);
-								resolution.val(tmpthis.json.resolution);
+								sensitive.val(tmpthis.json.sensitive);
 								dropmotion.val(tmpthis.json.drop_motion);
-
+								
 								$("#Motion-Detector-form").dialog({
 													autoOpen : false,
 													height : 300,
@@ -655,7 +655,7 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 															tmpthis.json.interval = parseInt(interval.val());
-															tmpthis.json.resolution = parseInt(resolution.val());
+															tmpthis.json.sensitive = parseFloat(sensitive.val());
 															tmpthis.json.drop_motion = parseInt(dropmotion.val());
 															$(this).dialog("close");
 														},

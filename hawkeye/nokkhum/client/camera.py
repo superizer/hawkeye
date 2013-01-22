@@ -73,6 +73,7 @@ class Camera:
     
     def get_storage(self, id):
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        print("url: ", self.url + '/storage/' + str(id))
         r = requests.get(self.url + '/storage/' + str(id), headers=self.headers)
         return r.json()
     

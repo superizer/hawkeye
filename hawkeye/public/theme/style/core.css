@@ -1,113 +1,26 @@
-html,body {
+html,body{
 	margin: 0;
-	padding: 0;
-	height: 100%;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
 	box-shadow: inset 0px 0px 30px 20px rgba(0, 0, 0, 0.6);
 	background-image: url('images/background.png');
 	background-repeat: repeat;
-	overflow: hidden;
 }
 
 #wrapper {
+	position: absolute;
+    overflow: auto;
+    left: 0;
+    right: 0;
+    top: 42px;
+    bottom: 0;
 	font-family: arial, helvetica, sans-serif;
-	height: 100%;
-	width: auto;
-	padding: 12px;
-	overflow: auto;
+	/* border: 5px solid red; */
 }
 
-/* --- button --- */
-
-.button {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-	padding: 6px 20px;
-	margin: 0;
-	cursor: pointer;
-	border: 1px solid #bbb;
-	overflow: visible;
-	font: bold 13px arial, helvetica, sans-serif;
-	text-decoration: none;
-	white-space: nowrap;
-	color: #555;
-	background-color: #ddd;
-	background-image: linear-gradient(top, rgba(255, 255, 255, 1),
-		rgba(255, 255, 255, 0) ),
-		url(data:image/png;base64,iVBORw0KGg[...]QmCC);
-	transition: background-color .2s ease-out;
-	background-clip: padding-box; /* Fix bleeding */
-	border-radius: 3px;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5),
-		0 1px 0 rgba(255, 255, 255, .3) inset;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
-}
-
-.button:hover {
-	background-color: #eee;
-	color: #555;
-}
-
-.button:active {
-	background: #e9e9e9;
-	position: relative;
-	top: 1px;
-	text-shadow: none;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
-}
-
-.button-group,.button-group li {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-}
-
-.button-group {
-	font-size: 0; /* Inline block elements gap - fix */
-	margin: 0;
-	padding: 0;
-	/*background: rgba(0, 0, 0, .04);*/
-	/*border-bottom: 1px solid rgba(0, 0, 0, .07);*/
-	/*padding: 7px;*/
-	/*border-radius: 7px;*/
-}
-
-#login .button-group {
-	font-size: 0; /* Inline block elements gap - fix */
-	margin: 0 7px 5px 7px;
-	padding: 0;
-}
-
-.button-group li {
-	margin-right: -1px; /* Overlap each right button border */
-}
-
-.button-group .button {
-	font-size: 13px; /* Set the font size, different from inherited 0 */
-	border-radius: 0;
-}
-
-.button-group .button:active {
-	box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px
-		rgba(0, 0, 0, .2) inset, -5px 0 5px -3px rgba(0, 0, 0, .2) inset;
-}
-
-.button-group li:first-child .button {
-	border-radius: 3px 0 0 3px;
-}
-
-.button-group li:first-child .button:active {
-	box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, -5px 0 5px -3px
-		rgba(0, 0, 0, .2) inset;
-}
-
-.button-group li:last-child .button {
-	border-radius: 0 3px 3px 0;
-}
-
-.button-group li:last-child .button:active {
-	box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px
-		rgba(0, 0, 0, .2) inset;
+.nomenu{
+	top:0;
 }
 
 .onoffswitch {
@@ -249,6 +162,11 @@ html,body {
 	
 }
 
+#login .centered{
+	width:193px;
+	margin:0 9px 0 auto;
+}
+
 #login .validate {
 	position: absolute;
 	width: 220px;
@@ -278,6 +196,143 @@ html,body {
 	font-size: 14px;
 	-webkit-border-radius: 3px;
 }
+
+/* --- register --- */
+
+#register {
+	background-color: #fff;
+	position: absolute;
+	width: 250px;
+	height: 220px;
+	left: 50%;
+	top: 50%;
+	margin-left: -125px;
+	margin-top: -110px;
+	padding: 12px 5px 0px 5px;
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 20px 0.8px #000;
+}
+
+#register input[type=text],input[type=password] {
+	width: 232px;
+	height: 26px;
+	margin: 0 7px 5px 7px;
+	background: #efefef;
+	border: 1px solid #dedede;
+	font-size: 14px;
+	-webkit-border-radius: 3px;
+}
+
+#register .centered{
+	width:215px;
+	margin:0 9px 0 auto;
+}
+
+#register .validate {
+	position: absolute;
+	width: 220px;
+	margin: -50px 7px 0px 7px;
+	background: #ff3366;
+	border: 1px solid #ff6699;
+	padding: 6px;
+	font-size: 14px;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	opacity: 0.0;
+	-webkit-animation: Opacity 3s;
+	-webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes Opacity {
+	from {opacity: 1.0;}
+    to {opacity: 0.0;}
+}
+
+/* --- addproject & editproject--- */
+
+#addproject {
+	background-color: #fff;
+	position: absolute;
+	width: 250px;
+	height: 176px;
+	left: 50%;
+	top: 50%;
+	margin-left: -125px;
+	margin-top: -88px;
+	padding: 12px 5px 0px 5px;
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 20px 0.8px #000;
+}
+
+#addproject input[type=text],input[type=password],textarea {
+	width: 232px;
+	height: 26px;
+	margin: 0 7px 5px 7px;
+	background: #efefef;
+	border: 1px solid #dedede;
+	font-size: 14px;
+	-webkit-border-radius: 3px;
+}
+
+#addproject textarea {
+	width: 232px;
+	height: 78px;
+	margin: 0 7px 5px 7px;
+	background: #efefef;
+	border: 1px solid #dedede;
+	font-size: 14px;
+	-webkit-border-radius: 3px;
+}
+
+#addproject .centered{
+	width:195px;
+	margin:0 9px 0 auto;
+}
+
+#addproject .validate {
+	position: absolute;
+	width: 220px;
+	margin: -50px 7px 0px 7px;
+	background: #ff3366;
+	border: 1px solid #ff6699;
+	padding: 6px;
+	font-size: 14px;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	opacity: 0.0;
+	-webkit-animation: Opacity 3s;
+	-webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes Opacity {
+	from {opacity: 1.0;}
+    to {opacity: 0.0;}
+}
+
+/* --- profile --- */
+#profilep {
+	background-color: #fff;
+	position: absolute;
+	width: 280px;
+	height: 150px;
+	left: 50%;
+	top: 50%;
+	margin-left: -140px;
+	margin-top: -75px;
+	padding: 12px 5px 0px 5px;
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 20px 0.8px #000;
+}
+
+#profilep .centered{
+	width:59px;
+	margin:0 auto 0 auto;
+}
+
+#profilep dl {clear: both;}
+#profilep dt {float: left;text-align: right;width: 80px;line-height: 25px;margin: 0 0 0 0;}
+#profilep dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
+
 /* --- index ---*/
 .pmenu{
 	float: right;
@@ -321,6 +376,50 @@ html,body {
 	height: 100%;
 	background-color: #fff;
 	padding: 10px;
+}
+
+/* --- controlpanel --- */
+
+#controlpanel{
+	width:100%;
+	height: 100%;
+	background-color: #fff;
+}
+
+#list-user{
+	clear:both;
+	float:left;
+	bottom:0;
+	height:100%;
+	width:200px;
+	background-color:blue;
+	overflow: auto;
+}
+
+/* --- observe --- */
+
+#ob-area{
+	width:100%;
+	height:100%;
+}
+
+.c-1{
+	width:100%;
+	height:100%;
+}
+
+.c-2{
+	width:50%;
+	height:50%;
+}
+
+.fappend-c{
+	clear:both;
+	float:left;
+}
+
+.append-c{
+	float:left;
 }
 
 /*

@@ -1,4 +1,11 @@
 <%inherit file="/base/base.mako"/>
+<%block name='script'>
+<script type="text/javascript">
+	$(function(){
+		$("#radio").buttonset();
+	});
+</script>
+</%block>
 
 <div id="login">
 	<div class="logo"></div>
@@ -12,10 +19,10 @@
 	<form action="/login" autocomplete="on">
 		${form.email(placeholder="Username")}
 		${form.password(placeholder="Password")}
-		<ul class="button-group">
-			<li><input type="submit" class="button" value="Login" /></li>
-			<li><a href="/register" class="button">Register</a></li>
-			<li><a href="/exit" class="button">Exit</a></li>
-		</ul>
+		<div id="radio" class="centered">
+			<button type="submit" value="Login">Login</button>
+		    <a href="/register" >Register</a>
+		    <a href="/exit" >Exit</a>
+		</div>
 	</form>
 </div>

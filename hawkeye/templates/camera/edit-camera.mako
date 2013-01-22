@@ -1,6 +1,21 @@
 <%inherit file="/base/base.mako"/>
 <%! import json %>
+<%block name="style">
 <link media="screen" href="${base_url}/public/theme/style/canvas.css" rel="stylesheet" type="text/css" />
+<style>
+#wrapper {
+	position: absolute;
+    overflow: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+	font-family: arial, helvetica, sans-serif;
+	/* border: 5px solid red; */
+}
+</style>
+</%block>
+<%block name='script'>
 <script type="text/javascript">
 	var oldoption = ${json.dumps(cameras)};
 	var projectid = ${project['id']};
@@ -91,6 +106,7 @@
 		  });
 	  });
 </script>
+</%block>
 <div style="display: none">
 	<form>
 		<input type="hidden" id="project_id" name="project_id" value="${project['id']}"/>
@@ -142,7 +158,7 @@
 		<form>
 			<fieldset>
 				<label for="interval">Interval</label> <input type="text" name="interval" id="interval" class="text ui-widget-content ui-corner-all" /> 
-				<label for="resolution">Resolution</label> <input type="text" name="resolution" id="resolution" class="text ui-widget-content ui-corner-all" /> 
+				<label for="sensitive">Sensitive</label> <input type="text" name="sensitive" id="sensitive" class="text ui-widget-content ui-corner-all" /> 
 				<label for="dropmotion">Drop motion</label> <input type="text" name="dropmotion" id="dropmotion" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
 		</form>

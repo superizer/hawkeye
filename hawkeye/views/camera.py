@@ -11,13 +11,6 @@ import logging
 import json
 logger = logging.getLogger(__name__)
 #add_camera(self, name, username, password, url, image_size, fps, storage_periods):
-def start(request):
-    camera_id = int(request.matchdict.get('camera_id'))
-    #print('id',camera_id)
-    #camera_id = 1
-    data = request.nokkhum_client.camera.start_camera(camera_id)
-    print('start data',data)
-    return request.route_path('/home')
 
 def add(request):
     #print('ip',request.config.settings.get('nokkhum.api.host'))
@@ -99,13 +92,13 @@ def storage(request):
     else:
         #id = int(request.matchdict.get('camera_id'))
         #print('***id', id)
-        camera_id = 1
+        #camera_id = 1
         data = request.nokkhum_client.camera.get_storage(camera_id)
 #        print('storage', data)
     return dict(
                 files = data['files'],
                 route = route,
-                camera = { 'id': camera_id }
+                camera = camera_id
                 )  
 #/camera/storage?files_url=/storage/1/20121223&camera_id=1
 def files(request):

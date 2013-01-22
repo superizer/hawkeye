@@ -44,7 +44,7 @@
     	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
     	          },
     	          success: function(chonf){
-					  if(chonf.camera.operating.status == 'Running'){
+					  if(chonf.camera.operating.status != 'stop'){
 						  $('#myonoffswitch-${y}').attr('checked','checked');
 					  }
 					  $('#myonoffswitch-${y}').click(function() {
@@ -56,7 +56,7 @@
 			    	        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
 			    	          },
 			    	          success: function(chonf){
-			    	        	  if(chonf.camera.operating.status == 'Running'){
+			    	        	  if(chonf.camera.operating.status != 'stop'){
 									  $.ajax({
 						    			  type: 'POST',
 						    	          url: "${request.config.settings['nokkhum.api.url']}/cameras/${camera['id']}/operating",
@@ -104,7 +104,7 @@
 		$("#addProject").button();
 		$("#profile").button();
 		$("#logout").button();
-		
+		$("#controlPanel").button();
 	});
 </script>
 </%block>
@@ -114,6 +114,7 @@
 <%block name='menu'>
 <div class="menu">
 	<a href="/project/add" id="addProject">Add Project</a>
+	<a href="/controlpanel" id="controlPanel">ControlPanel</a>
 	<div class="right"> 
 		<a href="/profile" id="profile">Profile</a> 
 		<a href="/logout" id="logout">Logout</a>
@@ -146,6 +147,7 @@
 		    <button id="select">Select an action</button>
 		  </div>
 		  <ul>
+		  	<li><a href ="/observe?id=${project['id']}">Observe</a></li>
 		    <li><a href ="/project/edit?id=${project['id']}">Edit project</a></li>
 		    <li><a href ="/project/delete?id=${project['id']}">Delete project</a></li>
 		  </ul>

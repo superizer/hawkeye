@@ -4,10 +4,11 @@
 	$(function() {
 		$.ajax({
 			type : 'GET',
-			url : "${request.config.settings['nokkhum.api.url']}/storage/1",
+			url : "${request.config.settings['nokkhum.api.url']}/storage/${camera}",
 			datatype : 'json',
 			error : function(resp) { console.debug("header-> : " + JSON.stringify(resp.getAllResponseHeaders())); },
 			success : function(dir) {
+				
 				function generteNextFolder(tmp){
 					$.ajax({
 						type : 'GET',
