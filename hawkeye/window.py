@@ -80,6 +80,7 @@ class NetworkAccessManager(QNetworkAccessManager):
         if api_url in request.url().toString():
             if 'token' in self.context_obj.session:
                 request.setRawHeader('X-Auth-Token', self.context_obj.session['token']['id'])
+            
         
         return QNetworkAccessManager.createRequest(self, operation, request, data)
 

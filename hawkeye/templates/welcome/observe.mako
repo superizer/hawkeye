@@ -77,7 +77,7 @@
         								          image.src = str.substr(0,str.lastIndexOf('.')) + 'data=' +timestamp;
         								        
         								      }
-        								      setTimeout(updateImage, 100, tmpId);
+        								      setTimeout(updateImage, 50, tmpId);
         									  }
         								  }
         								  updateImage(imgId);

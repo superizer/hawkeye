@@ -192,6 +192,20 @@
 			</fieldset>
 		</form>
 	</div>
+	
+	<div id="Mutimedia-form" title="Edit Image Recorder">
+		<form>
+			<fieldset>
+				<label for="height">Height</label> <input type="text" name="mheight" id="mheight" class="text ui-widget-content ui-corner-all" /> 
+				<label for="width">Width</label> <input type="text" name="mwidth" id="mwidth" class="text ui-widget-content ui-corner-all" /> 
+				<label for="url">Url</label> <input type="text" name="url" id="murl" class="text ui-widget-content ui-corner-all" />
+				<label for="maximumwaitmotion">Maximum wait motion</label> <input type="text" name="maximumwaitmotion" id="mmaximumwaitmotion" class="text ui-widget-content ui-corner-all" /> 
+				<label for="fps">Fps</label> <input type="text" name="fps" id="mfps"class="text ui-widget-content ui-corner-all" /> 
+				<label for="recordmotion">Record motion</label> <input type="text" name="recordmotion" id="mrecordmotion" class="text ui-widget-content ui-corner-all" />
+			</fieldset>
+		</form>
+	</div>
+	
 </div>
 <div id="container"></div>
 <script type="text/javascript" src="${base_url}/public/js/kinetic-v4.2.0.min.js"></script>

@@ -22,7 +22,7 @@
 		</dl>
 		<dl>
 			<dt>
-				<label for="surname">Email :</label>
+				<label for="email">Email :</label>
 			</dt>
 			<dd>${user.get('email')}</dd>
 		</dl>

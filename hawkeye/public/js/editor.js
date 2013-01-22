@@ -384,7 +384,7 @@ function Processor(name) {
 		this.nextline = new Array();
 		this.json = {
 			"name" : "Motion Detector",
-			"interval" : 0,
+			"interval" : 10,
 			"sensitive" : 0.0,
 			"processors" : [],
 			"drop_motion" : 10
@@ -479,7 +479,8 @@ function Processor(name) {
 		this.json = {
 			"name" : "Image Recorder",
 			"width" : 0,
-			"height" : 0
+			"height" : 0,
+			"interval" : 1
 		};
 		this.shape = new Kinetic.Text({
 			x : 430,
@@ -492,6 +493,39 @@ function Processor(name) {
 			fontSize : 10,
 			textFill : '#555',
 			width : 130,
+			padding : 14,
+			align : 'center',
+			shadow : {
+				color : 'black',
+				blur : 10,
+				offset : [ 5, 5 ],
+				opacity : 0.2
+			},
+			cornerRadius : 10,
+			draggable : true
+		});
+		break;
+	case "Multimedia Recorder":
+		this.json = {
+			"name" : "Multimedia Recorder",
+			"width" : 0,
+			"height" : 0,
+			"url" : '',
+			"maximum_wait_motion" : -1,
+			"fps" : 0,
+			"record_motion" : false
+		};
+		this.shape = new Kinetic.Text({
+			x : 570,
+			y : 50,
+			stroke : '#555',
+			strokeWidth : 2,
+			fill : '#ddd',
+			text : 'Multimedia Recorder',
+			fontFamily : 'Tahoma, Geneva, sans-serif',
+			fontSize : 10,
+			textFill : '#555',
+			width : 180,
 			padding : 14,
 			align : 'center',
 			shadow : {
@@ -755,6 +789,46 @@ function Processor(name) {
 													}
 												});
 								$("#Image-Recorder-form").dialog("open");
+							} else if (tmpthis.json.name == "Multimedia Recorder") {
+								var width = $("#mwidth"),url=$("#murl"), height = $("#mheight"), maximumwaitmotion = $("#mmaximumwaitmotion"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
+								allFields = $([]).add(width).add(height).add(url).add(maximumwaitmotion).add(fps).add(recordmotion);
+
+								width.val(tmpthis.json.width);
+								height.val(tmpthis.json.height);
+								url.val(tmpthis.json.url);
+								maximumwaitmotion.val(tmpthis.json.maximum_wait_motion);
+								fps.val(tmpthis.json.fps);
+								recordmotion.val(tmpthis.json.record_motion);
+
+								$("#Mutimedia-form").dialog({
+													autoOpen : false,
+													height : 300,
+													width : 400,
+													modal : true,
+													buttons : {
+														"Save" : function() {
+															allFields.removeClass("ui-state-error");
+
+															tmpthis.json.width = parseInt(width.val());
+															tmpthis.json.height = parseInt(height.val());
+															tmpthis.json.maximum_wait_motion = parseInt(maximumwaitmotion.val());
+															tmpthis.json.fps = parseInt(fps.val());
+															tmpthis.json.record_motion = recordmotion.val() == "true";
+															var turl = url.val();
+															turl = turl.substr(0,turl.lastIndexOf('/'));
+						            				        turl = turl.substr(0,turl.lastIndexOf('/'));
+						            				        tmpthis.json.url = turl;
+															$(this).dialog("close");
+														},
+														Cancel : function() {
+															$(this).dialog("close");
+														}
+													},
+													close : function() {
+														allFields.val("").removeClass("ui-state-error");
+													}
+												});
+								$("#Mutimedia-form").dialog("open");
 							}
 						}
 					});
@@ -901,6 +975,29 @@ function Menu() {
 		visible : false
 	});
 	this.dataSubInPro.push(this.imageRecorder);
+	this.multimediaRecorder = new Kinetic.Text({
+		x : 570,
+		y : 50,
+		stroke : '#555',
+		strokeWidth : 2,
+		fill : '#ddd',
+		text : 'Multimedia Recorder',
+		fontFamily : 'Tahoma, Geneva, sans-serif',
+		fontSize : 10,
+		textFill : '#555',
+		width : 180,
+		padding : 14,
+		align : 'center',
+		shadow : {
+			color : 'black',
+			blur : 10,
+			offset : [ 5, 5 ],
+			opacity : 0.2
+		},
+		cornerRadius : 10,
+		visible : false
+	});
+	this.dataSubInPro.push(this.multimediaRecorder);
 	// --- end subitem ---
 	// --- end pro item ---
 
@@ -1051,6 +1148,11 @@ function Menu() {
 	});
 	tmp.imageRecorder.on('click', function() {
 		nodes.push(new Processor('Image Recorder'));
+		sTatus = undefined;
+		proReset();
+	});
+	tmp.multimediaRecorder.on('click', function() {
+		nodes.push(new Processor('Multimedia Recorder'));
 		sTatus = undefined;
 		proReset();
 	});
