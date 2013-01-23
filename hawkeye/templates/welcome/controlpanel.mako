@@ -40,19 +40,157 @@
 	    		        	  $("#approve").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/active"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/active",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		        	  $("#ban").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/deactivate"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/deactivate",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		        	  $("#delete").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/delete"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/delete",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		          }
@@ -72,7 +210,7 @@
 	    		  for(i in getUser.users){
 	    			  var option = document.createElement("option");
 	    			  option.text = getUser.users[i].email;
-	    			  option.value = getUser.users[i].email;
+	    			  option.value = getUser.users[i].id;
 	    			  listUser.add(option,listUser.options[null]);
 	    		  }
 	    		  $("#sInActiveUser").change(function () {
@@ -91,19 +229,157 @@
 	    		        	  $("#approve").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/active"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/active",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		        	  $("#ban").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/deactivate"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/deactivate",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		        	  $("#delete").click(function() {
 	    		        		  $.ajax({
 					    			  type: 'POST',
-					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/delete"
+					    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/"+getUser.user.id+"/status/delete",
+					    	          data:JSON.stringify({'tmp':'dummykung'}),
+					    	          datatype: 'json',
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#sInActiveUser').empty();
+					    	        	  $('#sActiveUser').empty();
+					    	        	  $("#name").text("");
+				    		        	  $("#surname").text("");
+				    		        	  $("#email").text("");
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/deactivate", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sInActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	        	  $.ajax({
+					    	    			  type: 'GET',
+					    	    	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+					    	    	          datatype: 'json',
+					    	    	          error: function(){
+					    	    	        	  alert('Too Bad');
+					    	    	          },
+					    	    	          success: function(getUser){
+					    	    	        	  var listUser = document.getElementById("sActiveUser");
+					    	    	    		  for(i in getUser.users){
+					    	    	    			  var option = document.createElement("option");
+					    	    	    			  option.text = getUser.users[i].email;
+					    	    	    			  option.value = getUser.users[i].id;
+					    	    	    			  listUser.add(option,listUser.options[null]);
+					    	    	    		  }
+					    	    	          }
+					    	    	      });
+					    	          }
 					    	      });
 	    		        	  });
 	    		          }

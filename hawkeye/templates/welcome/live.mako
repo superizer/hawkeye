@@ -1,4 +1,10 @@
+<%inherit file="/base/base.mako"/> 
+<%block name='script'>
 <script type="text/javascript">
+
+$(function(){
+	$('#home').button();	
+});
 function updateImage()
 {
 	var image = document.getElementById("display");
@@ -11,6 +17,10 @@ function updateImage()
     setTimeout(updateImage, 1000);
 }
 </script>
-
-<img id="display" src="${url}" height="240" width="320" onload="updateImage();"/><br/>
-<a href="/home"><input type="button"  value="Home"></a>
+</%block>
+<%block name='menu'>
+<div class="menu">
+	<a href="/home" id="home" >Back</a>
+</div>
+</%block>
+<img id="display" src="${url}" height="100%" width="100%" onload="updateImage();"/><br/>

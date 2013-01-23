@@ -105,6 +105,7 @@
 		$("#profile").button();
 		$("#logout").button();
 		$("#controlPanel").button();
+		$("#collaborator").button();
 	});
 </script>
 </%block>
@@ -115,6 +116,7 @@
 <div class="menu">
 	<a href="/project/add" id="addProject">Add Project</a>
 	<a href="/controlpanel" id="controlPanel">ControlPanel</a>
+	<a href="/collaborator" id="collaborator">Collaborator</a>
 	<div class="right"> 
 		<a href="/profile" id="profile">Profile</a> 
 		<a href="/logout" id="logout">Logout</a>

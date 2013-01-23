@@ -8,6 +8,7 @@ from hawkeye.forms import account_form
 from hawkeye.forms import project_form
 
 import logging
+import hawkeye.window
 logger = logging.getLogger(__name__)
 
 def login(request):
@@ -155,4 +156,14 @@ def observe_project(request):
     return dict(
 #                data = data['project']['cameras']
                  project_id = project_id
+                )
+def collaborator_project(request):
+    user_id = ""
+    data = request.nokkhum_client.account.list_project()
+    print('data -->',data)
+#    data = request.nokkhum_client.camera.list_camera(project_id)
+#    print("data -->",data['project']['cameras'])
+    return dict(
+#                data = data['project']['cameras']
+                 data = data['projects']
                 )

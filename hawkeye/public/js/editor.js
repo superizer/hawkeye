@@ -22,58 +22,54 @@ var nodes = new Array();
 
 if (oldoption != undefined) {
 	function generate(tmpjson, tmpnode) {
-		if(tmpjson.processors != undefined){
-			for (i in tmpjson.processors) {
-				switch (tmpjson.processors[i].name) {
-				case "Motion Detector":
-					var tmp = new Processor("Motion Detector");
-					nodes.push(tmp);
-					tmpnode.next.push(tmp);
-					tmp.pre.push(tmpnode);
-					tmpnode.addLine(tmp);
-					generate(tmpjson.processors[i], tmp);
-					if(tmpnode.json.camera == undefined){
-						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
-						tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
-					}
-					break;
-				case "Face Detector":
-					var tmp = new Processor("Face Detector");
-					nodes.push(tmp);
-					tmpnode.next.push(tmp);
-					tmp.pre.push(tmpnode);
-					tmpnode.addLine(tmp);
-					generate(tmpjson.processors[i], tmp);
-					if(tmpnode.json.camera == undefined){
-						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
-						tmpnode.json.processors.splice(0,tmpnode.json.processors.length);
-					}
-					break;
-				case "Video Recorder":
-					var tmp = new Processor("Video Recorder");
-					nodes.push(tmp);
-					tmpnode.next.push(tmp);
-					tmp.pre.push(tmpnode);
-					tmpnode.addLine(tmp);
-					if(tmpnode.json.camera == undefined){
+		   if(tmpjson.processors != undefined){
+				for (i in tmpjson.processors) {
+					switch (tmpjson.processors[i].name) {
+					case "Motion Detector":
+						var tmp = new Processor("Motion Detector");
+						nodes.push(tmp);
+						tmpnode.next.push(tmp);
+						tmp.pre.push(tmpnode);
+						tmpnode.addLine(tmp);
 						generate(tmpjson.processors[i], tmp);
-						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
-					}
-					break;
-				case "Image Recorder":
-					var tmp = new Processor("Image Recorder");
-					nodes.push(tmp);
-					tmpnode.next.push(tmp);
-					tmp.pre.push(tmpnode);
-					tmpnode.addLine(tmp);
-					if(tmpnode.json.camera == undefined){
+						tmp.json = JSON.parse(JSON.stringify(tmpjson.processors[i]));
+						break;
+					case "Face Detector":
+						var tmp = new Processor("Face Detector");
+						nodes.push(tmp);
+						tmpnode.next.push(tmp);
+						tmp.pre.push(tmpnode);
+						tmpnode.addLine(tmp);
 						generate(tmpjson.processors[i], tmp);
-						tmpnode.json = JSON.parse(JSON.stringify(tmpjson));
+						tmp.json = JSON.parse(JSON.stringify(tmpjson));
+						break;
+					case "Video Recorder":
+						var tmp = new Processor("Video Recorder");
+						nodes.push(tmp);
+						tmpnode.next.push(tmp);
+						tmp.pre.push(tmpnode);
+						tmpnode.addLine(tmp);
+						tmp.json = JSON.parse(JSON.stringify(tmpjson.processors[i]));
+						break;
+					case "Image Recorder":
+						var tmp = new Processor("Image Recorder");
+						nodes.push(tmp);
+						tmpnode.next.push(tmp);
+						tmp.pre.push(tmpnode);
+						tmpnode.addLine(tmp);
+						tmp.json = JSON.parse(JSON.stringify(tmpjson.processors[i]));
+						break;
+					case "Multimedia Recorder":
+						var tmp = new Processor("Multimedia Recorder");
+						nodes.push(tmp);
+						tmpnode.next.push(tmp);
+						tmp.pre.push(tmpnode);
+						tmpnode.addLine(tmp);
+						tmp.json = JSON.parse(JSON.stringify(tmpjson.processors[i]));
+						break;
 					}
-					break;
 				}
-			}
-		}
+		   }
 	}
 	
 	function generatepoint (nodes,level,offsetStart){
@@ -673,7 +669,7 @@ function Processor(name) {
 					function() {
 						if (sTatus == undefined) {
 							if (tmpthis.json.name == "Motion Detector") {
-								var interval = $("#interval"), sensitive = $("#sensitive"), dropmotion = $("#dropmotion"), 
+								var interval = $("#mminterval"), sensitive = $("#mmsensitive"), dropmotion = $("#mmdropmotion"), 
 								allFields = $([]).add(interval).add(sensitive).add(dropmotion);
 
 								interval.val(tmpthis.json.interval);
@@ -703,7 +699,7 @@ function Processor(name) {
 												});
 								$("#Motion-Detector-form").dialog("open");
 							} else if (tmpthis.json.name == "Face Detector") {
-								var interval = $("#interval"), allFields = $([]).add(interval);
+								var interval = $("#fdinterval"), allFields = $([]).add(interval);
 
 								interval.val(tmpthis.json.interval);
 
@@ -729,9 +725,11 @@ function Processor(name) {
 												});
 								$("#Face-Detector-form").dialog("open");
 							} else if (tmpthis.json.name == "Video Recorder") {
-								var width = $("#width"), height = $("#height"), maximumwaitmotion = $("#maximumwaitmotion"), fps = $("#fps"), recordmotion = $("#recordmotion"), 
+								var width = $("#vrwidth"), height = $("#vrheight"), maximumwaitmotion = $("#vrmaximumwaitmotion"), fps = $("#vrfps"), recordmotion = $("#vrrecordmotion"), 
 								allFields = $([]).add(width).add(height).add(maximumwaitmotion).add(fps).add(recordmotion);
-
+								
+						      
+						        
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
 								maximumwaitmotion.val(tmpthis.json.maximum_wait_motion);
@@ -764,7 +762,7 @@ function Processor(name) {
 												});
 								$("#Video-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Image Recorder") {
-								var width = $("#width-img"), height = $("#height-img"), 
+								var width = $("#irwidth"), height = $("#irheight"), 
 								allFields = $([]).add(width).add(height);
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
@@ -792,7 +790,7 @@ function Processor(name) {
 							} else if (tmpthis.json.name == "Multimedia Recorder") {
 								var width = $("#mwidth"),url=$("#murl"), height = $("#mheight"), maximumwaitmotion = $("#mmaximumwaitmotion"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
 								allFields = $([]).add(width).add(height).add(url).add(maximumwaitmotion).add(fps).add(recordmotion);
-
+								
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
 								url.val(tmpthis.json.url);
@@ -815,9 +813,11 @@ function Processor(name) {
 															tmpthis.json.fps = parseInt(fps.val());
 															tmpthis.json.record_motion = recordmotion.val() == "true";
 															var turl = url.val();
-															turl = turl.substr(0,turl.lastIndexOf('/'));
-						            				        turl = turl.substr(0,turl.lastIndexOf('/'));
-						            				        tmpthis.json.url = turl;
+															if(turl != tmpthis.json.url){
+																turl = turl.substr(0,turl.lastIndexOf('/'));
+							            				        turl = turl.substr(0,turl.lastIndexOf('/'));
+							            				        tmpthis.json.url = turl;
+															}
 															$(this).dialog("close");
 														},
 														Cancel : function() {
