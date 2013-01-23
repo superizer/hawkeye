@@ -31,6 +31,7 @@
 	          }
 		});
 		$("#add").click(function() {
+			alert(JSON.stringify({'collaborator':{'id': parseInt(us)}}));
 			$.ajax({
   			  type: 'POST',
   	          url: "${request.config.settings['nokkhum.api.url']}/projects/"+ps+"/collaborators",

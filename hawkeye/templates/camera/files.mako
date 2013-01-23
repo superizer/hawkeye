@@ -1,5 +1,18 @@
 <%inherit file="/base/base.mako"/>
-
+<%block name="style">
+<style>
+#wrapper {
+	position: absolute;
+    overflow: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+	font-family: arial, helvetica, sans-serif;
+	/* border: 5px solid red; */
+}
+</style>
+</%block>
 % if image:
 	<img src='${url}' /><br/>
 % else:
