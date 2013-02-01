@@ -98,7 +98,7 @@ def storage(request):
     return dict(
                 files = data['files'],
                 route = route,
-                camera = { 'id': camera_id }
+                camera = camera_id 
                 )  
 #/camera/storage?files_url=/storage/1/20121223&camera_id=1
 def files(request):

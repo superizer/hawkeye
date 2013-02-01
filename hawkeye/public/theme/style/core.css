@@ -85,7 +85,19 @@ html,body{
 
 
 /* --- file --- */
+.folder {
+	width:120px;
+	height:120px;
+	float:left;
+	background:url('images/storage/folder.png') no-repeat center; 
+}
 
+.fname{
+	margin: 90px 0 0 0;
+	text-align: center;
+	word-wrap: break-word;
+}
+/*
 .folder {
 	float: left;
 	display: block;
@@ -99,36 +111,29 @@ html,body{
 .folder:hover {
 	background: no-repeat url('images/storage/overfolder.png') top center;
 }
-
+*/
 .picture {
-	float: left;
-	display: block;
-	width: 120px;
-	padding-top: 46px;
-	margin: 10px;
-	background: no-repeat url('images/storage/picture .png') top center;
-	text-align: center;
-	word-wrap: break-word;
+	width:120px;
+	height:120px;
+	float:left;
+	background:url('images/storage/picture.png') no-repeat center; 
 }
 
-.picture :hover {
+/* .picture :hover {
 	background: no-repeat url('images/storage/overpicture .png') top center;
-}
+} */
+
 
 .video {
-	float: left;
-	display: block;
-	width: 120px;
-	padding-top: 46px;
-	margin: 10px;
-	background: no-repeat url('images/storage/video .png') top center;
-	text-align: center;
-	word-wrap: break-word;
+	width:120px;
+	height:120px;
+	float:left;
+	background:url('images/storage/video.png') no-repeat center; 
 }
-
+/*
 .video :hover {
 	background: no-repeat url('images/storage/overvideo .png') top center;
-}
+}*/
 /* --- menu --- */
 .menu {
 	clear: both;
