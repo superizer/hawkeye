@@ -6,9 +6,10 @@
     overflow: auto;
     left: 0;
     right: 0;
-    top: 0;
+    top: 42px;
     bottom: 0;
 	font-family: arial, helvetica, sans-serif;
+	background-color: #fff;
 	/* border: 5px solid red; */
 }
 </style>
@@ -31,12 +32,56 @@
 		% endfor
 	}); */
 	$(function() {
+		var history  = new Array();
+		history.push("/storage/${camera}");
+		var whatHere = 0;
+		$("#home").button();
 		$.ajax({
 			type : 'GET',
 			url : "${request.config.settings['nokkhum.api.url']}/storage/${camera}",
 			datatype : 'json',
 			error : function(resp) { console.debug("header-> : " + JSON.stringify(resp.getAllResponseHeaders())); },
 			success : function(dir) {
+				
+				$("#prev-views").button({ disabled: true }).click(function(){
+					$('#wrapper').empty();
+					whatHere--;
+					if(whatHere < 0 ){
+						whatHere = 0;
+					}
+					var tmpName = history[whatHere].substr(history[whatHere].lastIndexOf('.') + 1,history[whatHere].length);
+					if(tmpName == 'png'){
+						showPicFile(history[whatHere]);
+					}else if(tmpName == 'ogv' || tmpName == 'webm'){
+						showVideoFile(history[whatHere]);
+					}else{
+						generteNextFolder(history[whatHere]);
+					}
+					if(history[whatHere] == history[0]){
+						$("#prev-views").button({ disabled: true });
+					}
+					$("#next-views").button({ disabled: false });
+		  		});
+		  		$("#next-views").button({ disabled: true }).click(function(){
+		  			$('#wrapper').empty();
+		  			whatHere++;
+		  			if(whatHere >  history.length - 1){
+						whatHere = history.length - 1;
+					}
+		  			var tmpName = history[whatHere].substr(history[whatHere].lastIndexOf('.') + 1,history[whatHere].length);
+					if(tmpName == 'png'){
+						showPicFile(history[whatHere]);
+					}else if(tmpName == 'ogv' || tmpName == 'webm'){
+						showVideoFile(history[whatHere]);
+					}else{
+						generteNextFolder(history[whatHere]);
+					}
+					if(history[whatHere] == history[history.length - 1]){
+						$("#next-views").button({ disabled: true });
+					}
+					$("#prev-views").button({ disabled: false });
+		  		});
+				
 				function generteNextFolder(tmp){
 					$.ajax({
 						type : 'GET',
@@ -59,7 +104,7 @@
 						"style" : "width:100%; height:100%;",
 						"controls":"controls",
 						"autoplay":"autoplay"
-					}).appendTo('#storage'));
+					}).appendTo('#wrapper'));
 					
 				}
 				
@@ -68,14 +113,14 @@
 					$("<img/>", {
 						"style" : "width:100%; height:100%;",
 						"src" : tmpUrl
-					}).appendTo('#storage');
+					}).appendTo('#wrapper');
 					
 				}
 				
 				function generteFolder(tmp) {
 					for (i in tmp) {
 						if(tmp[i].file){
-							var tmpName = tmp[i].name.substr(tmp[i].name.lastIndexOf('.'),tmp[i].name.length);
+							var tmpName = tmp[i].name.substr(tmp[i].name.lastIndexOf('.') + 1,tmp[i].name.length);
 							if(tmpName == "png"){
 								$("<div/>", {
 									"class" : "fname",
@@ -84,10 +129,14 @@
 									$("<div/>", {
 										"class" : "picture",
 										dblclick :function(){
-											$('#storage').empty();
+											$('#wrapper').empty();
+											history.push(tmp[i].download);
+											whatHere = history.length - 1;
+											$("#next-views").button({ disabled: true });
+											$("#prev-views").button({ disabled: false });
 											showPicFile(tmp[i].download);
 										}
-									}).appendTo('#storage')		
+									}).appendTo('#wrapper')		
 								);
 							}else{
 								$("<div/>", {
@@ -97,10 +146,14 @@
 									$("<div/>", {
 										"class" : "video",
 										dblclick :function(){
-											$('#storage').empty();
+											$('#wrapper').empty();
+											history.push(tmp[i].download);
+											whatHere = history.length - 1;
+											$("#next-views").button({ disabled: true });
+											$("#prev-views").button({ disabled: false });
 											showVideoFile(tmp[i].download);
 										}
-									}).appendTo('#storage')		
+									}).appendTo('#wrapper')		
 								);
 							}
 						}else{
@@ -111,22 +164,37 @@
 								$("<div/>", {
 									"class" : "folder",
 									dblclick :function(){
-										$('#storage').empty();
+										$('#wrapper').empty();
+										history.push(tmp[i].url);
+										whatHere = history.length - 1;
+										$("#next-views").button({ disabled: true });
+										$("#prev-views").button({ disabled: false });
 										generteNextFolder(tmp[i].url);
 									}
-								}).appendTo('#storage')		
+								}).appendTo('#wrapper')		
 							);
 						}
 					}
 				}
+				thisHere = 
 				generteFolder(dir.files);
 			}
 		});
 	});
 </script>
 </%block>
-<div id="storage"></div>
+
+<%block name='menu'>
+<div class="menu">
+	<a href="#"  id="prev-views" >Previous</a>
+	<a href="#"  id="next-views" >Next</a>
+	<a href="/home" id="home" >Home</a>
+</div>
+</%block>
+
+
 <%doc>
+<div id="storage"></div>
 <% x = 0 %>
 % for file in files:
 	% if file['file']:
