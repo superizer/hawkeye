@@ -1,5 +1,6 @@
 <%inherit file="/base/base.mako"/>
 <%block name="style">
+<link href="${base_url}/public/theme/style/contextmenu.css" rel="stylesheet" type="text/css" />
 <style>
 #wrapper {
 	position: absolute;
@@ -15,6 +16,7 @@
 </style>
 </%block>
 <%block name="script">
+<script src="${base_url}/public/js/Plugins/jquery.contextmenu.js" type="text/javascript"></script> 
 <script type="text/javascript">
 /* 	$(function(){
 		<% x = 0 %>
@@ -157,6 +159,41 @@
 								);
 							}
 						}else{
+							var option = { width: 150, items: [
+							                                   { text: "Open", 
+							                                	 icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
+							                                	 alias: "1-1", 
+							                                	 action: openThis },
+							                                   { text: "Delete", 
+							                                	 icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
+							                                	 alias: "1-2", 
+							                                	 action: deleteThis }
+							                                   ]
+							                           };
+					        function openThis() {
+					        	$('#wrapper').empty();
+					        	$('.b-m-mpanel').remove();
+								history.push(tmp[i].url);
+								whatHere = history.length - 1;
+								$("#next-views").button({ disabled: true });
+								$("#prev-views").button({ disabled: false });
+								generteNextFolder(tmp[i].url);
+					        }
+					        function deleteThis() {
+					        	$.ajax({
+					    			  type: 'DELETE',
+					    	          url: "${request.config.settings['nokkhum.api.url']}"+tmp[i].url,
+					    	          error: function(){
+					    	        	  alert('Too Bad');
+					    	          },
+					    	          success: function(){
+					    	        	  $('#wrapper').empty();
+					    	        	  $('.b-m-mpanel').remove();
+										  generteNextFolder(history[whatHere]);
+					    	          }
+					    	        });
+					        }
+							
 							$("<div/>", {
 								"class" : "fname",
 								text : tmp[i].name
@@ -165,18 +202,18 @@
 									"class" : "folder",
 									dblclick :function(){
 										$('#wrapper').empty();
+										$('.b-m-mpanel').remove();
 										history.push(tmp[i].url);
 										whatHere = history.length - 1;
 										$("#next-views").button({ disabled: true });
 										$("#prev-views").button({ disabled: false });
 										generteNextFolder(tmp[i].url);
 									}
-								}).appendTo('#wrapper')		
+								}).contextmenu(option).appendTo('#wrapper')		
 							);
 						}
 					}
 				}
-				thisHere = 
 				generteFolder(dir.files);
 			}
 		});

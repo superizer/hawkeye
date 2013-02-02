@@ -131,6 +131,13 @@ html,body{
 	float:left;
 	background:url('images/storage/video.png') no-repeat center; 
 }
+
+.video .fname{
+	margin: 105px 0 0 0;
+	text-align: center;
+	padding:0 10px 10px 10px;
+	word-wrap: break-word;
+}
 /*
 .video :hover {
 	background: no-repeat url('images/storage/overvideo .png') top center;

@@ -9,7 +9,7 @@
 		$("#add").button();
 		$.ajax({
 			  type: 'GET',
-	          url: "${request.config.settings['nokkhum.api.url']}/admin/users/status/active", 
+	          url: "${request.config.settings['nokkhum.api.url']}/co_users/users", 
 	          datatype: 'json',
 	          error: function(){
 	        	  alert('Too Bad');
