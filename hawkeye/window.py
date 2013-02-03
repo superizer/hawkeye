@@ -74,7 +74,7 @@ class NetworkAccessManager(QNetworkAccessManager):
         self.context_obj = context_obj
         
     def createRequest(self, operation, request, data):
-        print("url: ", request.url())
+#        print("url: ", request.url())
         api_url = self.context_obj.config.settings['nokkhum.api.url']
 
         if api_url in request.url().toString():
