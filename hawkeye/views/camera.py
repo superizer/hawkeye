@@ -71,8 +71,10 @@ def delete(request):
 
 def storage(request):
     camera_id = int(request.matchdict.get('camera_id'))
-    #('***id', camera_id)
+    #print('id ->', camera_id)
     url = request.matchdict.get('files_url', None)
+    if url == "":
+       url = None
     #print('file url',url)
     route = None
     if url is not None:
@@ -80,12 +82,12 @@ def storage(request):
         #print('url pos', url[:pos])
         if url[:pos] == '/storage/' + str(camera_id):
             data = request.nokkhum_client.camera.get_file(url)
-            route = '/camera/storage?camera_id=' + str(camera_id)
+            route = '/camera/storage'
         else:
             #print(':D')
             data = request.nokkhum_client.camera.get_file(url)
             #pos = url.rfind('/')
-            route='/camera/storage?files_url='+ url[:pos] + '&camera_id=' + str(camera_id)
+            route='/camera/storage?files_url='+ url[:pos] 
         #print ('url: ', route)
 
     else:
@@ -98,14 +100,14 @@ def storage(request):
     return dict(
                 files = data['files'],
                 route = route,
-                camera = camera_id 
+                camera = { 'id': camera_id } 
                 )  
 #/camera/storage?files_url=/storage/1/20121223&camera_id=1
 def files(request):
     camera_id = int(request.matchdict.get('camera_id'))
     #print('***id', camera_id)
     #print('matchdict', request.matchdict)
-    url = request.matchdict.get('files_url')
+    url = request.matchdict.get('fdurl')
     #print('url', url)
     pos = url.rfind('/')
     back_url = url[:pos]
@@ -133,25 +135,19 @@ def files(request):
     
 def delete_files(request):
     
-    url = request.matchdict.get('files_url')
+    url = request.matchdict.get('furl')
     #print('url', url)
     data = request.nokkhum_client.camera.delete_file(url)
     #print('delete data', data)
     pos = url.rfind('/')
-    route='/camera/storage?files_url='+ url[:pos]
-    #print ('url: ', route)
-    return request.route_path(route )   
+    route='/camera/storage?files_url=' + url[:pos]
+    print ('url: ', route)
+    return request.route_path(route)   
     
 def live(request):
     camera_id = int(request.matchdict.get('camera_id'))
     data =request.nokkhum_client.camera.get_camera(camera_id);
-    url = data['camera']['url']
-    pos = url.rfind('/')
-    url = url[:pos]
-    pos = url.rfind('/')
-    print('pos',pos)
-    url = url[:pos] + '/image/jpeg.cgi?.jpg'
-    print('url', url)
+    url = data['camera']['image_url']
     return dict(
                 url = url
                 )

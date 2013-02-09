@@ -49,11 +49,9 @@
         				        	  console.debug("header-> : "+JSON.stringify(resp.getAllResponseHeaders()));
         				          },
         				          success: function(urlGet){
-        				        	  var url = urlGet.camera.url;
+        				        	  var url = urlGet.camera.image_url;
         				        	  var imgId = "display-"+urlGet.camera.id;
-            			  	          url = url.substr(0,url.lastIndexOf('/'));
-            				          url = url.substr(0,url.lastIndexOf('/'));
-            						  url = url + "/image/jpeg.cgi?.jpg";
+            						  url = url + "?.jpg";
             						  
             						  var img = document.createElement("IMG");
           		                      switch(nextpoint){

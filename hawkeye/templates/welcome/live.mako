@@ -10,7 +10,7 @@ function updateImage()
 	var image = document.getElementById("display");
     if(image.complete) {
     	var timestamp = new Date().getTime();
-    	var str = "${url}";
+    	var str = "${url}?.jpg";
         image.src = str.substr(0,str.lastIndexOf('.')) + 'data=' +timestamp;
         
     }
@@ -23,4 +23,4 @@ function updateImage()
 	<a href="/home" id="home" >Back</a>
 </div>
 </%block>
-<img id="display" src="${url}" height="100%" width="100%" onload="updateImage();"/><br/>
+<img id="display" src="${url}?.jpg" height="100%" width="100%" onload="updateImage();"/><br/>

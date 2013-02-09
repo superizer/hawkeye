@@ -18,6 +18,106 @@
 <%block name="script">
 <script src="${base_url}/public/js/Plugins/jquery.contextmenu.js" type="text/javascript"></script> 
 <script type="text/javascript">
+
+    $(function(){
+    	$("#home").button();
+    	$("#prev-views").button({ disabled: true }).click(function(){
+			document.getElementById("pre").submit();
+  		});
+    	% if route is not None:
+    		$("#prev-views").button({ disabled: false });
+    	% endif
+    	% for file in files:
+    		% if file['file']:
+    			var tmpName = "${file['name']}";
+    			tmpName = tmpName.substr(tmpName.lastIndexOf('.') + 1,tmpName.length);
+				if(tmpName == "png"){
+					$("<div/>", {
+						"class" : "fname",
+						text : "${file['name']}"
+					}).appendTo(
+						$("<div/>", {
+							"class" : "picture",
+							dblclick :function(){
+								document.getElementById("fdurl").value = "${file['download']}";
+								document.getElementById("open").submit();
+							}
+						}).contextmenu({ width: 150, items: [
+							                                    { text: "Open", 
+									                                  icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
+									                                  alias: "1-1", 
+									                                  action: function() {
+									                                	  document.getElementById("fdurl").value = "${file['download']}";
+									      								  document.getElementById("open").submit();
+									        					     }},
+									                                 { text: "Delete", 
+									                                   icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
+									                                   alias: "1-2", 
+									                                   action: function() {
+										                                   document.getElementById("furl").value = "${file['url']}";
+										         						   document.forms["del"].submit();
+										        					 }}
+									                              ]}).appendTo('#wrapper')		
+					);
+				}else{
+					$("<div/>", {
+						"class" : "fname",
+						text : "${file['name']}"
+					}).appendTo(
+						$("<div/>", {
+							"class" : "video",
+							dblclick :function(){
+								document.getElementById("fdurl").value = "${file['download']}";
+								document.getElementById("open").submit();
+							}
+						}).contextmenu({ width: 150, items: [
+							                                    { text: "Open", 
+									                                  icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
+									                                  alias: "1-1", 
+									                                  action: function() {
+									                                	  document.getElementById("fdurl").value = "${file['download']}";
+									      								  document.getElementById("open").submit();
+									        					     }},
+									                                 { text: "Delete", 
+									                                   icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
+									                                   alias: "1-2", 
+									                                   action: function() {
+										                                   document.getElementById("furl").value = "${file['url']}";
+										         						   document.forms["del"].submit();
+										        					 }}
+									                              ]}).appendTo('#wrapper')		
+					);
+				}
+    		% else:
+	    		$("<div/>", {
+					"class" : "fname",
+					text : "${file['name']}"
+				}).appendTo(
+					$("<div/>", {
+						"class" : "folder",
+						dblclick :function(){
+							document.getElementById("files_url").value = "${file['url']}";
+							document.getElementById("next").submit();
+						}
+					}).contextmenu({ width: 150, items: [
+						                                    { text: "Open", 
+							                                  icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
+							                                  alias: "1-1", 
+							                                  action: function() {
+							                                	 document.getElementById("files_url").value = "${file['url']}";
+							         							 document.forms["next"].submit();
+							        					     }},
+							                                 { text: "Delete", 
+							                                   icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
+							                                   alias: "1-2", 
+							                                   action: function() {
+								                                   document.getElementById("furl").value = "${file['url']}";
+								         						   document.forms["del"].submit();
+								        					 }}
+							                              ]}).appendTo('#wrapper'));
+    		% endif
+    	% endfor
+    });
 /* 	$(function(){
 		<% x = 0 %>
 		% for file in files:
@@ -33,10 +133,9 @@
 			<% x = x + 1 %>
 		% endfor
 	}); */
-	$(function() {
-		var history  = new Array();
-		history.push("/storage/${camera}");
-		var whatHere = 0;
+	/* $(function() {
+		var origin = "/storage/${camera}";
+		var whatHere = "";
 		$("#home").button();
 		$.ajax({
 			type : 'GET',
@@ -47,41 +146,13 @@
 				
 				$("#prev-views").button({ disabled: true }).click(function(){
 					$('#wrapper').empty();
-					whatHere--;
-					if(whatHere < 0 ){
-						whatHere = 0;
-					}
-					var tmpName = history[whatHere].substr(history[whatHere].lastIndexOf('.') + 1,history[whatHere].length);
-					if(tmpName == 'png'){
-						showPicFile(history[whatHere]);
-					}else if(tmpName == 'ogv' || tmpName == 'webm'){
-						showVideoFile(history[whatHere]);
-					}else{
-						generteNextFolder(history[whatHere]);
-					}
-					if(history[whatHere] == history[0]){
+					whatHere = whatHere.substr(0,whatHere.lastIndexOf('/'));
+					
+					generteNextFolder(whatHere);
+					if(whatHere == origin){
 						$("#prev-views").button({ disabled: true });
 					}
 					$("#next-views").button({ disabled: false });
-		  		});
-		  		$("#next-views").button({ disabled: true }).click(function(){
-		  			$('#wrapper').empty();
-		  			whatHere++;
-		  			if(whatHere >  history.length - 1){
-						whatHere = history.length - 1;
-					}
-		  			var tmpName = history[whatHere].substr(history[whatHere].lastIndexOf('.') + 1,history[whatHere].length);
-					if(tmpName == 'png'){
-						showPicFile(history[whatHere]);
-					}else if(tmpName == 'ogv' || tmpName == 'webm'){
-						showVideoFile(history[whatHere]);
-					}else{
-						generteNextFolder(history[whatHere]);
-					}
-					if(history[whatHere] == history[history.length - 1]){
-						$("#next-views").button({ disabled: true });
-					}
-					$("#prev-views").button({ disabled: false });
 		  		});
 				
 				function generteNextFolder(tmp){
@@ -132,9 +203,7 @@
 										"class" : "picture",
 										dblclick :function(){
 											$('#wrapper').empty();
-											history.push(tmp[i].download);
-											whatHere = history.length - 1;
-											$("#next-views").button({ disabled: true });
+											whatHere += '/';
 											$("#prev-views").button({ disabled: false });
 											showPicFile(tmp[i].download);
 										}
@@ -149,9 +218,7 @@
 										"class" : "video",
 										dblclick :function(){
 											$('#wrapper').empty();
-											history.push(tmp[i].download);
-											whatHere = history.length - 1;
-											$("#next-views").button({ disabled: true });
+											whatHere += '/';
 											$("#prev-views").button({ disabled: false });
 											showVideoFile(tmp[i].download);
 										}
@@ -159,26 +226,9 @@
 								);
 							}
 						}else{
-							var option = { width: 150, items: [
-							                                   { text: "Open", 
-							                                	 icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
-							                                	 alias: "1-1", 
-							                                	 action: openThis },
-							                                   { text: "Delete", 
-							                                	 icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
-							                                	 alias: "1-2", 
-							                                	 action: deleteThis }
-							                                   ]
-							                           };
-					        function openThis() {
-					        	$('#wrapper').empty();
-					        	$('.b-m-mpanel').remove();
-								history.push(tmp[i].url);
-								whatHere = history.length - 1;
-								$("#next-views").button({ disabled: true });
-								$("#prev-views").button({ disabled: false });
-								generteNextFolder(tmp[i].url);
-					        }
+					        
+							
+							
 					        function deleteThis() {
 					        	$.ajax({
 					    			  type: 'DELETE',
@@ -189,7 +239,7 @@
 					    	          success: function(){
 					    	        	  $('#wrapper').empty();
 					    	        	  $('.b-m-mpanel').remove();
-										  generteNextFolder(history[whatHere]);
+										//  generteNextFolder(history[whatHere]);
 					    	          }
 					    	        });
 					        }
@@ -203,13 +253,27 @@
 									dblclick :function(){
 										$('#wrapper').empty();
 										$('.b-m-mpanel').remove();
-										history.push(tmp[i].url);
-										whatHere = history.length - 1;
-										$("#next-views").button({ disabled: true });
+										whatHere = tmp[i].url;
 										$("#prev-views").button({ disabled: false });
-										generteNextFolder(tmp[i].url);
+										generteNextFolder(whatHere);
 									}
-								}).contextmenu(option).appendTo('#wrapper')		
+								}).contextmenu({ width: 150, items: [
+									                                   { text: "Open", 
+										                                	 icon: "${base_url}/public/theme/style/images/contextmenu/fileopen.png", 
+										                                	 alias: "1-1", 
+										                                	 action: function() {
+										        					        	$('#wrapper').empty();
+										        					        	$('.b-m-mpanel').remove();
+										        					        	whatHere = tmp[i].url;
+										        								$("#prev-views").button({ disabled: false });
+										        								generteNextFolder(whatHere);
+										        					        } },
+										                                   { text: "Delete", 
+										                                	 icon: "${base_url}/public/theme/style/images/contextmenu/editdelete.png", 
+										                                	 alias: "1-2", 
+										                                	 action: deleteThis }
+										                                   ]
+										                           }).appendTo('#wrapper')		
 							);
 						}
 					}
@@ -217,18 +281,33 @@
 				generteFolder(dir.files);
 			}
 		});
-	});
+	}); */
 </script>
 </%block>
 
 <%block name='menu'>
 <div class="menu">
-	<a href="#"  id="prev-views" >Previous</a>
-	<a href="#"  id="next-views" >Next</a>
+	<a href="#"  id="prev-views" >Back</a>
 	<a href="/home" id="home" >Home</a>
 </div>
 </%block>
 
+<div style="display: none;">
+	<form id="next" action="/camera/storage" method="post">
+		<input type="hidden" id="files_url" name="files_url" value=""/>
+		<input type="hidden" id="camera_id" name="camera_id" value="${camera['id']}"/>
+	</form>
+	<form id="pre" action="${route}" method="post">
+	    <input type="hidden" id="camera_id" name="camera_id" value="${camera['id']}"/>
+	</form>
+	<form id="open" action="/camera/files" method="post">
+	    <input type="hidden" id="fdurl" name="fdurl" value=""/>
+	    <input type="hidden" id="camera_id" name="camera_id" value="${camera['id']}"/>
+	</form>
+	<form id="del" action="/camera/files/delete" method="post">
+		<input type="hidden" id="furl" name="furl" value=""/>
+	</form>
+</div>
 
 <%doc>
 <div id="storage"></div>

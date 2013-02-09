@@ -4,6 +4,7 @@ var stage = new Kinetic.Stage({
 	height : window.innerHeight
 });
 
+var eDition = true;
 var stageLayer = new Kinetic.Layer();
 var stageBackground = new Kinetic.Rect({
 	x : 0,
@@ -100,6 +101,7 @@ if (oldoption != undefined) {
 	generate(oldoption.camera, camera);
 	generatepoint(camera, 0, 100);
 }else{
+	eDition = false;
 	camera.json.camera.project.id = projectid;
 	camera.json.camera.user.id = userid;
 	camera.json.camera.fps = parseInt($('#fps').val());
@@ -182,7 +184,7 @@ function Camera() {
 			'create_date': '',
 			'name': '',
 			'storage_periods': 0,
-			'url': '',
+			'video_url': '',
 			'fps': 0,
 			'image_size': '',
 			'model': {'name': '', 
@@ -194,6 +196,8 @@ function Camera() {
 			'project' : {'id': 0}, 
 			'user':{'id': 0},
 			"id": 0,
+			"host":'',
+			"port":80,
 			"processors" : []
 		    }
 		};
@@ -257,10 +261,13 @@ function Camera() {
 	tmpthis.shape.on('dblclick',function() {
 
 						if (sTatus == undefined) {
-							var name = $("#name"), url = $("#url"),manufactory=$("#menufactory"),recordstore=$("#recordstore"),imagesize = $("#imagesize"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"), 
-							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password);
+							var name = $("#name"), url = $("#url"),manufactory=$("#menufactory"),recordstore=$("#recordstore"),imagesize = $("#imagesize"), fps = $("#fps"), model = $("#model"), username = $("#username"), password = $("#password"),
+							host = $("#host"),port = $("#port"),
+							allFields = $([]).add(name).add(url).add(fps).add(manufactory).add(recordstore).add(imagesize).add(model).add(username).add(password).add(host).add(port);
 							    name.val(tmpthis.json.camera.name);
-								url.val(tmpthis.json.camera.url);
+								url.val(tmpthis.json.camera.video_url);
+								host.val(tmpthis.json.camera.host);
+								port.val(tmpthis.json.camera.port);
 								manufactory.val(tmpthis.json.camera.model.manufactory.name);
 								recordstore.val(tmpthis.json.camera.storage_periods);
 								imagesize.val(tmpthis.json.camera.image_size);
@@ -280,7 +287,7 @@ function Camera() {
 														allFields.removeClass("ui-state-error");
 
 														tmpthis.json.camera.name = name.val();
-														tmpthis.json.camera.url = url.val();
+														tmpthis.json.camera.video_url = url.val();
 														tmpthis.json.camera.fps = parseInt(fps.val());
 														tmpthis.json.camera.model.name = model.val();
 														tmpthis.json.camera.model.manufactory.name= manufactory.val();
@@ -288,6 +295,8 @@ function Camera() {
 														tmpthis.json.camera.image_size = imagesize.val();
 														tmpthis.json.camera.username = username.val();
 														tmpthis.json.camera.password = password.val();
+														tmpthis.json.camera.host = host.val();
+														tmpthis.json.camera.port = parseInt(port.val());
 														$(this).dialog("close");
 
 													},
@@ -380,10 +389,12 @@ function Processor(name) {
 		this.nextline = new Array();
 		this.json = {
 			"name" : "Motion Detector",
-			"interval" : 10,
+			"interval" : 3,
 			"sensitive" : 0.0,
 			"processors" : [],
-			"drop_motion" : 10
+			"drop_motion" : 10,
+			"motion_analysis_method":"",
+			"region_of_interest":{"point1":{"x":0,"y":0},"point2":{"x":0,"y":0}}
 		};
 		this.shape = new Kinetic.Text({
 			x : 10,
@@ -444,7 +455,6 @@ function Processor(name) {
 			"name" : "Video Recorder",
 			"width" : 0,
 			"height" : 0,
-			"maximum_wait_motion" : -1,
 			"fps" : 0,
 			"record_motion" : false
 		};
@@ -507,7 +517,6 @@ function Processor(name) {
 			"width" : 0,
 			"height" : 0,
 			"url" : '',
-			"maximum_wait_motion" : -1,
 			"fps" : 0,
 			"record_motion" : false
 		};
@@ -669,13 +678,94 @@ function Processor(name) {
 					function() {
 						if (sTatus == undefined) {
 							if (tmpthis.json.name == "Motion Detector") {
-								var interval = $("#mminterval"), sensitive = $("#mmsensitive"), dropmotion = $("#mmdropmotion"), 
+								var interval = $("#mminterval"), sensitive = $("#mmsensitive"), dropmotion = $("#mmdropmotion"), choprocess = $("#mmchoprocess"),
 								allFields = $([]).add(interval).add(sensitive).add(dropmotion);
-
+								choprocess.val(tmpthis.json.motion_analysis_method);
 								interval.val(tmpthis.json.interval);
 								sensitive.val(tmpthis.json.sensitive);
 								dropmotion.val(tmpthis.json.drop_motion);
+//===============================================================================================================================================================================
+								$("#cregion").css('background', 'url(' + imUrl + ') no-repeat');
+								var rearea = new Kinetic.Stage({
+								    container : 'cregion',
+									width : 640 ,
+									height : 480
+								});
+								var reclayer = new Kinetic.Layer();
+								var baclayer = new Kinetic.Layer();
+								var back = new Kinetic.Rect({
+							        x: 0,
+							        y: 0,
+							        width: 640,
+							        height: 480
+							      });
 								
+								var rect = new Kinetic.Rect({
+							        x: tmpthis.json.region_of_interest.point1.x,
+							        y: tmpthis.json.region_of_interest.point1.y,
+							        width: tmpthis.json.region_of_interest.point2.x - tmpthis.json.region_of_interest.point1.x,
+							        height: tmpthis.json.region_of_interest.point2.y - tmpthis.json.region_of_interest.point1.y,
+							        stroke: 'red',
+							        strokeWidth: 2
+							      });
+								baclayer.add(back);
+								reclayer.add(rect);
+								rearea.add(reclayer);
+								rearea.add(baclayer);
+								var mousestat = "";
+								
+								rearea.on('mousedown', function() {
+									if(mousestat == ""){
+										var mousePas = rearea.getMousePosition();
+										rect.setX(mousePas.x);
+										rect.setY(mousePas.y);
+										mousestat = "down";
+									}
+								});
+								
+								rearea.on('mouseup', function() {
+									mousestat = "";
+								});
+								
+								rearea.on('mousemove', function() {
+									if(mousestat == "down"){
+										var mousePas = rearea.getMousePosition();
+										rect.setWidth(Math.abs(rect.getX() - mousePas.x));
+										rect.setHeight(Math.abs(rect.getY() - mousePas.y));
+										reclayer.drawScene();
+									}
+								});
+							
+								
+								$("#region-of-interest-form").dialog({  
+									autoOpen : false,
+									height : 640,
+									width : 680,
+									modal : true,
+									buttons : {
+										"Save" : function() {
+											tmpthis.json.region_of_interest.point1.x = parseInt(rect.getX());
+											tmpthis.json.region_of_interest.point1.y = parseInt(rect.getY());
+											tmpthis.json.region_of_interest.point2.x = parseInt(rect.getX() + rect.getWidth());
+											tmpthis.json.region_of_interest.point2.y = parseInt(rect.getY() + rect.getHeight());
+											
+											$(this).dialog("close");
+										},
+										Cancel : function() {
+											$(this).dialog("close");
+										}
+									},
+									close : function() {
+										allFields.val("").removeClass("ui-state-error");
+									}
+								});
+								
+								$("#bregion").button({ disabled: true }).click(function() {
+							        $( "#region-of-interest-form" ).dialog( "open" );
+							    });
+								if(eDition){
+									$("#bregion").button({ disabled: false });
+								}
 								$("#Motion-Detector-form").dialog({
 													autoOpen : false,
 													height : 300,
@@ -687,6 +777,7 @@ function Processor(name) {
 															tmpthis.json.interval = parseInt(interval.val());
 															tmpthis.json.sensitive = parseFloat(sensitive.val());
 															tmpthis.json.drop_motion = parseInt(dropmotion.val());
+															tmpthis.json.motion_analysis_method = choprocess.val();
 															$(this).dialog("close");
 														},
 														Cancel : function() {
@@ -725,14 +816,13 @@ function Processor(name) {
 												});
 								$("#Face-Detector-form").dialog("open");
 							} else if (tmpthis.json.name == "Video Recorder") {
-								var width = $("#vrwidth"), height = $("#vrheight"), maximumwaitmotion = $("#vrmaximumwaitmotion"), fps = $("#vrfps"), recordmotion = $("#vrrecordmotion"), 
-								allFields = $([]).add(width).add(height).add(maximumwaitmotion).add(fps).add(recordmotion);
+								var width = $("#vrwidth"), height = $("#vrheight"), fps = $("#vrfps"), recordmotion = $("#vrrecordmotion"), 
+								allFields = $([]).add(width).add(height).add(fps).add(recordmotion);
 								
 						      
 						        
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
-								maximumwaitmotion.val(tmpthis.json.maximum_wait_motion);
 								fps.val(tmpthis.json.fps);
 								recordmotion.val(tmpthis.json.record_motion);
 
@@ -747,7 +837,6 @@ function Processor(name) {
 
 															tmpthis.json.width = parseInt(width.val());
 															tmpthis.json.height = parseInt(height.val());
-															tmpthis.json.maximum_wait_motion = parseInt(maximumwaitmotion.val());
 															tmpthis.json.fps = parseInt(fps.val());
 															tmpthis.json.record_motion = recordmotion.val() == "true";
 															$(this).dialog("close");
@@ -762,10 +851,11 @@ function Processor(name) {
 												});
 								$("#Video-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Image Recorder") {
-								var width = $("#irwidth"), height = $("#irheight"), 
-								allFields = $([]).add(width).add(height);
+								var width = $("#irwidth"), height = $("#irheight"),interval = $("#irinterval"), 
+								allFields = $([]).add(width).add(height).add(interval);
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
+								interval.val(tmpthis.json.interval);
 								$("#Image-Recorder-form").dialog({
 													autoOpen : false,
 													height : 300,
@@ -776,6 +866,7 @@ function Processor(name) {
 															allFields.removeClass("ui-state-error");
 															tmpthis.json.width = parseInt(width.val());
 															tmpthis.json.height = parseInt(height.val());
+															tmpthis.json.interval = parseInt(interval.val());
 															$(this).dialog("close");
 														},
 														Cancel : function() {
@@ -788,13 +879,12 @@ function Processor(name) {
 												});
 								$("#Image-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Multimedia Recorder") {
-								var width = $("#mwidth"),url=$("#murl"), height = $("#mheight"), maximumwaitmotion = $("#mmaximumwaitmotion"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
-								allFields = $([]).add(width).add(height).add(url).add(maximumwaitmotion).add(fps).add(recordmotion);
+								var width = $("#mwidth"),url=$("#murl"), height = $("#mheight"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
+								allFields = $([]).add(width).add(height).add(url).add(fps).add(recordmotion);
 								
 								width.val(tmpthis.json.width);
 								height.val(tmpthis.json.height);
 								url.val(tmpthis.json.url);
-								maximumwaitmotion.val(tmpthis.json.maximum_wait_motion);
 								fps.val(tmpthis.json.fps);
 								recordmotion.val(tmpthis.json.record_motion);
 
@@ -809,7 +899,6 @@ function Processor(name) {
 
 															tmpthis.json.width = parseInt(width.val());
 															tmpthis.json.height = parseInt(height.val());
-															tmpthis.json.maximum_wait_motion = parseInt(maximumwaitmotion.val());
 															tmpthis.json.fps = parseInt(fps.val());
 															tmpthis.json.record_motion = recordmotion.val() == "true";
 															var turl = url.val();

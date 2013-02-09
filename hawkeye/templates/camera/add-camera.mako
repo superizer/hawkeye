@@ -18,6 +18,7 @@
 <script type="text/javascript">
 
 	var oldoption = undefined;
+	var imUrl = "";
 	var projectid = ${project['id']};
 	var userid = ${project['user']['id']};
 
@@ -123,7 +124,8 @@
 		<form>
 			<fieldset> 
 				<label for="name">Name</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />  
-				<label for="url">Url</label> <input type="text" name="url" id="url" class="text ui-widget-content ui-corner-all" />
+				<label for="host">Host</label> <input type="text" name="host" id="host" class="text ui-widget-content ui-corner-all" />
+				<label for="port">Port</label> <input type="text" name="port" id="port" class="text ui-widget-content ui-corner-all" />
 				<label for="username">Username</label> <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" />
 			    <label for="password">Password</label> <input type="text" name="password" id="password" class="text ui-widget-content ui-corner-all" />
 				<label for="fps">Fps</label> 
@@ -150,6 +152,7 @@
 				<label for="model">Model</label> 
                 <select id="model" class="select ui-widget-content ui-corner-all">
                 </select>
+                <label for="url">Url</label> <input type="text" name="url" id="url" class="text ui-widget-content ui-corner-all" />
 				<label for="recordstore">Record Store</label> <input type="text" name="recordstore" id="recordstore" class="text ui-widget-content ui-corner-all" /> 
 		</fieldset>
 		</form>
@@ -161,6 +164,20 @@
 				<label for="mminterval">Interval</label> <input type="text" name="mminterval" id="mminterval" class="text ui-widget-content ui-corner-all" /> 
 				<label for="mmsensitive">Sensitive</label> <input type="text" name="mmsensitive" id="mmsensitive" class="text ui-widget-content ui-corner-all" /> 
 				<label for="mmdropmotion">Drop motion</label> <input type="text" name="mmdropmotion" id="mmdropmotion" class="text ui-widget-content ui-corner-all" />
+				<label  for="mmchoprocess">Choose Process</label> 
+                <select id="mmchoprocess" class="select ui-widget-content ui-corner-all">
+				  <option value="Optical Flow">Optical Flow</option>
+				  <option value="Background Subtraction">Background Subtraction</option>
+                </select>
+				<button id="bregion">Region of Interest</button>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="region-of-interest-form" title="region of interest select">
+		<form>
+			<fieldset>
+				<div id="cregion" ></div>
 			</fieldset>
 		</form>
 	</div>
@@ -178,7 +195,6 @@
 			<fieldset>
 				<label for="vrheight">Height</label> <input type="text" name="vrheight" id="vrheight" class="text ui-widget-content ui-corner-all" /> 
 				<label for="vrwidth">Width</label> <input type="text" name="vrwidth" id="vrwidth" class="text ui-widget-content ui-corner-all" /> 
-				<label for="vrmaximumwaitmotion">Maximum wait motion</label> <input type="text" name="vrmaximumwaitmotion" id="vrmaximumwaitmotion" class="text ui-widget-content ui-corner-all" /> 
 				<label for="vrfps">Fps</label> <input type="text" name="vrfps" id="vrfps"class="text ui-widget-content ui-corner-all" /> 
 				<label for="vrrecordmotion">Record motion</label> <input type="text" name="vrrecordmotion" id="vrrecordmotion" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
@@ -190,6 +206,7 @@
 			<fieldset>
 				<label for="irheight">Height</label> <input type="text" name="irheight" id="irheight" class="text ui-widget-content ui-corner-all" /> 
 				<label for="irwidth">Width</label> <input type="text" name="irwidth" id="irwidth" class="text ui-widget-content ui-corner-all" />
+				<label for="irinterval">Interval</label> <input type="text" name="irinterval" id="irinterval" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
 		</form>
 	</div>
@@ -200,7 +217,6 @@
 				<label for="mheight">Height</label> <input type="text" name="mheight" id="mheight" class="text ui-widget-content ui-corner-all" /> 
 				<label for="mwidth">Width</label> <input type="text" name="mwidth" id="mwidth" class="text ui-widget-content ui-corner-all" /> 
 				<label for="murl">Url</label> <input type="text" name="murl" id="murl" class="text ui-widget-content ui-corner-all" />
-				<label for="mmaximumwaitmotion">Maximum wait motion</label> <input type="text" name="mmaximumwaitmotion" id="mmaximumwaitmotion" class="text ui-widget-content ui-corner-all" /> 
 				<label for="mfps">Fps</label> <input type="text" name="mfps" id="mfps"class="text ui-widget-content ui-corner-all" /> 
 				<label for="mrecordmotion">Record motion</label> <input type="text" name="mrecordmotion" id="mrecordmotion" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
