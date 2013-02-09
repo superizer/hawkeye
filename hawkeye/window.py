@@ -74,16 +74,14 @@ class NetworkAccessManager(QNetworkAccessManager):
         self.context_obj = context_obj
         
     def createRequest(self, operation, request, data):
-        print("url: ", request.url())
+#        print("url: ", request.url())
         api_url = self.context_obj.config.settings['nokkhum.api.url']
 
         if api_url in request.url().toString():
             if 'token' in self.context_obj.session:
-                print("url ->: ", self.context_obj.session['token']['id'])
-                print("url ->: ", request.rawHeader('Access-Control-Request-Method'))
-            
-                request.setRawHeader('Access-Control-Request-Method', '*')
-                request.setRawHeader('Origin', '*')
+#                print("url ->: ", self.context_obj.session['token']['id'])
+#                print("url ->: ", request.rawHeader('Access-Control-Request-Method'))
+
                 request.setRawHeader('X-Auth-Token', self.context_obj.session['token']['id'])
             
         
