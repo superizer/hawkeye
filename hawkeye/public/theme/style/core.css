@@ -451,7 +451,7 @@ html,body{
 	background-color: #fff;
 	position: absolute;
 	width: auto;
-	height: 240px;
+	height: 190px;
 	left: 5px;
 	top: 5px;
 	padding: 12px;
@@ -460,6 +460,8 @@ html,body{
 	right: 5px;
 }
 
+#colist ul { list-style-type: none; }
+
 #colist .llist{
 	float: left;
 	width: 200px;
@@ -467,9 +469,9 @@ html,body{
 	margin: 0 0 0 12px;
 }
 
-#colist .alist{
-	width: 200px;
-	height: 200px;
+#colist .hlist{
+	width: 610px;
+	margin: 0 auto 0 auto;
 }
 
 #colist .tlist{
@@ -479,7 +481,10 @@ html,body{
 #colist .mlist{
 	height: 30px;
 	padding:5px 0 5px 0;
+	width: 610px;
+	text-align: right;
 }
+
 
 #colist .ulist{
 	height: 150px;

@@ -159,14 +159,37 @@ def observe_project(request):
 def collaborator_project(request):
     user_id = ""
     data = request.nokkhum_client.account.list_project()
-    data_users = request.nokkhum_client.account.list_user()
+    data_users = request.nokkhum_client.account.list_user()['users']
     filter_id = request.session['user']['id']
-    print('data -->',data['projects'])
-    print('user -->',data_users['users'])
+#    print('user -->',data_users)
+#    print('fuser -->',filter_id)
+    for fdata in data_users:
+#        print('quser -->',fdata)
+        if fdata['id'] is filter_id:
+            data_users.remove(fdata)
+            break
+#    print('data -->',data['projects'])
+#    print('user -->',data_users)
+    method = str(request.matchdict.get('method',None))
+    p_id = request.matchdict.get('p_id',None)
+    u_id = request.matchdict.get('u_id',None)
+#    print("method ->",method)
+#    print("p_id ->",p_id)
+#    print("u_id ->",u_id)
+    if method is not None:
+#        print("ok -> not none")
+        if method == "add":
+#            print("ok -> add")
+            t_data = request.nokkhum_client.account.add_coraborator(p_id,u_id)
+#            print("ok ->",t_data)
+        elif method == "delete":
+#            print("ok -> delete")
+            t_data = request.nokkhum_client.account.delete_coraborator(p_id,u_id)
+#            print("ok ->",t_data)
 #    data = request.nokkhum_client.camera.list_camera(project_id)
 #    print("data -->",data['project']['cameras'])
     return dict(
 #                data = data['project']['cameras']
                  data = data['projects'],
-                 users = data_users['users']
+                 users = data_users
                 )

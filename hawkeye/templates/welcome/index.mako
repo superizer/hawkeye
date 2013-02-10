@@ -211,7 +211,7 @@
 % endfor
 
 % for project in collaborators:
-	<h3>${project['name']}</h3>
+	<h3>${project['name']} [Collaborator]</h3>
 	<div>
 		<div class="pmenu">
 		    <a id="pmenu-${x}" href ="/observe?id=${project['id']}">Observe</a>

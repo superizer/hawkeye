@@ -56,3 +56,11 @@ class Account:
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.get(self.url + '/co_users/users' , headers=self.headers)
         return r.json()
+    def add_coraborator(self, p_id, u_id ):
+        payload = {'collaborator':{'id': int(u_id)}}
+        r = requests.post(self.url + '/projects/' + str(p_id) + '/collaborators' , data=json.dumps(payload), headers=self.headers)
+        return r.json()
+    def delete_coraborator(self, p_id, u_id ):
+        payload = {'collaborator':{'id': int(u_id)}}
+        r = requests.delete(self.url + '/projects/' + str(p_id) + '/collaborators' , data=json.dumps(payload), headers=self.headers)
+        return r.json()
