@@ -144,9 +144,8 @@ def edit(request):
     return request.route_path('/home')
 
 def controlpanel(request):
-    roles_name = ""
     return dict(
-                roles_name = roles_name
+                who = request.session['user']['roles'][0]['id']
                 )
     
 def observe_project(request):
@@ -160,10 +159,14 @@ def observe_project(request):
 def collaborator_project(request):
     user_id = ""
     data = request.nokkhum_client.account.list_project()
-    print('data -->',data)
+    data_users = request.nokkhum_client.account.list_user()
+    filter_id = request.session['user']['id']
+    print('data -->',data['projects'])
+    print('user -->',data_users['users'])
 #    data = request.nokkhum_client.camera.list_camera(project_id)
 #    print("data -->",data['project']['cameras'])
     return dict(
 #                data = data['project']['cameras']
-                 data = data['projects']
+                 data = data['projects'],
+                 users = data_users['users']
                 )

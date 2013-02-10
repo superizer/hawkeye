@@ -27,10 +27,12 @@ def index(request):
     
     else:
         #print('request', data)
+        print("This You ->",request.session['user'])
         return dict(
                     form = form,
                     projects=data['projects'],
-                    collaborators=data['collaborate_projects']
+                    collaborators=data['collaborate_projects'],
+                    who = request.session['user']['roles'][0]['name']
                     )
         
     # add code hear

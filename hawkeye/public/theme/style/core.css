@@ -472,6 +472,20 @@ html,body{
 	height: 200px;
 }
 
+#colist .tlist{
+	height: 150px;
+}
+
+#colist .mlist{
+	height: 30px;
+	padding:5px 0 5px 0;
+}
+
+#colist .ulist{
+	height: 150px;
+	width: 200px;
+}
+
 #colist .clist{
 	width: 500px;
 	margin: 0 auto 0 auto;
@@ -509,55 +523,3 @@ html,body{
 .append-c{
 	float:left;
 }
-
-/*
-dl {clear: both;}
-dt {float: left;text-align: right;width: 130px;line-height: 25px;margin: 0 0 0 0;}
-dd {float: left;width: 130px;line-height: 25px;margin: 0 0 0 5px;}
-
-.form-button {width:251px;clear:both;margin: 0 auto 0 auto;}
-.form-message {color:red;height:16px;clear:both;text-align:center;margin: 0 auto 0 auto;}
-.form-name {clear:both;text-align: center;}
-.logo{}
-
-.main-menu{clear: both;margin:10px 10px 0 10px;}
-.main-menu-right{clear: both;float: right;}
-
-.menu-project{clear: both;float: right;}
-.des-project{clear: both;word-wrap: break-word;margin:45px 0 0 0;}
-
-.login-set-shadow-style{width: 332px; height: 152px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -76px;}
-.login-set-content-style{position: absolute; width: 310px; height: 130px; left: 50%; top: 50%; margin-left: -155px; margin-top: -65px; padding: 7px;}
-.login-set-content-inner-style{background: none; border: 0;}
-.login-button{width:80px;}
-
-.register-set-shadow-style{width: 332px; height: 232px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -116px;}
-.register-set-content-style{position: absolute; width: 310px; height: 210px; left: 50%; top: 50%; margin-left: -155px; margin-top: -105px; padding: 7px;}
-.register-set-content-inner-style{background: none; border: 0;}
-.register-button{width:80px;}
-
-.profile-set-shadow-style{width: 332px; height: 162px; position: absolute; left: 50%; top: 50%; margin-left: -166px; margin-top: -81px;}
-.profile-set-content-style{position: absolute; width: 310px; height: 140px; left: 50%; top: 50%; margin-left: -155px; margin-top: -70px; padding: 7px;}
-.profile-set-content-inner-style{background: none; border: 0;}
-.profile-button{width:80px;}
-
-.add-project-set-shadow-style{width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;}
-.add-project-set-content-style{position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;}
-.add-project-set-content-inner-style{background: none; border: 0;}
-.add-project-button{width:80px;}
-
-.edit-project-set-shadow-style{width: 322px; height: 172px; position: absolute; left: 50%; top: 50%; margin-left: -161px; margin-top: -86px;}
-.edit-project-set-content-style{position: absolute; width: 300px; height: 150px; left: 50%; top: 50%; margin-left: -150px; margin-top: -75px; padding: 7px;}
-.edit-project-set-content-inner-style{background: none; border: 0;}
-.edit-project-button{width:80px;}
-
-.index-icon-button{clear:both;float:left;margin:0 5px 0 0;}
-.index-camera-list-tool{clear:both; float:right;}
-.menu-project-camera{margin-top:-7px;}
-.list-camera-project{height:35px;}
-
-.storage-set-background-style{width: 100%; height: 100%; margin: 10px;background-color: white;}
-.storage-set-content-style{position: absolute; width: 310px; height: 130px; left: 50%; top: 50%; margin-left: -155px; margin-top: -65px; padding: 7px;}
-.storage-set-content-inner-style{background: none; border: 0;}
-.storage-button{width:80px;}
-*/

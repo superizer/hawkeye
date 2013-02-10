@@ -7,7 +7,7 @@
 		var ps;
 		$("#back").button();
 		$("#add").button();
-		$.ajax({
+	/* 	$.ajax({
 			  type: 'GET',
 	          url: "${request.config.settings['nokkhum.api.url']}/co_users/users", 
 	          datatype: 'json',
@@ -29,7 +29,7 @@
 	    			  ps = $("#slProject option:selected").val();
 	    		  });
 	          }
-		});
+		}); */
 		$("#add").click(function() {
 			alert(JSON.stringify({'collaborator':{'id': parseInt(us)}}));
 			$.ajax({
@@ -54,22 +54,39 @@
 </div>
 </%block>
 <div id="colist">
-	<div class="clist">
-	<div id="selectUser" class="llist">
-		<select id="slUser" multiple="multiple" class="alist">
-		</select>
-	</div>
-	<div id="selectProject" class="llist">
-		<select id="slProject" multiple="multiple" class="alist">
-		% for project in data:
-			<option value="${project['id']}">${project['name']}</option>
-		% endfor
-		</select>
-	</div>
-	<div class="blist">
-	<buttun id="add">Add</buttun>
-	</div>
-	</div>
+	<ul>
+    	<li class="tlist">	
+    		<select id="slUser" multiple="multiple" class="ulist">
+    			% for user in users:
+					<option value="${user['id']}">${user['email']}</option>
+				% endfor
+			</select>
+			<select id="slProject" multiple="multiple" class="ulist">
+				% for project in data:
+					<option value="${project['id']}">${project['name']}</option>
+				% endfor
+			</select>
+    	</li>
+    	<li class="mlist">
+    		<buttun id="add">Add</buttun>
+    	</li>
+  	</ul>
+	<!-- <div class="clist">
+		<div id="selectUser" class="llist">
+			<select id="slUser" multiple="multiple" class="alist">
+			</select>
+		</div>
+		<div id="selectProject" class="llist">
+			<select id="slProject" multiple="multiple" class="alist">
+			% for project in data:
+				<option value="${project['id']}">${project['name']}</option>
+			% endfor
+			</select>
+		</div>
+		<div class="blist">
+			<buttun id="add">Add</buttun>
+		</div>
+	</div> -->
 </div>
 <form id="goback" action="/home" style="display: none;"></form>
 

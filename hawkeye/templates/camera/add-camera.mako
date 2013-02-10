@@ -193,8 +193,6 @@
 	<div id="Video-Recorder-form" title="Edit Video Recorder">
 		<form>
 			<fieldset>
-				<label for="vrheight">Height</label> <input type="text" name="vrheight" id="vrheight" class="text ui-widget-content ui-corner-all" /> 
-				<label for="vrwidth">Width</label> <input type="text" name="vrwidth" id="vrwidth" class="text ui-widget-content ui-corner-all" /> 
 				<label for="vrfps">Fps</label> <input type="text" name="vrfps" id="vrfps"class="text ui-widget-content ui-corner-all" /> 
 				<label for="vrrecordmotion">Record motion</label> <input type="text" name="vrrecordmotion" id="vrrecordmotion" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
@@ -204,8 +202,6 @@
 	<div id="Image-Recorder-form" title="Edit Image Recorder">
 		<form>
 			<fieldset>
-				<label for="irheight">Height</label> <input type="text" name="irheight" id="irheight" class="text ui-widget-content ui-corner-all" /> 
-				<label for="irwidth">Width</label> <input type="text" name="irwidth" id="irwidth" class="text ui-widget-content ui-corner-all" />
 				<label for="irinterval">Interval</label> <input type="text" name="irinterval" id="irinterval" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
 		</form>

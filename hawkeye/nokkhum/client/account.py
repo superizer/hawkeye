@@ -52,3 +52,7 @@ class Account:
         self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
         r = requests.put(self.url + '/projects/'+ str(id) , data=json.dumps(payload), headers=self.headers)
         return r.json()
+    def list_user(self):
+        self.headers['X-Auth-Token'] = hawkeye.window.Window.session['token']['id']
+        r = requests.get(self.url + '/co_users/users' , headers=self.headers)
+        return r.json()

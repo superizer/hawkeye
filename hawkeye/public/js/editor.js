@@ -293,6 +293,62 @@ function Camera() {
 														tmpthis.json.camera.model.manufactory.name= manufactory.val();
 														tmpthis.json.camera.storage_periods = parseInt(recordstore.val());
 														tmpthis.json.camera.image_size = imagesize.val();
+															for(i in nodes){
+																if(imagesize.val() == "320x240"){
+																	if(nodes[i].json.name == "Video Recorder"){
+																		nodes[i].json.width = 320;
+																		nodes[i].json.height = 240;
+																	}else if(nodes[i].json.name == "Image Recorder"){
+																		nodes[i].json.width = 320;
+																		nodes[i].json.height = 240;
+																	}else if(nodes[i].json.name == "Multimedia Recorder"){
+																		nodes[i].json.width = 320;
+																		nodes[i].json.height = 240;
+																	}
+																}else{
+																	if(nodes[i].json.name == "Video Recorder"){
+																		nodes[i].json.width = 640;
+																		nodes[i].json.height = 480;
+																	}else if(nodes[i].json.name == "Image Recorder"){
+																		nodes[i].json.width = 640;
+																		nodes[i].json.height = 480;
+																	}else if(nodes[i].json.name == "Multimedia Recorder"){
+																		nodes[i].json.width = 640;
+																		nodes[i].json.height = 480;
+																	}
+																}
+															}
+															function genWH(tmp){
+																if(tmp.processors != undefined){
+																for(i in tmp.processors){
+																	if(imagesize.val() == "320x240"){
+																		if(tmp.processors[i].json.name == "Video Recorder"){
+																			tmp.processors[i].json.width = 320;
+																			tmp.processors[i].json.height = 240;
+																		}else if(tmp.processors[i].json.name == "Image Recorder"){
+																			tmp.processors[i].json.width = 320;
+																			tmp.processors[i].json.height = 240;
+																		}else if(tmp.processors[i].json.name == "Multimedia Recorder"){
+																			tmp.processors[i].json.width = 320;
+																			tmp.processors[i].json.height = 240;
+																		}
+																	}else{
+																		if(tmp.processors[i].json.name == "Video Recorder"){
+																			tmp.processors[i].json.width = 640;
+																			tmp.processors[i].json.height = 480;
+																		}else if(tmp.processors[i].json.name == "Image Recorder"){
+																			tmp.processors[i].json.width = 640;
+																			tmp.processors[i].json.height = 480;
+																		}else if(tmp.processors[i].json.name == "Multimedia Recorder"){
+																			tmp.processors[i].json.width = 640;
+																			tmp.processors[i].json.height = 480;
+																		}
+																	}
+																	genWH(tmp.processors[i]);
+																}
+																}
+															}
+															genWH(tmpthis.json.camera);
 														tmpthis.json.camera.username = username.val();
 														tmpthis.json.camera.password = password.val();
 														tmpthis.json.camera.host = host.val();
@@ -816,13 +872,9 @@ function Processor(name) {
 												});
 								$("#Face-Detector-form").dialog("open");
 							} else if (tmpthis.json.name == "Video Recorder") {
-								var width = $("#vrwidth"), height = $("#vrheight"), fps = $("#vrfps"), recordmotion = $("#vrrecordmotion"), 
-								allFields = $([]).add(width).add(height).add(fps).add(recordmotion);
+								var fps = $("#vrfps"), recordmotion = $("#vrrecordmotion"), 
+								allFields = $([]).add(fps).add(recordmotion);
 								
-						      
-						        
-								width.val(tmpthis.json.width);
-								height.val(tmpthis.json.height);
 								fps.val(tmpthis.json.fps);
 								recordmotion.val(tmpthis.json.record_motion);
 
@@ -835,8 +887,14 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 
-															tmpthis.json.width = parseInt(width.val());
-															tmpthis.json.height = parseInt(height.val());
+															if(camera.json.camera.image_size == "320x240"){
+																tmpthis.json.width = 320;
+																tmpthis.json.height = 240;
+															}else{
+																tmpthis.json.width = 640;
+																tmpthis.json.height = 480;
+															}
+															
 															tmpthis.json.fps = parseInt(fps.val());
 															tmpthis.json.record_motion = recordmotion.val() == "true";
 															$(this).dialog("close");
@@ -851,10 +909,8 @@ function Processor(name) {
 												});
 								$("#Video-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Image Recorder") {
-								var width = $("#irwidth"), height = $("#irheight"),interval = $("#irinterval"), 
-								allFields = $([]).add(width).add(height).add(interval);
-								width.val(tmpthis.json.width);
-								height.val(tmpthis.json.height);
+								var interval = $("#irinterval"), 
+								allFields = $([]).add(interval);
 								interval.val(tmpthis.json.interval);
 								$("#Image-Recorder-form").dialog({
 													autoOpen : false,
@@ -864,8 +920,13 @@ function Processor(name) {
 													buttons : {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
-															tmpthis.json.width = parseInt(width.val());
-															tmpthis.json.height = parseInt(height.val());
+															if(camera.json.camera.image_size == "320x240"){
+																tmpthis.json.width = 320;
+																tmpthis.json.height = 240;
+															}else{
+																tmpthis.json.width = 640;
+																tmpthis.json.height = 480;
+															}
 															tmpthis.json.interval = parseInt(interval.val());
 															$(this).dialog("close");
 														},
@@ -879,11 +940,9 @@ function Processor(name) {
 												});
 								$("#Image-Recorder-form").dialog("open");
 							} else if (tmpthis.json.name == "Multimedia Recorder") {
-								var width = $("#mwidth"),url=$("#murl"), height = $("#mheight"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
-								allFields = $([]).add(width).add(height).add(url).add(fps).add(recordmotion);
+								var url=$("#murl"), fps = $("#mfps"), recordmotion = $("#mrecordmotion"), 
+								allFields = $([]).add(url).add(fps).add(recordmotion);
 								
-								width.val(tmpthis.json.width);
-								height.val(tmpthis.json.height);
 								url.val(tmpthis.json.url);
 								fps.val(tmpthis.json.fps);
 								recordmotion.val(tmpthis.json.record_motion);
@@ -897,8 +956,14 @@ function Processor(name) {
 														"Save" : function() {
 															allFields.removeClass("ui-state-error");
 
-															tmpthis.json.width = parseInt(width.val());
-															tmpthis.json.height = parseInt(height.val());
+															if(camera.json.camera.image_size == "320x240"){
+																tmpthis.json.width = 320;
+																tmpthis.json.height = 240;
+															}else{
+																tmpthis.json.width = 640;
+																tmpthis.json.height = 480;
+															}
+															
 															tmpthis.json.fps = parseInt(fps.val());
 															tmpthis.json.record_motion = recordmotion.val() == "true";
 															var turl = url.val();
