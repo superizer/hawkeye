@@ -4,10 +4,12 @@ Created on Dec 3, 2012
 @author: superizer
 '''
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtWebKit import *
-from PyQt4.QtNetwork import *
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QShortcut, QSplitter
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWebKitWidgets import *
+from PyQt5.QtWebKit import QWebSettings
+from PyQt5.QtNetwork import *
 
 import logging
 logger = logging.getLogger(__name__)
@@ -102,10 +104,11 @@ class Window(QWidget):
         self.web_view = QWebView(self)
         self.web_view.setPage(HawkeyeWebPage())
         self.web_view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
-        self.web_view.connect(self.web_view, SIGNAL("linkClicked(const QUrl&)"), self.link_clicked)
-        self.web_view.connect(self.web_view, SIGNAL("urlChanged(const QUrl&)"), self.url_changed)
-        self.web_view.connect(self.web_view, SIGNAL("loadFinished(bool)"), self.load_finished)
-        self.web_view.connect(self.web_view, SIGNAL("loadStarted()"), self.load_started)
+#         self.web_view.connect(self.web_view, SIGNAL("linkClicked(const QUrl&)"), self.link_clicked)
+#         self.web_view.connect(self.web_view, SIGNAL("urlChanged(const QUrl&)"), self.url_changed)
+#         self.web_view.connect(self.web_view, SIGNAL("loadFinished(bool)"), self.load_finished)
+#         self.web_view.connect(self.web_view, SIGNAL("loadStarted()"), self.load_started)
+        
         self.web_view.page().form_submitted.connect(self.handle_form_submitted)
         self.web_view.page().request_reload.connect(self.handle_reload)
         # initial template lookup
@@ -114,7 +117,7 @@ class Window(QWidget):
         
         # layout attribute
         layout = QVBoxLayout(self)
-        layout.setMargin(0) 
+        layout.setContentsMargins(0, 0, 0, 0) 
         
         # add debug inspector
         if self.config.settings.get("debug", False):
@@ -154,7 +157,8 @@ class Window(QWidget):
     def handle_form_submitted(self, qurl, elements=dict()):
 
  #       print("\n\ngot url: ", qurl)
-        for key, value in qurl.queryItems():
+        qqurl = QUrlQuery(qurl)
+        for key, value in qqurl.queryItems():
             elements[key] = value
             
         self.render(qurl, elements)
@@ -166,26 +170,27 @@ class Window(QWidget):
         print("reload ->: ", qurl)
         self.render(qurl)
     
-    def load_started(self): 
+    def loadStarted(self): 
         ''''''
         # print("load_started ->: ", self.web_view.url())
 
         
-    def load_finished(self, finished): 
+    def loadFinished(self, finished): 
         ''''''
         # print("load_finished ->: ", finished)
 #        if finished:
 #            self.web_view.setUrl(QUrl('/login'))
         
-    def url_changed(self, qurl): 
+    def urlChanged(self, qurl): 
         ''''''
         # print("url_changed ->: ", qurl)
     
-    def link_clicked(self, qurl):  
+    def linkClicked(self, qurl):  
         # print("link_clicked ->: ", qurl)
+        qqurl = QUrlQuery(qurl)
         elements = {}
         # print("got link_clicked url: ", qurl)
-        for key, value in qurl.queryItems():
+        for key, value in qqurl.queryItems():
             elements[key] = value
             
         self.render(qurl, elements)
@@ -243,4 +248,4 @@ class Window(QWidget):
         
     def welcome(self):
         context_obj = context.ResourceContext(self.config, self.session)
-        return self.link_clicked(context_obj.route_path('/login'))
+        return self.linkClicked(context_obj.route_path('/login'))

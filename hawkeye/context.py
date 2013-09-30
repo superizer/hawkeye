@@ -5,7 +5,7 @@ Created on Dec 4, 2012
 '''
 
 
-from PyQt4.QtCore import QUrl
+from PyQt5.QtCore import QUrl
 from hawkeye.nokkhum.client import connection
 class MyDict(dict):
     def getlist(self, name):
