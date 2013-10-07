@@ -104,10 +104,10 @@ class Window(QWidget):
         self.web_view = QWebView(self)
         self.web_view.setPage(HawkeyeWebPage())
         self.web_view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
-#         self.web_view.connect(self.web_view, SIGNAL("linkClicked(const QUrl&)"), self.link_clicked)
-#         self.web_view.connect(self.web_view, SIGNAL("urlChanged(const QUrl&)"), self.url_changed)
-#         self.web_view.connect(self.web_view, SIGNAL("loadFinished(bool)"), self.load_finished)
-#         self.web_view.connect(self.web_view, SIGNAL("loadStarted()"), self.load_started)
+        self.web_view.linkClicked.connect(self.link_clicked)
+        self.web_view.urlChanged.connect(self.url_changed)
+        self.web_view.loadFinished.connect(self.load_finished)
+        self.web_view.loadStarted.connect(self.load_started)
         
         self.web_view.page().form_submitted.connect(self.handle_form_submitted)
         self.web_view.page().request_reload.connect(self.handle_reload)
@@ -170,22 +170,22 @@ class Window(QWidget):
         print("reload ->: ", qurl)
         self.render(qurl)
     
-    def loadStarted(self): 
+    def load_started(self): 
         ''''''
         # print("load_started ->: ", self.web_view.url())
 
         
-    def loadFinished(self, finished): 
+    def load_finished(self, finished): 
         ''''''
         # print("load_finished ->: ", finished)
 #        if finished:
 #            self.web_view.setUrl(QUrl('/login'))
         
-    def urlChanged(self, qurl): 
+    def url_changed(self, qurl): 
         ''''''
         # print("url_changed ->: ", qurl)
     
-    def linkClicked(self, qurl):  
+    def link_clicked(self, qurl):  
         # print("link_clicked ->: ", qurl)
         qqurl = QUrlQuery(qurl)
         elements = {}
@@ -214,7 +214,8 @@ class Window(QWidget):
                 response = action(context_obj)
             except Exception as e:            
                 if e.args[0] == 'Request Exit':
-                    qApp.closeAllWindows()
+                    #qApp.closeAllWindows()
+                    self.close()
                     return  
                           
                 logger.exception(e)
@@ -248,4 +249,4 @@ class Window(QWidget):
         
     def welcome(self):
         context_obj = context.ResourceContext(self.config, self.session)
-        return self.linkClicked(context_obj.route_path('/login'))
+        return self.link_clicked(context_obj.route_path('/login'))
