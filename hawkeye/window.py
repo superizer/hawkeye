@@ -105,7 +105,7 @@ class Window(QWidget):
         self.web_view.setPage(HawkeyeWebPage())
         self.web_view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
         self.web_view.page().linkClicked.connect(self.link_clicked)
-        self.web_view.page().urlChanged.connect(self.url_changed)
+        #self.web_view.page().urlChanged.connect(self.url_changed)
         self.web_view.page().loadFinished.connect(self.load_finished)
         self.web_view.page().loadStarted.connect(self.load_started)
         
@@ -181,8 +181,8 @@ class Window(QWidget):
 #        if finished:
 #            self.web_view.setUrl(QUrl('/login'))
         
-    def url_changed(self, qurl): 
-        ''''''
+#     def url_changed(self, qurl): 
+#         ''''''
         # print("url_changed ->: ", qurl)
     
     def link_clicked(self, qurl):  
