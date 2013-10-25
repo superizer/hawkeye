@@ -5,11 +5,12 @@ Created on Dec 3, 2012
 '''
 
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QShortcut, QSplitter
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWebKitWidgets import *
+from PyQt5.QtCore import Qt, pyqtSignal, QUrl, QVariant, QUrlQuery, QSize
+#from PyQt5.QtGui import 
+from PyQt5.QtWebKitWidgets import QWebPage, QWebView, QWebInspector
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtNetwork import *
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -21,12 +22,11 @@ import os
 
 from . import context
 
-class HawkeyeWebPage(QWebPage):
+class WebPage(QWebPage):
     form_submitted = pyqtSignal(QUrl, QVariant)
     request_reload = pyqtSignal(QUrl)
 
     def acceptNavigationRequest(self, frame, req, nav_type):
-        
         if nav_type == QWebPage.NavigationTypeFormSubmitted:
             forms = req.originatingObject().findAllElements('form')
             
@@ -56,39 +56,13 @@ class HawkeyeWebPage(QWebPage):
             
             #print("elements: ", elements)
             self.form_submitted.emit(req.url(), elements)
+        
         if nav_type == QWebPage.NavigationTypeReload:
             self.request_reload.emit(req.url())
             
-        return super(HawkeyeWebPage, self).acceptNavigationRequest(frame, req, nav_type)
-    
-class NetworkAccessManager(QNetworkAccessManager):
-    '''
-    implement hawkeye new networkrequest with identify user token header, only connect to nokkhum api. 
-    '''
-    def __init__(self, old_manager, context_obj):
+        return super(WebPage, self).acceptNavigationRequest(frame, req, nav_type)
 
-        QNetworkAccessManager.__init__(self)
-        self.old_manager = old_manager
-        self.setCache(old_manager.cache())
-        self.setCookieJar(old_manager.cookieJar())
-        self.setProxy(old_manager.proxy())
-        self.setProxyFactory(old_manager.proxyFactory())
-        self.context_obj = context_obj
         
-    def createRequest(self, operation, request, data):
-#        print("url: ", request.url())
-        api_url = self.context_obj.config.settings['nokkhum.api.url']
-
-        if api_url in request.url().toString():
-            if 'token' in self.context_obj.session:
-#                print("url ->: ", self.context_obj.session['token']['id'])
-#                print("url ->: ", request.rawHeader('Access-Control-Request-Method'))
-
-                request.setRawHeader('X-Auth-Token', self.context_obj.session['token']['id'])
-            
-        
-        return QNetworkAccessManager.createRequest(self, operation, request, data)
-
 class Window(QWidget):
     
     session = dict()
@@ -98,22 +72,25 @@ class Window(QWidget):
         
         self.config = config
         
-        self.base_url = QUrl.fromLocalFile(os.path.dirname(__file__)).toString()
+        self.base_uri = QUrl.fromLocalFile(os.path.dirname(__file__)).toString()
         
         # initial web view add handle all link and form submitted
         self.web_view = QWebView(self)
-        self.web_view.setPage(HawkeyeWebPage())
+        self.web_view.setPage(WebPage())
         self.web_view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
         self.web_view.page().linkClicked.connect(self.link_clicked)
         #self.web_view.page().urlChanged.connect(self.url_changed)
         self.web_view.page().loadFinished.connect(self.load_finished)
         self.web_view.page().loadStarted.connect(self.load_started)
-        
+
         self.web_view.page().form_submitted.connect(self.handle_form_submitted)
         self.web_view.page().request_reload.connect(self.handle_reload)
+        
         # initial template lookup
         self.tempalte_lookup = TemplateLookup(directories=[self.config.settings.get("mako.directories")],
-                                 module_directory=self.config.settings.get("mako.module_directory"))
+                                 module_directory=self.config.settings.get("mako.module_directory"),
+                                 input_encoding='utf-8',
+                                 )
         
         # layout attribute
         layout = QVBoxLayout(self)
@@ -131,10 +108,6 @@ class Window(QWidget):
         else:
             layout.addWidget(self.web_view)
                 
-        old_manager = self.web_view.page().networkAccessManager()
-        context_obj = context.ResourceContext(self.config, self.session)
-        new_manager = NetworkAccessManager(old_manager, context_obj)
-        self.web_view.page().setNetworkAccessManager(new_manager)
 
     def setup_inspector(self):
         '''
@@ -161,14 +134,13 @@ class Window(QWidget):
         for key, value in qqurl.queryItems():
             elements[key] = value
             
-        self.render(qurl, elements)
+        self.render(qurl.path(), elements)
         # do stuff with elements...
 #        for item in elements.items():
 #            print ("got: ", item)
 
     def handle_reload(self, qurl):
-        print("reload ->: ", qurl)
-        self.render(qurl)
+        self.render(qurl.path())
     
     def load_started(self): 
         ''''''
@@ -193,34 +165,31 @@ class Window(QWidget):
         for key, value in qqurl.queryItems():
             elements[key] = value
             
-        self.render(qurl, elements)
+        self.render(qurl.path(), elements)
         #self.render(qurl.path())
         
         
-    def render(self, qurl, args=None):
-        url = qurl.path()
-        self.config.current_route_path = qurl.toString()
-        print("url: ", url)
+    def render(self, url, args=None):
+        self.config.current_route_path = url
         print("current_route_path: ", self.config.current_route_path)
         logger.debug("url: %s" % url)
-        view = self.config.get_route(url)
-        # logger.debug("view: %s" % view)
+        route = self.config.get_route(url)
+        logger.debug("view: %s" % route)
         
-        if view is not None:
-            action = view.get('action')
+        if route is not None:
+            view = route.get('view')
             context_obj = context.ResourceContext(self.config, self.session)
             context_obj.add_args(args)
             try:
-                response = action(context_obj)
+                response = view(context_obj)
             except Exception as e:            
                 if e.args[0] == 'Request Exit':
-                    #qApp.closeAllWindows()
                     self.close()
                     return  
                           
                 logger.exception(e)
                 #need error page
-                return ('/home')
+                return self.link_clicked('/home')
 
             
             if not isinstance(response, dict):
@@ -240,13 +209,13 @@ class Window(QWidget):
                             )
             
             response['request'] = context_obj
-            response['base_url'] = self.base_url
+            response['base_uri'] = self.base_uri
             html = template.render(**response)
             
             self.web_view.setHtml(html, QUrl("file://"+url))
-            
+            # self.web_view.setHtml(html)
             #self.web_view.load(a)
         
     def welcome(self):
         context_obj = context.ResourceContext(self.config, self.session)
-        return self.link_clicked(context_obj.route_path('/login'))
+        return self.link_clicked(context_obj.redirect_url('login'))

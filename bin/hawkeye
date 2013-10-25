@@ -7,11 +7,9 @@ Created on Dec 2, 2012
 
 from hawkeye import application
 from hawkeye import config
-from hawkeye import routing
 
 import sys
 import os
-import logging
 import logging.config
 
 if __name__ == '__main__':
@@ -20,12 +18,12 @@ if __name__ == '__main__':
         sys.exit()
         
     config = config.Configuration(sys.argv[1])
-    routing.add_route(config)
     
     # initial logging
     directory = config.settings.get('hawkeye.log_dir')
     if not os.path.exists(directory):
         os.makedirs(directory)
+
     logging.config.fileConfig(sys.argv[1])
     logger = logging.getLogger()
     logger.debug("welcome_message")

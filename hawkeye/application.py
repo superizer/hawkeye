@@ -14,6 +14,8 @@ import sys
 import logging
 logger = logging.getLogger(__name__)
 
+from . import routing
+
 class Application(object):
     '''
     classdocs
@@ -26,6 +28,7 @@ class Application(object):
         self.app = QApplication(sys.argv)
 #        self.app.setGraphicsSystem("raster");
         self.config = config
+        routing.add_route(config)
         
     def start(self):
         

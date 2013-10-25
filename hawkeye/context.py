@@ -6,8 +6,8 @@ Created on Dec 4, 2012
 
 
 from PyQt5.QtCore import QUrl
-from hawkeye.nokkhum.client import connection
-class MyDict(dict):
+
+class MatchDict(dict):
     def getlist(self, name):
         return [self.get(name)]
 
@@ -15,24 +15,28 @@ class ResourceContext:
     def __init__(self, config, session):
         ''''''
         self.config = config
-        self.matchdict = MyDict()
-        self.nokkhum_client = connection.Connection(self.config.settings.get('nokkhum.api.host'),self.config.settings.get('nokkhum.api.port'))
+        self.matchdict = MatchDict()
         self.session = session
     
     def route_url(self, name):
-        return QUrl(name)
+        return self.route_path(name)
     
     def route_path(self, name):
-        return QUrl(name)
+        route = self.config.get_route(name)
+        if route:
+            return route['url']
+        
+        return None
+    
+    def redirect_url(self, name):
+        return QUrl(self.route_path(name))
     
     def add_args(self, args):
         if args is not None:
             self.matchdict.update(args)
             
-    def remember(self, args):
-        if 'access' in args:
-            self.session.update(args['access'])
+    def remember(self, user):
+        self.session['user']=user
             
     def forget(self):
-        del self.session['token']
         del self.session['user']

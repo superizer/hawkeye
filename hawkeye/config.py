@@ -7,7 +7,6 @@ Created on Dec 3, 2012
 import os
 import configparser
 
-
 class Configuration:
     '''
     classdocs
@@ -47,22 +46,22 @@ class Configuration:
                 else:
                     self.settings[k] = v.replace("hawkeye:", self.current_project_path+"/")
         
-        if 'nokkhum.api.protocal' not in self.settings.keys():
-            self.settings['nokkhum.api.protocal'] = 'http'
-        if 'nokkhum.api.host' not in self.settings.keys():
-            self.settings['nokkhum.api.host'] = 'localhost'
-        if 'nokkhum.api.port' not in self.settings.keys():
-            self.settings['nokkhum.api.port'] = 6543
-            
-        self.settings['nokkhum.api.url'] = "%s://%s:%d" % (self.settings['nokkhum.api.protocal'], self.settings['nokkhum.api.host'], self.settings['nokkhum.api.port'])
-        
         
     
-    def add_route(self, name, action, renderer=None):
+    def add_route(self, name, url, view, renderer=None):
         self.route[name] = dict(
                                 name=name,
-                                action=action,
+                                url=url,
+                                view=view,
                                 renderer=renderer
                                 )
     def get_route(self, name):
-        return self.route.get(name, None)
+        if self.route.get(name, None):
+            return self.route.get(name)
+    
+        for k, v in self.route.items():
+            if v['url'] == name:
+                return v
+            
+        return None
+    
